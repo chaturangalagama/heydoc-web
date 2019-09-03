@@ -28,6 +28,7 @@ import { PatientService } from '../services/patient.service';
 import { PaymentService } from '../services/payment.service';
 import * as moment from 'moment';
 import { VitalConfiguration } from '../objects/response/VitalConfiguration';
+import { JwtHelperService } from '@auth0/angular-jwt';
 @Injectable()
 export class StoreService implements OnDestroy {
   private isClinicLoaded = new Subject();
@@ -106,7 +107,8 @@ export class StoreService implements OnDestroy {
     private utilsService: UtilsService,
     private apiPatientVisitService: ApiPatientVisitService,
     private logger: LoggerService,
-    private router: Router
+    private router: Router,
+    public jwtHelper: JwtHelperService
   ) {
     this.storeStatus = new StoreStatus(false, false, false);
     this.isStoreReady = new BehaviorSubject(this.storeStatus);
@@ -134,18 +136,35 @@ export class StoreService implements OnDestroy {
     this.storeStatus.isReseting = true;
     this.isStoreReady.next(this.storeStatus);
     if (this.authService.isAuthenticated()) {
-      this.authService.getUser().subscribe(
-        res => {
-          this.logger.info('USER', res.payload);
-          this.user = res.payload;
-          localStorage.setItem('roles', JSON.stringify(this.user.roles));
-          this.permissionsService.loadPermissions(this.user.roles);
-          this.authService.permissionsLoaded = true;
-          this.listTemplates();
-          this.initStore();
-        },
-        err => this.alertService.error(JSON.stringify(err))
-      );
+      const decodeToken = this.jwtHelper.decodeToken(localStorage.getItem('access_token'));
+      localStorage.setItem('roles', JSON.stringify(decodeToken.authorities));
+      const user_details = JSON.parse(localStorage.getItem('user_details'));
+      if(user_details != null){
+        this.user = {
+          createDate: user_details['createDate'],
+          lastUpdate: user_details['lastUpdate'],
+          userName: decodeToken.user_name,
+          password: '',
+          firstName: user_details['firstName'],
+          lastName: user_details['lastName'],
+          email: user_details['email'],
+          status: user_details['status'],
+          oldPasswords: '',
+          numberOfLoginAttempts: user_details['numberOfLoginAttempts'],
+          roles: decodeToken.authorities,
+          context: user_details['context']
+        }
+        console.log("Current user's details", this.user);
+      }else{        
+        console.log('Error in retrieving current users details');
+        this.alertService.error(JSON.stringify('Error in retrieving current users details'));
+        this.errorMessages['user_details'] = 'Error in retrieving current users details';
+        this.setStoreReady(false);
+      }
+      this.permissionsService.loadPermissions(decodeToken.authorities);
+      this.authService.permissionsLoaded = true;
+      this.listTemplates();
+      this.initStore();
     }
   }
 
@@ -186,7 +205,7 @@ export class StoreService implements OnDestroy {
 
     this.apiCmsManagementService.listVisitPurposes().subscribe(
       res => {
-        console.log('GOT VISIT PURPOSE LIST');
+        console.log('GOT VISIT PURPOSE LIST', res.payload);
         this.visitPurposeList = res.payload;
         this.setStoreReady(true);
       },
@@ -198,6 +217,7 @@ export class StoreService implements OnDestroy {
     );
     this.apiCmsManagementService.listDoctors().subscribe(
       res => {
+        console.log('GOT DOCTOR LIST', res.payload);
         this.doctorList = res.payload;
         this.setStoreReady(true);
       },
@@ -331,7 +351,7 @@ export class StoreService implements OnDestroy {
     if (this.clinicId) {
       this.apiCmsManagementService.listDoctorsByClinic(this.clinicId).subscribe(
         res => {
-          console.log('GOT DOCTOR LIST', res.payload);
+          console.log('GOT CLINIC DOCTOR LIST', res.payload);
           this.doctorListByClinic = res.payload;
           this.setStoreReady(true);
         },
@@ -402,7 +422,7 @@ export class StoreService implements OnDestroy {
       this.registryPolling = null;
     }
   }
-
+    
   getMedicalCoveragesWithPagination() {
     this.apiCmsManagementService.listMedicalCoverages().subscribe(
       res => {
@@ -829,6 +849,9 @@ export class StoreService implements OnDestroy {
   logoutClearUp() {
     this.unsubscribeNotificationPolling();
     this.unsubscribeRegistryPolling();
+    localStorage.setItem('access_token', null);
+    localStorage.setItem('refresh_token', null);
+    localStorage.setItem('user_details', null);
     this.clinicCode = '';
     this.clinicId = '';
     this.router.navigate(['login']);

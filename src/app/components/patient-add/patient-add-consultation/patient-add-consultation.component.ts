@@ -73,7 +73,7 @@ export class PatientAddConsultationComponent implements OnInit, OnDestroy {
         .map(item => {
           let options = new SelectItemOptions<Doctor>();
           options.value = item.id;
-          options.label = item.displayName;
+          options.label = item.name;
           options.data = item;
           return options;
         });

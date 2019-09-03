@@ -92,8 +92,10 @@ export class LoginComponent implements OnInit, OnDestroy {
     this.loading = true;
     this.authService.login(user).subscribe(
       resp => {
-        localStorage.setItem('access_token', resp.headers.get('Authorization').substring(7));
-
+        localStorage.setItem('access_token', resp.body['access_token']);
+        localStorage.setItem('refresh_token', resp.body['refresh_token']);
+        localStorage.setItem('user_details', JSON.stringify(resp.body['user_details']));
+        
         this.storeService.preInit();
         this.storeService.startNotificationPolling();
       },

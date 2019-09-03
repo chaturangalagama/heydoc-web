@@ -178,7 +178,7 @@ export class PatientListComponent implements OnInit, OnDestroy {
             })
           : '';
 
-        const d = doctor ? doctor.displayName : '';
+        const d = doctor ? doctor.name : '';
         // console.log("PAYLOAD: ", payload);
 
         const tempPatient = {

@@ -63,6 +63,7 @@ import { BsModalService } from 'ngx-bootstrap/modal';
 import { API_DOMAIN } from './constants/app.constants';
 import { TempStoreService } from './services/temp-store.service';
 import { ApiCaseManagerService } from './services/api-case-manager.service';
+import { RefreshTokenInterceptor4 } from './services/refresh-token-interceptor-4';
 
 // HTTP MODULE
 // Services
@@ -151,7 +152,7 @@ const appInitializerFn = (appConfig: AppConfigService) => {
     { provide: LoggerService, useClass: ConsoleLoggerService },
     {
       provide: HTTP_INTERCEPTORS,
-      useClass: JwtInterceptor,
+      useClass: RefreshTokenInterceptor4,//JwtInterceptor,
       multi: true
     },
 

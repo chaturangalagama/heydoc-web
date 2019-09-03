@@ -11,15 +11,21 @@ import {
   HttpErrorResponse
 } from '@angular/common/http';
 import { AuthService } from './auth.service';
+import { AlertService } from './alert.service';
 
 @Injectable()
 export class JwtInterceptor implements HttpInterceptor {
   exceptionUrl = 'aacore/login';
-  authService: AuthService;
+  // authService: AuthService;
+  // alertService : AlertService;
 
-  constructor(private router: Router, private injector: Injector) {}
+  constructor(private router: Router, private injector: Injector, private authService: AuthService, private alertService : AlertService) {}
 
   intercept(request: HttpRequest<any>, next: HttpHandler): Observable<HttpEvent<any>> {
+    // add authorization header with jwt token if available
+    const access_token = localStorage.getItem('access_token');
+    if (access_token) 
+        request = request.clone({ setHeaders: { Authorization: `Bearer ${access_token}` ,'Content-Type': 'application/json' } });
     return next.handle(request).pipe(
       tap(
         (event: HttpEvent<any>) => {
@@ -29,22 +35,22 @@ export class JwtInterceptor implements HttpInterceptor {
         },
         (err: any) => {
           if (err instanceof HttpErrorResponse) {
-            if (err.status === 401 || err.status === 403) {
-              // redirect to the login route
-              // or show a modal
-              console.log('ERROR: ', err.status);
-              console.log('ERROR URL: ', err.url);
-              if (!err.url.includes('aacore/user/login') && !err.url.includes('aacore/user/logout')) {
-                if (!this.authService) {
-                  this.authService = <AuthService>this.injector.get(AuthService);
-                }
-                this.authService.triggerLogout();
-                alert('Your token is not valid and will be logged out.');
-                console.log('Access Denied', err);
-                this.router.navigate(['login']);
-              }
-              localStorage.clear();
-            }
+            // if (err.status === 401 || err.status === 403) {
+            //   // redirect to the login route
+            //   // or show a modal
+            //   console.log('ERROR: ', err.status);
+            //   console.log('ERROR URL: ', err.url);
+            //   if (!err.url.includes('aacore/user/login') && !err.url.includes('aacore/user/logout')) {
+            //     if (!this.authService) {
+            //       this.authService = <AuthService>this.injector.get(AuthService);
+            //     }
+            //     this.authService.triggerLogout();
+            //     alert('Your token is not valid and will be logged out.');
+            //     console.log('Access Denied', err);
+            //     this.router.navigate(['login']);
+            //   }
+            //   localStorage.clear();
+            // }
           }
         }
       )
