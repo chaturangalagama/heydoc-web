@@ -89,6 +89,7 @@ import { VitalAddComponent } from './components/vital/vital-add/vital-add.compon
 import { VitalTableComponent } from './components/vital/vital-table/vital-table.component';
 import { VitalAddItemComponent } from './components/vital/vital-add/vital-add-item/vital-add-item.component';
 import { VitalContainerComponent } from './components/vital/vital-container/vital-container.component';
+import { AutoLogoutPopupComponent } from './views/pages/auto-logout-popup/auto-logout-popup.component';
 
 const APP_VITAL = [
   VitalChartComponent,
@@ -257,6 +258,7 @@ const APP_VITAL = [
     MedicalCertificateItemControlComponent,
     ConsultationFollowUpComponent,
     ConsultationMemoComponent,
+    AutoLogoutPopupComponent,
 
     TouchedObjectDirective,
     ClinicNotesComponent,
@@ -314,7 +316,8 @@ const APP_VITAL = [
     ConsultationFollowUpComponent,
     ConsultationMemoComponent,
     ConsultationSearchComponent,
-    VitalAddComponent
+    VitalAddComponent,
+    AutoLogoutPopupComponent
   ]
 })
 export class SharedModule {}

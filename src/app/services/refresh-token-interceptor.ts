@@ -1,7 +1,7 @@
-import { Injectable, Injector } from '@angular/core';
+import { Injectable, Injector, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
-import { Observable, BehaviorSubject, Subject } from 'rxjs';
-import { tap, switchMap, take, filter } from 'rxjs/operators';
+import { Observable, BehaviorSubject, Subject, throwError } from 'rxjs';
+import { tap, switchMap, take, filter, catchError } from 'rxjs/operators';
 import {
   HttpInterceptor,
   HttpRequest,
@@ -12,85 +12,88 @@ import {
 } from '@angular/common/http';
 import { AuthService } from './auth.service';
 import { AlertService } from './alert.service';
+import { BsModalRef, BsModalService } from 'ngx-bootstrap';
+import { AutoLogoutPopupComponent } from '../views/pages/auto-logout-popup/auto-logout-popup.component';
 
 @Injectable()
 export class RefreshTokenInterceptor implements HttpInterceptor {
-  
-  // private refreshTokenInProgress = false;
-  // cachedRequests: Array<HttpRequest<any>> = [];
 
-  constructor(private router: Router, private injector: Injector, private authService: AuthService, private alertService : AlertService) {}
+  public isTokenRefreshing = false;
+  private refreshTokenSubject: BehaviorSubject<any> = new BehaviorSubject<any>(null);
+  
+  bsModalRef: BsModalRef;
+
+  constructor(public authService: AuthService, private alertService : AlertService, private modalService: BsModalService,) { }
 
   intercept(request: HttpRequest<any>, next: HttpHandler): Observable<HttpEvent<any>> {
-    const access_token = localStorage.getItem('access_token');
-    if (access_token && !request.url.includes("token")) 
-        request = request.clone({ setHeaders: { Authorization: `Bearer ${access_token}` ,'Content-Type': 'application/json' } });
-    return next.handle(request).pipe(
-      tap(
-        (event: HttpEvent<any>) => {
-          if (event instanceof HttpResponse) {
-          }
-        },
-        (error: any) => {
-          if (error instanceof HttpErrorResponse) {
-            // if(error.message['error'] == "invalid_token"){
-            //   // this.collectFailedRequest(request);
-            // }
-            if (request.url.includes("token") || error.status !== (401 || 403)) {
-              this.alertService.error(JSON.stringify(error));
-            }
-            // if (this.refreshTokenInProgress) {
-            //   return null;
-            // } 
-            else {
-                // this.refreshTokenInProgress = true;
-                return this.authService.refreshToken().subscribe(resp => {
-                  // this.refreshTokenInProgress = false;
-                  this.storeNewAuthenticationToken(resp);
-                  // this.retryFailedRequests();
-                  //////////////////////
 
-                  //////////////////////
-                },
-                (error: any) => {
-                    // this.refreshTokenInProgress = false;
-                    this.authService.logout();
-                    this.alertService.error(JSON.stringify(error));
-                });
-            }
-          }
-        }
-      )
-    );
+    if (!request.url.includes("token") && localStorage.getItem('access_token')) {
+      request = this.addToken(request, localStorage.getItem('access_token'));
+    }
+
+    return next.handle(request).pipe(catchError(error => {
+      if (error instanceof HttpErrorResponse && error.status === 401) {
+        return this.handle401Error(request, next, error);
+      } else {
+        return throwError(error);
+      }
+    }));
   }
 
-  
-storeNewAuthenticationToken(resp) {
-  localStorage.setItem('access_token', null);
-  localStorage.setItem('refresh_token', null);
-  localStorage.setItem('user_details', null);
-  localStorage.setItem('access_token', resp.body['access_token']);
-  localStorage.setItem('refresh_token', resp.body['refresh_token']);
-  localStorage.setItem('user_details', JSON.stringify(resp.body['user_details']));
-}
+  private addToken(request: HttpRequest<any>, token: string) {
+    return request.clone({
+      setHeaders: {
+        'Authorization': `Bearer ${token}`
+      }
+    });
+  }
 
-// public collectFailedRequest(request): void {
-//   this.cachedRequests.push(request);
-// }
+  private handle401Error(request: HttpRequest<any>, next: HttpHandler, error) {
+    if(request.url.includes("token")){
+      this.showModal();
+    }
+    if (!this.isTokenRefreshing) {
+      this.isTokenRefreshing = true;
+      this.refreshTokenSubject.next(null);
 
-// public retryFailedRequests(): void {
-//   // this.intercept(this.cachedRequests[0], null);
-//   // retry the requests. this method can be called after the token is refreshed
-//   const access_token = localStorage.getItem('access_token');
-//   this.cachedRequests.forEach(request => 
-//     request = request.clone({ setHeaders: { Authorization: `Bearer ${access_token}` ,'Content-Type': 'application/json' } })
-//     );
-//     // return next.handle(req).pipe(
+      return this.authService.refreshToken().pipe(      
+        switchMap((resp: any) => {
+          this.storeNewAuthenticationToken(resp);
+          this.isTokenRefreshing = false;
+          this.refreshTokenSubject.next(localStorage.getItem('access_token'));
+          return next.handle(this.addToken(request, localStorage.getItem('access_token')));
+        })
+        );
 
-//     // )
-// }
+    } else {
+      return this.refreshTokenSubject.pipe(
+        filter(token => token != null),
+        take(1),
+        switchMap(jwt => {
+          return next.handle(this.addToken(request, jwt))
+        })
+        );
+    }
+  }
 
-//////////////////////////////////////////////
+  showModal() {
+    this.bsModalRef = this.modalService.show(AutoLogoutPopupComponent, {
+      class: 'modal-md',
+      backdrop: 'static',
+      keyboard: false
+    });
+    this.bsModalRef.content.logout.subscribe(logout => {
+      this.authService.logout();
+    })
+  }
 
+  storeNewAuthenticationToken(resp) {
+    localStorage.setItem('access_token', null);
+    localStorage.setItem('refresh_token', null);
+    localStorage.setItem('user_details', null);
+    localStorage.setItem('access_token', resp.body['access_token']);
+    localStorage.setItem('refresh_token', resp.body['refresh_token']);
+    localStorage.setItem('user_details', JSON.stringify(resp.body['user_details']));
+  }
 
 }

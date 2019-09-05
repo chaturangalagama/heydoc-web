@@ -178,9 +178,9 @@ export class StoreService implements OnDestroy {
   }
 
   initStore() {
-    this.authService.isLogout().subscribe(data => {
-      this.logoutClearUp();
-    });
+    // this.authService.isLogout().subscribe(data => {
+    //   this.logoutClearUp();
+    // });
     this.alertService.getMessage().subscribe(msg => console.log(msg));
 
     this.apiCmsManagementService.listClinics().subscribe(
@@ -846,17 +846,14 @@ export class StoreService implements OnDestroy {
     this.unreadNotificationList = this.notificationList.filter(notification => !notification.read);
   }
 
-  logoutClearUp() {
-    this.unsubscribeNotificationPolling();
-    this.unsubscribeRegistryPolling();
-    localStorage.setItem('access_token', null);
-    localStorage.setItem('refresh_token', null);
-    localStorage.setItem('user_details', null);
-    this.clinicCode = '';
-    this.clinicId = '';
-    this.router.navigate(['login']);
-    this.storeSuccessCount = 0;
-  }
+  // logoutClearUp() {
+  //   this.unsubscribeNotificationPolling();
+  //   this.unsubscribeRegistryPolling();
+  //   this.clinicCode = '';
+  //   this.clinicId = '';
+  //   this.router.navigate(['login']);
+  //   this.storeSuccessCount = 0;
+  // }
 
   getTemplates() {
     return this.templates;
