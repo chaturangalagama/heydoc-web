@@ -12,7 +12,6 @@ import { refferalLetterTemplate } from '../views/templates/refferal.letter';
 import moment = require('moment');
 import { DB_FULL_DATE_FORMAT, DISPLAY_DATE_FORMAT } from '../constants/app.constants';
 import { store } from '@angular/core/src/render3/instructions';
-import { ApiCaseManagerService } from './api-case-manager.service';
 import { MedicalCoverageSelected } from '../objects/MedicalCoverage';
 
 @Injectable()
@@ -26,7 +25,6 @@ export class PrintTemplateService {
     private apiPatientVisitService: ApiPatientVisitService,
     private permissionsService: NgxPermissionsService,
     private apiCmsManagementService: ApiCmsManagementService,
-    private apiCaseManageService: ApiCaseManagerService,
     private alertService: AlertService,
     private store: StoreService
   ) {}
@@ -98,247 +96,247 @@ export class PrintTemplateService {
         this.apiCmsManagementService.searchDiagnosisByIds(medicalReferenceEntity.diagnosisIds).subscribe(
           res => {
             const diagnosis = res.payload.map(d => `${d.icd10Code} [${d.icd10Term}]`);
-            this.apiCaseManageService.searchCase(consultationInfo.caseId).subscribe(res => {
-              const caseNumber = res.payload.caseNumber;
-              const salesOrder = res.payload.salesOrder;
-              const purchaseItem: Array<any> = salesOrder.purchaseItem;
-              const invoices = salesOrder.invoices;
-              this.apiCmsManagementService.searchLabel('BILL').subscribe(
-                res => {
-                  const template = JSON.parse(res.payload.template);
-                  const receiptTitle = draft ? 'DRAFT' : 'OFFICIAL';
-                  const drugCharges = purchaseItem.filter(item => {
-                    const storeItem = this.store.chargeItemList.find(storeItem => storeItem.item.id === item.itemRefId);
-                    return (storeItem || { item: { itemType: '' } }).item.itemType === 'DRUG';
-                  });
-                  const medicalServiceCharges = purchaseItem.filter(item => {
-                    const storeItem = this.store.chargeItemList.find(storeItem => storeItem.item.id === item.itemRefId);
-                    return (storeItem || { item: { itemType: '' } }).item.itemType === 'SERVICE';
-                  });
-                  const medicalTestCharges = purchaseItem.filter(item => {
-                    const storeItem = this.store.chargeItemList.find(storeItem => storeItem.item.id === item.itemRefId);
-                    return (storeItem || { item: { itemType: '' } }).item.itemType === 'LABORATORY';
-                  });
-                  const immunizationCharges = purchaseItem.filter(item => {
-                    const storeItem = this.store.chargeItemList.find(storeItem => storeItem.item.id === item.itemRefId);
-                    return (storeItem || { item: { itemType: '' } }).item.itemType === 'VACCINATION';
-                  });
-                  const drugTotalCharge = drugCharges.reduce((sum, obj) => (sum += this.getCalculatedPrice(obj)), 0);
-                  const medicalServiceTotalCharge = medicalServiceCharges.reduce(
-                    (sum, obj) => (sum += this.getCalculatedPrice(obj)),
-                    0
-                  );
-                  const medicalTestTotalCharge = medicalTestCharges.reduce(
-                    (sum, obj) => (sum += this.getCalculatedPrice(obj)),
-                    0
-                  );
-                  const immunizationTotalCharge = immunizationCharges.reduce(
-                    (sum, obj) => (sum += this.getCalculatedPrice(obj)),
-                    0
-                  );
-                  let drugTotalChargeString =
-                    drugTotalCharge > 0
-                      ? this.mapToHtmlBoldNameAndValue([
-                          {
-                            name: 'DRUGS',
-                            price: drugTotalCharge
-                          }
-                        ])
-                      : '';
-                  let medicalServiceTotalChargeString =
-                    medicalServiceTotalCharge > 0
-                      ? this.mapToHtmlBoldNameAndValue([
-                          {
-                            name: 'MEDICAL SERVICES',
-                            price: medicalServiceTotalCharge
-                          }
-                        ])
-                      : '';
-                  let medicalTestTotalChargeString =
-                    medicalTestTotalCharge > 0
-                      ? this.mapToHtmlBoldNameAndValue([
-                          {
-                            name: 'MEDICAL TESTS',
-                            price: medicalTestTotalCharge
-                          }
-                        ])
-                      : '';
-                  let immunizationTotalChargeString =
-                    immunizationTotalCharge > 0
-                      ? this.mapToHtmlBoldNameAndValue([
-                          {
-                            name: 'IMMUNIZATIONS',
-                            price: immunizationTotalCharge
-                          }
-                        ])
-                      : '';
+            // this.apiCaseManageService.searchCase(consultationInfo.caseId).subscribe(res => {
+            //   const caseNumber = res.payload.caseNumber;
+            //   const salesOrder = res.payload.salesOrder;
+            //   const purchaseItem: Array<any> = salesOrder.purchaseItem;
+            //   const invoices = salesOrder.invoices;
+            //   this.apiCmsManagementService.searchLabel('BILL').subscribe(
+            //     res => {
+            //       const template = JSON.parse(res.payload.template);
+            //       const receiptTitle = draft ? 'DRAFT' : 'OFFICIAL';
+            //       const drugCharges = purchaseItem.filter(item => {
+            //         const storeItem = this.store.chargeItemList.find(storeItem => storeItem.item.id === item.itemRefId);
+            //         return (storeItem || { item: { itemType: '' } }).item.itemType === 'DRUG';
+            //       });
+            //       const medicalServiceCharges = purchaseItem.filter(item => {
+            //         const storeItem = this.store.chargeItemList.find(storeItem => storeItem.item.id === item.itemRefId);
+            //         return (storeItem || { item: { itemType: '' } }).item.itemType === 'SERVICE';
+            //       });
+            //       const medicalTestCharges = purchaseItem.filter(item => {
+            //         const storeItem = this.store.chargeItemList.find(storeItem => storeItem.item.id === item.itemRefId);
+            //         return (storeItem || { item: { itemType: '' } }).item.itemType === 'LABORATORY';
+            //       });
+            //       const immunizationCharges = purchaseItem.filter(item => {
+            //         const storeItem = this.store.chargeItemList.find(storeItem => storeItem.item.id === item.itemRefId);
+            //         return (storeItem || { item: { itemType: '' } }).item.itemType === 'VACCINATION';
+            //       });
+            //       const drugTotalCharge = drugCharges.reduce((sum, obj) => (sum += this.getCalculatedPrice(obj)), 0);
+            //       const medicalServiceTotalCharge = medicalServiceCharges.reduce(
+            //         (sum, obj) => (sum += this.getCalculatedPrice(obj)),
+            //         0
+            //       );
+            //       const medicalTestTotalCharge = medicalTestCharges.reduce(
+            //         (sum, obj) => (sum += this.getCalculatedPrice(obj)),
+            //         0
+            //       );
+            //       const immunizationTotalCharge = immunizationCharges.reduce(
+            //         (sum, obj) => (sum += this.getCalculatedPrice(obj)),
+            //         0
+            //       );
+            //       let drugTotalChargeString =
+            //         drugTotalCharge > 0
+            //           ? this.mapToHtmlBoldNameAndValue([
+            //               {
+            //                 name: 'DRUGS',
+            //                 price: drugTotalCharge
+            //               }
+            //             ])
+            //           : '';
+            //       let medicalServiceTotalChargeString =
+            //         medicalServiceTotalCharge > 0
+            //           ? this.mapToHtmlBoldNameAndValue([
+            //               {
+            //                 name: 'MEDICAL SERVICES',
+            //                 price: medicalServiceTotalCharge
+            //               }
+            //             ])
+            //           : '';
+            //       let medicalTestTotalChargeString =
+            //         medicalTestTotalCharge > 0
+            //           ? this.mapToHtmlBoldNameAndValue([
+            //               {
+            //                 name: 'MEDICAL TESTS',
+            //                 price: medicalTestTotalCharge
+            //               }
+            //             ])
+            //           : '';
+            //       let immunizationTotalChargeString =
+            //         immunizationTotalCharge > 0
+            //           ? this.mapToHtmlBoldNameAndValue([
+            //               {
+            //                 name: 'IMMUNIZATIONS',
+            //                 price: immunizationTotalCharge
+            //               }
+            //             ])
+            //           : '';
 
-                  const totalCharge = invoices.reduce((sum, obj) => (sum += obj.payableAmount), 0) || 0;
-                  const gstTotalCharge = invoices.reduce((sum, obj) => (sum += obj.includedTaxAmount), 0) || 0;
-                  const subTotalCharge = totalCharge - gstTotalCharge;
-                  const consultationTotalCharge = subTotalCharge;
-                  const consultation = this.mapToHtmlBoldNameAndValue([
-                    {
-                      name: 'CONSULTATION / MEDICATION',
-                      price: consultationTotalCharge
-                    }
-                  ]);
-                  const payments = this.displayPaymentInfo(
-                    draft,
-                    invoices.filter(invoice => invoice.invoiceType !== 'DIRECT'),
-                    invoices.filter(invoice => invoice.invoiceType === 'DIRECT'),
-                    'breakdown'
-                  );
-                  console.log('payments: ', payments);
-                  const charges =
-                    "<div class='section-avoid-break'>" +
-                    this.mapToHtmlNoBold([
-                      {
-                        name: 'SUBTOTAL CHARGE',
-                        price: subTotalCharge
-                      }
-                    ]) +
-                    this.mapToHtmlNoBold([
-                      {
-                        name: 'GST@7%',
-                        price: gstTotalCharge
-                      }
-                    ]) +
-                    this.mapToHtmlBoldNameAndValue([
-                      {
-                        name: 'TOTAL CHARGE',
-                        price: totalCharge
-                      }
-                    ]) +
-                    payments +
-                    '<br></div>';
-                  const paymentModes = draft
-                    ? '-'
-                    : this.displayPaymentInfo(
-                        draft,
-                        invoices.filter(invoice => invoice.invoiceType !== 'DIRECT'),
-                        invoices.filter(invoice => invoice.invoiceType === 'DIRECT'),
-                        'summary'
-                      );
-                  const billNumberString = 'Case No: ' + (draft ? '-' : caseNumber || '');
-                  let html = template
-                    .replace('{{receiptTitle}}', receiptTitle)
-                    .replace(
-                      '{{clinicAddress}}',
-                      `${clinic.address.address.toUpperCase() || ''}, SINGAPORE ${clinic.address.postalCode}`
-                    )
-                    .replace(
-                      '{{companyRegistrationNumber}}',
-                      clinic.companyRegistrationNumber ? clinic.companyRegistrationNumber : ''
-                    )
-                    .replace(
-                      '{{gstRegistrationNumber}}',
-                      clinic.gstRegistrationNumber ? clinic.gstRegistrationNumber : ''
-                    )
-                    .replace('{{clinicName}}', `${clinic.name}`)
-                    .replace('{{clinicTel}}', clinic.contactNumber)
-                    .replace('{{clinicFax}}', clinic.faxNumber)
-                    .replace('{{patientName}}', patient.name)
-                    .replace('{{patientUserIdType}}', patient.userId.idType)
-                    .replace('{{patientUserId}}', patient.userId.number)
-                    .replace('{{diagnosis}}', diagnosis.length ? '' : diagnosis.join(', '))
-                    .replace('{{doctorName}}', consultDoctor.name)
-                    .replace('{{billNo}}', billNumberString)
-                    .replace('{{paymentModes}}', paymentModes)
-                    // .replace('{{subTotalCharge}}', `$${subTotalCharge.toFixed(2)}`)
-                    // .replace('{{gstTotalCharge}}', `$${gstTotalCharge.toFixed(2)}`)
-                    // .replace('{{totalCharge}}', `$${totalCharge.toFixed(2)}`)
-                    // .replace('{{payments}}', payments);
-                    .replace('{{charges}}', charges)
-                    .replace('{{assistantName}}', `${currentUserName}`)
-                    .replace(
-                      '{{visitDate}}',
-                      moment(medicalReferenceEntity.consultation.consultationStartTime, DB_FULL_DATE_FORMAT).format(
-                        DISPLAY_DATE_FORMAT
-                      )
-                    )
-                    .replace('{{printDate}}', moment().format(DISPLAY_DATE_FORMAT));
-                  if (receiptType === 'breakdown') {
-                    const drugs = this.mapToHtml(
-                      drugCharges.map(price => {
-                        const detail = this.store.chargeItemList.find(detail => detail.item.id === price.itemRefId);
-                        return {
-                          name: `${detail.item.name} [${detail.item.code}]`.toUpperCase(),
-                          price: this.getCalculatedPrice(price)
-                        };
-                      })
-                    );
-                    const medicalServices = this.mapToHtml(
-                      medicalServiceCharges.map(price => {
-                        const detail = this.store.chargeItemList.find(detail => detail.item.id === price.itemRefId);
-                        return {
-                          name: `${detail.item.description} [${detail.item.description}]`.toUpperCase(),
-                          price: this.getCalculatedPrice(price)
-                        };
-                      })
-                    );
-                    const medicalTests = this.mapToHtml(
-                      medicalTestCharges.map(price => {
-                        const detail = this.store.chargeItemList.find(detail => detail.item.id === price.itemRefId);
-                        return {
-                          name: `${detail.item.name} [${detail.item.category}]`.toUpperCase(),
-                          price: this.getCalculatedPrice(price)
-                        };
-                      })
-                    );
-                    const immunizations = this.mapToHtml(
-                      immunizationCharges.map(price => {
-                        const detail = this.store.chargeItemList.find(detail => detail.item.id === price.itemRefId);
-                        return {
-                          name: `${detail.item.name} [${detail.item.code}]`.toUpperCase(),
-                          price: this.getCalculatedPrice(price)
-                        };
-                      })
-                    );
-                    drugTotalChargeString =
-                      drugTotalCharge > 0
-                        ? "<div class='section-avoid-break'>" + drugTotalChargeString + drugs.join('\n') + '<br></div>'
-                        : '';
-                    medicalServiceTotalChargeString =
-                      medicalServiceTotalCharge > 0
-                        ? "<div class='section-avoid-break'>" +
-                          medicalServiceTotalChargeString +
-                          medicalServices.join('\n') +
-                          '<br></div>'
-                        : '';
-                    medicalTestTotalChargeString =
-                      medicalTestTotalCharge > 0
-                        ? "<div class='section-avoid-break'>" +
-                          medicalTestTotalChargeString +
-                          medicalTests.join('\n') +
-                          '<br></div>'
-                        : '';
-                    immunizationTotalChargeString =
-                      immunizationTotalCharge > 0
-                        ? "<div class='section-avoid-break'>" +
-                          immunizationTotalChargeString +
-                          immunizations.join('\n') +
-                          '</div>'
-                        : '';
-                    html = html
-                      .replace('{{drugs}}', drugTotalChargeString)
-                      .replace('{{medicalServices}}', medicalServiceTotalChargeString)
-                      .replace('{{medicalTests}}', medicalTestTotalChargeString)
-                      .replace('{{immunizations}}', immunizationTotalChargeString);
-                    html = html.replace('{{consultation}}', '');
-                  } else {
-                    html = html
-                      .replace('{{drugs}}', '')
-                      .replace('{{medicalServices}}', '')
-                      .replace('{{medicalTests}}', '')
-                      .replace('{{immunizations}}', '');
-                    html = html.replace('{{consultation}}', consultation);
-                  }
-                  this.printTemplate(html);
-                },
-                err => this.alertService.error(JSON.stringify(err.error.message))
-              );
-            }),
+            //       const totalCharge = invoices.reduce((sum, obj) => (sum += obj.payableAmount), 0) || 0;
+            //       const gstTotalCharge = invoices.reduce((sum, obj) => (sum += obj.includedTaxAmount), 0) || 0;
+            //       const subTotalCharge = totalCharge - gstTotalCharge;
+            //       const consultationTotalCharge = subTotalCharge;
+            //       const consultation = this.mapToHtmlBoldNameAndValue([
+            //         {
+            //           name: 'CONSULTATION / MEDICATION',
+            //           price: consultationTotalCharge
+            //         }
+            //       ]);
+            //       const payments = this.displayPaymentInfo(
+            //         draft,
+            //         invoices.filter(invoice => invoice.invoiceType !== 'DIRECT'),
+            //         invoices.filter(invoice => invoice.invoiceType === 'DIRECT'),
+            //         'breakdown'
+            //       );
+            //       console.log('payments: ', payments);
+            //       const charges =
+            //         "<div class='section-avoid-break'>" +
+            //         this.mapToHtmlNoBold([
+            //           {
+            //             name: 'SUBTOTAL CHARGE',
+            //             price: subTotalCharge
+            //           }
+            //         ]) +
+            //         this.mapToHtmlNoBold([
+            //           {
+            //             name: 'GST@7%',
+            //             price: gstTotalCharge
+            //           }
+            //         ]) +
+            //         this.mapToHtmlBoldNameAndValue([
+            //           {
+            //             name: 'TOTAL CHARGE',
+            //             price: totalCharge
+            //           }
+            //         ]) +
+            //         payments +
+            //         '<br></div>';
+            //       const paymentModes = draft
+            //         ? '-'
+            //         : this.displayPaymentInfo(
+            //             draft,
+            //             invoices.filter(invoice => invoice.invoiceType !== 'DIRECT'),
+            //             invoices.filter(invoice => invoice.invoiceType === 'DIRECT'),
+            //             'summary'
+            //           );
+            //       const billNumberString = 'Case No: ' + (draft ? '-' : caseNumber || '');
+            //       let html = template
+            //         .replace('{{receiptTitle}}', receiptTitle)
+            //         .replace(
+            //           '{{clinicAddress}}',
+            //           `${clinic.address.address.toUpperCase() || ''}, SINGAPORE ${clinic.address.postalCode}`
+            //         )
+            //         .replace(
+            //           '{{companyRegistrationNumber}}',
+            //           clinic.companyRegistrationNumber ? clinic.companyRegistrationNumber : ''
+            //         )
+            //         .replace(
+            //           '{{gstRegistrationNumber}}',
+            //           clinic.gstRegistrationNumber ? clinic.gstRegistrationNumber : ''
+            //         )
+            //         .replace('{{clinicName}}', `${clinic.name}`)
+            //         .replace('{{clinicTel}}', clinic.contactNumber)
+            //         .replace('{{clinicFax}}', clinic.faxNumber)
+            //         .replace('{{patientName}}', patient.name)
+            //         .replace('{{patientUserIdType}}', patient.userId.idType)
+            //         .replace('{{patientUserId}}', patient.userId.number)
+            //         .replace('{{diagnosis}}', diagnosis.length ? '' : diagnosis.join(', '))
+            //         .replace('{{doctorName}}', consultDoctor.name)
+            //         .replace('{{billNo}}', billNumberString)
+            //         .replace('{{paymentModes}}', paymentModes)
+            //         // .replace('{{subTotalCharge}}', `$${subTotalCharge.toFixed(2)}`)
+            //         // .replace('{{gstTotalCharge}}', `$${gstTotalCharge.toFixed(2)}`)
+            //         // .replace('{{totalCharge}}', `$${totalCharge.toFixed(2)}`)
+            //         // .replace('{{payments}}', payments);
+            //         .replace('{{charges}}', charges)
+            //         .replace('{{assistantName}}', `${currentUserName}`)
+            //         .replace(
+            //           '{{visitDate}}',
+            //           moment(medicalReferenceEntity.consultation.consultationStartTime, DB_FULL_DATE_FORMAT).format(
+            //             DISPLAY_DATE_FORMAT
+            //           )
+            //         )
+            //         .replace('{{printDate}}', moment().format(DISPLAY_DATE_FORMAT));
+            //       if (receiptType === 'breakdown') {
+            //         const drugs = this.mapToHtml(
+            //           drugCharges.map(price => {
+            //             const detail = this.store.chargeItemList.find(detail => detail.item.id === price.itemRefId);
+            //             return {
+            //               name: `${detail.item.name} [${detail.item.code}]`.toUpperCase(),
+            //               price: this.getCalculatedPrice(price)
+            //             };
+            //           })
+            //         );
+            //         const medicalServices = this.mapToHtml(
+            //           medicalServiceCharges.map(price => {
+            //             const detail = this.store.chargeItemList.find(detail => detail.item.id === price.itemRefId);
+            //             return {
+            //               name: `${detail.item.description} [${detail.item.description}]`.toUpperCase(),
+            //               price: this.getCalculatedPrice(price)
+            //             };
+            //           })
+            //         );
+            //         const medicalTests = this.mapToHtml(
+            //           medicalTestCharges.map(price => {
+            //             const detail = this.store.chargeItemList.find(detail => detail.item.id === price.itemRefId);
+            //             return {
+            //               name: `${detail.item.name} [${detail.item.category}]`.toUpperCase(),
+            //               price: this.getCalculatedPrice(price)
+            //             };
+            //           })
+            //         );
+            //         const immunizations = this.mapToHtml(
+            //           immunizationCharges.map(price => {
+            //             const detail = this.store.chargeItemList.find(detail => detail.item.id === price.itemRefId);
+            //             return {
+            //               name: `${detail.item.name} [${detail.item.code}]`.toUpperCase(),
+            //               price: this.getCalculatedPrice(price)
+            //             };
+            //           })
+            //         );
+            //         drugTotalChargeString =
+            //           drugTotalCharge > 0
+            //             ? "<div class='section-avoid-break'>" + drugTotalChargeString + drugs.join('\n') + '<br></div>'
+            //             : '';
+            //         medicalServiceTotalChargeString =
+            //           medicalServiceTotalCharge > 0
+            //             ? "<div class='section-avoid-break'>" +
+            //               medicalServiceTotalChargeString +
+            //               medicalServices.join('\n') +
+            //               '<br></div>'
+            //             : '';
+            //         medicalTestTotalChargeString =
+            //           medicalTestTotalCharge > 0
+            //             ? "<div class='section-avoid-break'>" +
+            //               medicalTestTotalChargeString +
+            //               medicalTests.join('\n') +
+            //               '<br></div>'
+            //             : '';
+            //         immunizationTotalChargeString =
+            //           immunizationTotalCharge > 0
+            //             ? "<div class='section-avoid-break'>" +
+            //               immunizationTotalChargeString +
+            //               immunizations.join('\n') +
+            //               '</div>'
+            //             : '';
+            //         html = html
+            //           .replace('{{drugs}}', drugTotalChargeString)
+            //           .replace('{{medicalServices}}', medicalServiceTotalChargeString)
+            //           .replace('{{medicalTests}}', medicalTestTotalChargeString)
+            //           .replace('{{immunizations}}', immunizationTotalChargeString);
+            //         html = html.replace('{{consultation}}', '');
+            //       } else {
+            //         html = html
+            //           .replace('{{drugs}}', '')
+            //           .replace('{{medicalServices}}', '')
+            //           .replace('{{medicalTests}}', '')
+            //           .replace('{{immunizations}}', '');
+            //         html = html.replace('{{consultation}}', consultation);
+            //       }
+            //       this.printTemplate(html);
+            //     },
+            //     err => this.alertService.error(JSON.stringify(err.error.message))
+            //   );
+            // }),
               err => this.alertService.error(JSON.stringify(err.error.message));
           },
           err => this.alertService.error(JSON.stringify(err.error.message))

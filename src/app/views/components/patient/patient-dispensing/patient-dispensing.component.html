@@ -22,7 +22,7 @@
     <!-- <div> DISPENSING ---- dispatchItems : {{ consultationFormGroup.get('dispatchItemEntities').value|json}} </div>
     <br>
     <div> DISPENSING ----- diagnosis : {{ consultationFormGroup.get('diagnosisIds').value|json}} </div> -->
-    <app-case-charge class="mt-0" [itemsFormArray]="consultationFormGroup.get('dispatchItemEntities')" [caseStatus]="caseStatus" (handleChargeItemChange)="handleChargeItemChange($event)"></app-case-charge>
+    <!-- <app-case-charge class="mt-0" [itemsFormArray]="consultationFormGroup.get('dispatchItemEntities')" [caseStatus]="caseStatus" (handleChargeItemChange)="handleChargeItemChange($event)"></app-case-charge> -->
     <!-- <br>{{ attachedMedicalCoverages.value | json }} -->
     <!-- <br>coverage limit: {{ chargeFormGroup.get('coverageLimitFormGroup').value | json }} -->
     <app-payment-coverage-limit [coverageLimitFormGroup]="chargeFormGroup.get('coverageLimitFormGroup')">

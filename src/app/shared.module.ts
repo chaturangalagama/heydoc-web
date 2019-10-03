@@ -69,12 +69,6 @@ import { RouterModule } from '../../node_modules/@angular/router';
 import { LoadingComponent } from './components/loading/loading.component';
 import { LoadingRetryComponent } from './components/loading-retry/loading-retry.component';
 import { DiscountComponent } from './components/consultation/discount/discount.component';
-import { CaseManagerAttachVisitComponent } from './components/case-manager/case-manager-attach-visit/case-manager-attach-visit.component';
-import { CaseManagerNewPaymentComponent } from './components/case-manager/case-manager-new-payment/case-manager-new-payment.component';
-import { CaseManagerCloseCaseComponent } from './components/case-manager/case-manager-close-case/case-manager-close-case.component';
-import { CaseManagerDeletePaymentComponent } from './components/case-manager/case-manager-delete-payment/case-manager-delete-payment.component';
-import { CaseManagerDeleteVisitComponent } from './components/case-manager/case-manager-delete-visit/case-manager-delete-visit.component';
-
 import { AddAppointmentComponent } from './components/appointments/add-appointment/add-appointment.component';
 import { ConsultationDiagnosisComponent } from './components/consultation/consultation-diagnosis/consultation-diagnosis.component';
 import { ConsultationProblemListComponent } from './components/consultation/consultation-problem-list/consultation-problem-list.component';
@@ -230,11 +224,6 @@ const APP_VITAL = [
     MedicalCoverageItemComponent,
     MedicalCoverageItemDetailComponent,
     DiscountComponent,
-    CaseManagerAttachVisitComponent,
-    CaseManagerNewPaymentComponent,
-    CaseManagerCloseCaseComponent,
-    CaseManagerDeletePaymentComponent,
-    CaseManagerDeleteVisitComponent,
     DiscountComponent,
     AddAppointmentComponent,
     AppointmentsNewComponent,
@@ -287,11 +276,6 @@ const APP_VITAL = [
     MedicalCoverageComponent,
     MedicalCoverageItemComponent,
     MedicalCoverageItemDetailComponent,
-    CaseManagerAttachVisitComponent,
-    CaseManagerNewPaymentComponent,
-    CaseManagerCloseCaseComponent,
-    CaseManagerDeletePaymentComponent,
-    CaseManagerDeleteVisitComponent,
     MedicalCoverageItemDetailComponent,
     AppointmentsNewComponent,
     ConsultationPatientInfoComponent,

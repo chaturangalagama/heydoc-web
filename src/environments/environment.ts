@@ -16,12 +16,9 @@ export const environment = {
     API_DOCUMENT_URL: 'http://localhost:9090/document-management',
     API_INVENTORY_SYSTEM_URL: 'http://localhost:9090',
     API_VITAL_URL: 'http://localhost:9090/vital',
-    API_CASE_INFO_URL: 'http://localhost:9090/case',
     API_PAYMENT_URL: 'http://localhost:9090/charging',
     REPORT_URL: 'http://reports.healthwaymedical.com.sg/reporting-ui/',
     API_PACKAGE_ITEM_INFO_URL: 'http://localhost:9090/item',
-    API_CLAIM_URL: 'https://devserver.lippoinnolab.com/cms-dua',
-    API_MANUAL_CLAIM_URL: 'https://devserver.lippoinnolab.com/cms-dua',
     SHOW_COPY_PRESCRIPTION_AFTER: '26-07-2018T00:00:00'
 
     // API_URL: 'https://devserver.lippoinnolab.com',

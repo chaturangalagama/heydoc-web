@@ -1,6 +1,4 @@
-import { JwtHelperService } from '@auth0/angular-jwt';
 import { StoreService } from './../../services/store.service';
-import { HttpHeaders } from '@angular/common/http';
 import { FormControl, FormGroup, FormBuilder, FormArray } from '@angular/forms';
 import { UserLogin } from './../../objects/User';
 import { Router } from '@angular/router';
@@ -42,7 +40,6 @@ export class LoginComponent implements OnInit, OnDestroy {
     private alertService: AlertService,
     private storeService: StoreService,
     private modalService: BsModalService,
-    private jwtHelper: JwtHelperService,
     private fb: FormBuilder
   ) {
     this.loginFormGroup = this.createLoginFormGroup();

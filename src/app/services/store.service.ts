@@ -43,7 +43,6 @@ export class StoreService implements OnDestroy {
   currentConsultationRoute = 'route1';
 
   private patientId: string;
-  private _caseId: string;
   private queueNumber: string;
   private visitStatus: string;
 
@@ -94,7 +93,7 @@ export class StoreService implements OnDestroy {
   private storeSuccessCount = 0;
   private storeFailCount = 0;
   private storeStatus: StoreStatus;
-  private API_COUNTS = 11;
+  private API_COUNTS = 10;//11
 
   constructor(
     private permissionsService: NgxPermissionsService,
@@ -155,7 +154,7 @@ export class StoreService implements OnDestroy {
           context: user_details['context']
         }
         console.log("Current user's details", this.user);
-      }else{        
+      }else{
         console.log('Error in retrieving current users details');
         this.alertService.error(JSON.stringify('Error in retrieving current users details'));
         this.errorMessages['user_details'] = 'Error in retrieving current users details';
@@ -262,40 +261,40 @@ export class StoreService implements OnDestroy {
       }
     );
 
-    this.apiCmsManagementService.listMedicalCoveragesWithPagination(0, 10000).subscribe(
-      res => {
-        console.log('GOT MEDICAL COVERAGE LIST');
-        console.log('res payload: ', res.payload.content);
+    // this.apiCmsManagementService.listMedicalCoveragesWithPagination(0, 10000).subscribe(
+    //   res => {
+    //     console.log('GOT MEDICAL COVERAGE LIST');
+    //     console.log('res payload: ', res.payload.content);
 
-        const data = res.payload.content;
-        const today = moment();
+    //     const data = res.payload.content;
+    //     const today = moment();
 
-        this.medicalCoverageListWithExpired = data;
-        // console.log("today: ", today);
-        data.forEach(item => {
-          const isValid = this.utilsService.validateDates(today, moment(item.endDate, DISPLAY_DATE_FORMAT));
-          if (item.coveragePlans.length !== 0) {
-            if (isValid) {
-              this.medicalCoverageList.push(item);
-            }
-          }
-        });
+    //     this.medicalCoverageListWithExpired = data;
+    //     // console.log("today: ", today);
+    //     data.forEach(item => {
+    //       const isValid = this.utilsService.validateDates(today, moment(item.endDate, DISPLAY_DATE_FORMAT));
+    //       if (item.coveragePlans.length !== 0) {
+    //         if (isValid) {
+    //           this.medicalCoverageList.push(item);
+    //         }
+    //       }
+    //     });
 
-        this.medicalCoverageList.map(item => {
-          return {
-            name: item.name,
-            coveragePlans: item.coveragePlans.map(plan => plan.name)
-          };
-        });
+    //     this.medicalCoverageList.map(item => {
+    //       return {
+    //         name: item.name,
+    //         coveragePlans: item.coveragePlans.map(plan => plan.name)
+    //       };
+    //     });
 
-        this.setStoreReady(true);
-      },
-      err => {
-        this.alertService.error(JSON.stringify(err));
-        this.errorMessages['listMedicalCoveragesWithPagination'] = err;
-        this.setStoreReady(false);
-      }
-    );
+    //     this.setStoreReady(true);
+    //   },
+    //   err => {
+    //     this.alertService.error(JSON.stringify(err));
+    //     this.errorMessages['listMedicalCoveragesWithPagination'] = err;
+    //     this.setStoreReady(false);
+    //   }
+    // );
 
     this.apiCmsManagementService.listInstructions().subscribe(
       data => {
@@ -422,7 +421,7 @@ export class StoreService implements OnDestroy {
       this.registryPolling = null;
     }
   }
-    
+
   getMedicalCoveragesWithPagination() {
     this.apiCmsManagementService.listMedicalCoverages().subscribe(
       res => {
@@ -871,15 +870,8 @@ export class StoreService implements OnDestroy {
   }
 
   getDosageInstructionByCode(code: string){
-       return this.dosageInstructions.find( dosage =>{ 
+       return this.dosageInstructions.find( dosage =>{
           return dosage.code === code});
-  }
-
-  getCaseId(): string {
-    return this._caseId;
-  }
-  setCaseId(value: string) {
-    this._caseId = value;
   }
 
   getVisitStatus(): string {

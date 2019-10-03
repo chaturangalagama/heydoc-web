@@ -8,7 +8,6 @@ import { EventEmitter } from '@angular/core';
 // Services
 import { StoreService } from './../../../../services/store.service';
 import { ConsultationFormService } from './../../../../services/consultation-form.service';
-import { CaseChargeFormService } from './../../../../services/case-charge-form.service';
 import { filter, distinctUntilChanged, map, debounceTime } from 'rxjs/operators';
 
 @Component({

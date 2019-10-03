@@ -34,8 +34,4 @@ export class PatientHistoryListComponent implements OnInit {
 
   onBtnDeleteClicked(index) {}
 
-  toCaseDetail(caseId: string) {
-    this.store.setCaseId(caseId);
-    this.router.navigate(['/pages/case/detail']);
-  }
 }

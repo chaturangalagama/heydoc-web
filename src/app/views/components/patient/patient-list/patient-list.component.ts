@@ -1,4 +1,3 @@
-import { ApiCaseManagerService } from './../../../../services/api-case-manager.service';
 import {
   PATIENT_LIST_TABLE_CONFIG,
   PATIENT_LIST_ENTRY_COUNTS_DROPDOWN,
@@ -69,7 +68,6 @@ export class PatientListComponent implements OnInit, OnDestroy {
     private router: Router,
     private store: StoreService,
     private apiPatientVisitService: ApiPatientVisitService,
-    private apiCaseManagerService: ApiCaseManagerService,
     private alertService: AlertService,
     private eRef: ElementRef,
     private logger: LoggerService,
@@ -389,7 +387,6 @@ export class PatientListComponent implements OnInit, OnDestroy {
   redirectToPatientDetail(patientId: string, visitId: string, caseId: string) {
     this.store.setPatientId(patientId);
     this.store.setPatientVisitRegistryId(visitId,true);
-    this.store.setCaseId(caseId);
     this.router.navigate(['/pages/patient/detail']);
     return false;
   }
@@ -401,7 +398,6 @@ export class PatientListComponent implements OnInit, OnDestroy {
   redirectToNextPage(value: string, patientId: string, caseId: string, visitId: string, doctorId: string) {
     this.store.setPatientId(patientId);
     this.store.setPatientVisitRegistryId(visitId,true);
-    this.store.setCaseId(caseId);
     this.store.setVisitStatus(value);
 
     switch (value) {
@@ -464,7 +460,7 @@ export class PatientListComponent implements OnInit, OnDestroy {
         this.showAddVitalSigns(row.patientId);
         break;
       case this.actionList[1]:
-        this.showUpdateMedicalCoverage(row);
+        // this.showUpdateMedicalCoverage(row);
         break;
       default:
         break;
@@ -494,24 +490,24 @@ export class PatientListComponent implements OnInit, OnDestroy {
     });
   }
 
-  showUpdateMedicalCoverage(row) {
-    console.log('row: ', row);
-    this.apiCaseManagerService.searchCase(row.caseId).subscribe(
-      res => {
-        let attachedMedicalCoverages = [];
-        if (res.payload.coverages) {
-          attachedMedicalCoverages = res.payload.coverages;
-        }
+  // showUpdateMedicalCoverage(row) {
+  //   console.log('row: ', row);
+  //   this.apiCaseManagerService.searchCase(row.caseId).subscribe(
+  //     res => {
+  //       let attachedMedicalCoverages = [];
+  //       if (res.payload.coverages) {
+  //         attachedMedicalCoverages = res.payload.coverages;
+  //       }
 
-        console.log('ATTACHED MEDICAL COVERAGES: ', attachedMedicalCoverages);
-        this.proceedToUpdateMedicalCoverage(row.caseId, row.patientId, row.visitId, attachedMedicalCoverages);
-      },
-      err => {
-        this.alertService.error(JSON.stringify(err));
-        this.proceedToUpdateMedicalCoverage(row.caseId, row.patientId, row.visitId, []);
-      }
-    );
-  }
+  //       console.log('ATTACHED MEDICAL COVERAGES: ', attachedMedicalCoverages);
+  //       this.proceedToUpdateMedicalCoverage(row.caseId, row.patientId, row.visitId, attachedMedicalCoverages);
+  //     },
+  //     err => {
+  //       this.alertService.error(JSON.stringify(err));
+  //       this.proceedToUpdateMedicalCoverage(row.caseId, row.patientId, row.visitId, []);
+  //     }
+  //   );
+  // }
 
   proceedToUpdateMedicalCoverage(
     caseId: string,

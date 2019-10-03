@@ -17,18 +17,13 @@ export class ApiPatientVisitService {
   private API_DOCUMENT_URL;
   private API_INVENTORY_SYSTEM_URL;
   private API_CMS_MANAGEMENT_URL;
-  private API_VITAL_URL;
-  private API_CLAIM_URL;
-  private API_MANUAL_CLAIM_URL;
-
+  private API_VITAL_URL
   constructor(private http: HttpClient, private appConfig: AppConfigService) {
     this.API_PATIENT_VISIT_URL = appConfig.getConfig().API_PATIENT_VISIT_URL;
     this.API_DOCUMENT_URL = appConfig.getConfig().API_DOCUMENT_URL;
     this.API_INVENTORY_SYSTEM_URL = appConfig.getConfig().API_INVENTORY_SYSTEM_URL;
     this.API_CMS_MANAGEMENT_URL = appConfig.getConfig().API_CMS_MANAGEMENT_URL;
     this.API_VITAL_URL = appConfig.getConfig().API_VITAL_URL;
-    this.API_CLAIM_URL = appConfig.getConfig().API_CLAIM_URL;
-    this.API_MANUAL_CLAIM_URL = appConfig.getConfig().API_MANUAL_CLAIM_URL;
   }
 
   initCreate(patientVisit: PatientVisit): Observable<HttpResponseBody> {
@@ -320,85 +315,6 @@ export class ApiPatientVisitService {
     return this.http.post<HttpResponseBody>(
       `${this.API_INVENTORY_SYSTEM_URL}/inventory/get-usage/${clinicId}`,
       JSON.stringify(inventories),
-      { headers: this.headers }
-    );
-  }
-
-  checkMhcpBalance(clinicId: string, planId: string, nric: string): Observable<HttpResponseBody> {
-    return this.http.post<HttpResponseBody>(
-      `${this.API_CLAIM_URL}/mhcp-claim/balance/${clinicId}/${planId}/${nric}`,
-      {},
-      { headers: this.headers }
-    );
-  }
-
-  listClaimsByClinlicByDate(
-    clinicId: string,
-    medicalCoverageType: string,
-    status: string,
-    startDate: string,
-    endDate: string
-  ): Observable<HttpResponseBody> {
-    return this.http.post<HttpResponseBody>(
-      `${
-      this.API_CLAIM_URL
-      }/mhcp-claim/list-by-type/${clinicId}/${medicalCoverageType}/${status}/${startDate}/${endDate}/`,
-      {},
-      { headers: this.headers }
-    );
-  }
-
-  saveClaim(claimId: string, claim): Observable<HttpResponseBody> {
-    return this.http.post<HttpResponseBody>(
-      `${this.API_CLAIM_URL}/mhcp-claim/save/${claimId}/`,
-      JSON.stringify(claim),
-      { headers: this.headers }
-    );
-  }
-
-  submitClaim(claimId: string, claim): Observable<HttpResponseBody> {
-    return this.http.post<HttpResponseBody>(
-      `${this.API_CLAIM_URL}/mhcp-claim/submit/${claimId}/`,
-      JSON.stringify(claim),
-      { headers: this.headers }
-    );
-  }
-
-  rejectClaim(claimId: string): Observable<HttpResponseBody> {
-    return this.http.post<HttpResponseBody>(`${this.API_CLAIM_URL}/mhcp-claim/reject/${claimId}/REJECTED_PERMANENT`, {
-      headers: this.headers
-    });
-  }
-
-  listManualClaimsByMultipleClinlicsByDate(
-    clinicIds: string[],
-    medicalCoverageType: string,
-    status: string,
-    startDate: string,
-    endDate: string,
-    payerNric: string,
-    page: Page
-  ): Observable<HttpResponseBody> {
-    let url = `${this.API_MANUAL_CLAIM_URL}/claim/list-by-type/${medicalCoverageType}/${payerNric}/${status}/${startDate}/${endDate}`;
-    if (payerNric === undefined || payerNric === null || payerNric === '')
-      url = `${this.API_MANUAL_CLAIM_URL}/claim/list-by-type/${medicalCoverageType}/${status}/${startDate}/${endDate}`; // list-by-type/${medicalCoverageType}/${status}/${startDate}/${endDate}/${page.pageNumber}/${page.size}`,
-    return this.http.post<HttpResponseBody>(url, JSON.stringify(clinicIds), { headers: this.headers });
-  }
-
-  saveClaimManual(claimId: string, claim): Observable<HttpResponseBody> {
-    return this.http.post<HttpResponseBody>(
-      `${this.API_MANUAL_CLAIM_URL}/claim/save/${claimId}`,
-      JSON.stringify(claim),
-      {
-        headers: this.headers
-      }
-    );
-  }
-
-  rejectClaimManual(claimId: string): Observable<HttpResponseBody> {
-    return this.http.post<HttpResponseBody>(
-      `${this.API_MANUAL_CLAIM_URL}/claim/reject/${claimId}/REJECTED_PERMANENT`,
-      {},
       { headers: this.headers }
     );
   }

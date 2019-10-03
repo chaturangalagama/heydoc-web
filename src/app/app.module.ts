@@ -48,7 +48,6 @@ import { AuthService } from './services/auth.service';
 import { CanDeactivateGuardService } from './services/can-deactivate-guard.service';
 import { ConsoleLoggerService } from './services/console-logger.service';
 import { ConsultationFormService } from './services/consultation-form.service';
-import { CaseChargeFormService } from './services/case-charge-form.service';
 import { DialogService } from './services/dialog.service';
 import { LoggerService } from './services/logger.service';
 import { PatientService } from './services/patient.service';
@@ -62,7 +61,6 @@ import { MedicalCoverageFormService } from './services/medical-coverage-form.ser
 import { BsModalService } from 'ngx-bootstrap/modal';
 import { API_DOMAIN } from './constants/app.constants';
 import { TempStoreService } from './services/temp-store.service';
-import { ApiCaseManagerService } from './services/api-case-manager.service';
 import { RefreshTokenInterceptor } from './services/refresh-token-interceptor';
 
 // HTTP MODULE
@@ -178,13 +176,11 @@ const appInitializerFn = (appConfig: AppConfigService) => {
     PolicyHolderService,
     PaymentService,
     ConsultationFormService,
-    CaseChargeFormService,
     UtilsService,
     MedicalCoverageFormService,
     BsModalService,
     NgxPermissionsService,
-    PrintTemplateService,
-    ApiCaseManagerService
+    PrintTemplateService
   ],
   bootstrap: [AppComponent]
 })

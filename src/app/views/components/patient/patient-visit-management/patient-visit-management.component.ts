@@ -1,5 +1,4 @@
 import { DialogService } from './../../../../services/dialog.service';
-import { CaseChargeFormService } from './../../../../services/case-charge-form.service';
 import { VISIT_MANAGEMENT_TABS, INPUT_DELAY } from './../../../../constants/app.constants';
 
 // General Libraries
@@ -33,7 +32,6 @@ import { MedicalCertificateItemsArrayComponent } from './../../../../components/
 
 // Constants
 import { DISPLAY_DATE_FORMAT, PATIENT_INFO_KEYS } from '../../../../constants/app.constants';
-import { ApiCaseManagerService } from '../../../../services/api-case-manager.service';
 
 @Component({
   selector: 'app-patient-visit-management',
@@ -92,9 +90,7 @@ export class PatientVisitManagementComponent implements OnInit, OnDestroy {
     private paymentService: PaymentService,
     private apiPatientInfoService: ApiPatientInfoService,
     private apiPatientVisitService: ApiPatientVisitService,
-    private apiCaseManagerService: ApiCaseManagerService,
     private consultationFormService: ConsultationFormService,
-    private caseChargeFormService: CaseChargeFormService,
     private patientService: PatientService,
     private utilsService: UtilsService,
     private permissionsService: NgxPermissionsService,
@@ -195,7 +191,6 @@ export class PatientVisitManagementComponent implements OnInit, OnDestroy {
 
   resetForm() {
     this.consultationFormService.resetForm();
-    this.caseChargeFormService.resetForm();
     this.paymentService.resetVisitCoverageArray();
     this.paymentService.resetChargeFormGroup();
     // this.createForm();
@@ -381,34 +376,34 @@ export class PatientVisitManagementComponent implements OnInit, OnDestroy {
         err => this.alertService.error(JSON.stringify(err))
       );
 
-    this.apiCaseManagerService
-      .searchCase(this.store.getCaseId())
-      .pipe(
-        distinctUntilChanged(),
-        debounceTime(INPUT_DELAY)
-      )
-      .subscribe(
-        res => {
-          console.log('res MC: ', res.payload);
-          res.payload.coverages.forEach(selectedPlan => {
-            const id = selectedPlan.planId;
-            const coverage = this.store
-              .getMedicalCoverages()
-              .find(coverage => coverage.coveragePlans.some(plans => plans.id === id));
-            if (coverage) {
-              this.attachedMedicalCoverages.push(
-                this.fb.group({
-                  medicalCoverageId: coverage.id,
-                  planId: id
-                })
-              );
-            }
-          });
-        },
-        err => {
-          this.alertService.error(JSON.stringify(err));
-        }
-      );
+    // this.apiCaseManagerService
+    //   .searchCase(this.store.getCaseId())
+    //   .pipe(
+    //     distinctUntilChanged(),
+    //     debounceTime(INPUT_DELAY)
+    //   )
+    //   .subscribe(
+    //     res => {
+    //       console.log('res MC: ', res.payload);
+    //       res.payload.coverages.forEach(selectedPlan => {
+    //         const id = selectedPlan.planId;
+    //         const coverage = this.store
+    //           .getMedicalCoverages()
+    //           .find(coverage => coverage.coveragePlans.some(plans => plans.id === id));
+    //         if (coverage) {
+    //           this.attachedMedicalCoverages.push(
+    //             this.fb.group({
+    //               medicalCoverageId: coverage.id,
+    //               planId: id
+    //             })
+    //           );
+    //         }
+    //       });
+    //     },
+    //     err => {
+    //       this.alertService.error(JSON.stringify(err));
+    //     }
+    //   );
   }
 
   // getVisitDetail() {
@@ -534,7 +529,6 @@ export class PatientVisitManagementComponent implements OnInit, OnDestroy {
 
   setPatientValues(event) {
     console.log('pa-vi event: ', event);
-    this.store.setCaseId(event.caseId);
     this.store.setPatientId(event.id);
     this.store.setVisitStatus(event.status);
     this.store.setPatientVisitRegistryId(event.visitId, true);
@@ -1033,9 +1027,9 @@ export class PatientVisitManagementComponent implements OnInit, OnDestroy {
 
     console.log('consultation values: ', this.visitManagementFormGroup);
 
-    this.consultation.dispatchItemEntities = this.caseChargeFormService.bindChargeItemsToDispatchitemEntities(
-      this.visitManagementFormGroup.get('consultationFormGroup').get('dispatchItemEntities')['controls']
-    );
+    // this.consultation.dispatchItemEntities = this.caseChargeFormService.bindChargeItemsToDispatchitemEntities(
+    //   this.visitManagementFormGroup.get('consultationFormGroup').get('dispatchItemEntities')['controls']
+    // );
     this.consultation.diagnosisIds = this.visitManagementFormGroup
       .get('consultationFormGroup')
       .get('diagnosisIds').value;

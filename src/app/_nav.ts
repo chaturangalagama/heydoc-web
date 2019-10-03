@@ -18,13 +18,6 @@ export const navigation = [
     svgIcon: '/assets/svg/patients.svg'
   },
   {
-    name: 'Claim',
-    url: '/pages/claim',
-    icon: '',
-    svgIcon: '/assets/svg/claims.svg',
-    permissions: ['ROLE_MHCP_LIST', 'ROLE_MHCP_LIST_HQ']
-  },
-  {
     name: 'Reports',
     url: '/pages/report',
     icon: '',
@@ -35,11 +28,5 @@ export const navigation = [
     url: '/pages/communications/',
     icon: '',
     svgIcon: '/assets/svg/communications.svg'
-  },
-  {
-    name: 'Case Manager',
-    url: '/pages/case/list',
-    icon: '',
-    svgIcon: '/assets/svg/casemanager.svg'
   }
 ];

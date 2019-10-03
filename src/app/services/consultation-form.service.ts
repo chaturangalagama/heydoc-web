@@ -1,6 +1,5 @@
 import { debounceTime, distinctUntilChanged } from 'rxjs/operators';
 import { ApiCmsManagementService } from './api-cms-management.service';
-import { CaseChargeFormService } from './case-charge-form.service';
 import { StoreService } from './store.service';
 import { DISPLAY_DATE_FORMAT, INPUT_DELAY } from './../constants/app.constants';
 import {
@@ -28,7 +27,6 @@ export class ConsultationFormService {
   constructor(
     private fb: FormBuilder,
     private store: StoreService,
-    private caseChargeFormService: CaseChargeFormService,
     private apiCmsManagementService: ApiCmsManagementService,
     private alertService: AlertService
   ) {}
@@ -60,7 +58,7 @@ export class ConsultationFormService {
       medicalCertificates: MedicalCertificateItemsArrayComponent.buildItems(),
       consultationFollowup: this.initFollowupDua(),
       patientReferral: this.fb.group({ patientReferrals: this.initPatientReferral() }),
-      dispatchItemEntities: this.caseChargeFormService.createEmptyDispatchDetails()
+      // dispatchItemEntities: this.caseChargeFormService.createEmptyDispatchDetails()
     });
   }
 
@@ -417,8 +415,6 @@ export class ConsultationFormService {
         dispatchItemEntities.removeAt(0);
       }
     }
-
-    this.caseChargeFormService.chargeItemDetails = dispatchItemEntities;
   }
 
   // FOLLOW UP

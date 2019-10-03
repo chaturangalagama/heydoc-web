@@ -1,4 +1,3 @@
-import { ApiCaseManagerService } from './../../../../services/api-case-manager.service';
 import { Component, OnInit, HostListener, Output, EventEmitter, Input } from '@angular/core';
 import { Location } from '@angular/common';
 import { Router, NavigationStart } from '@angular/router';
@@ -54,7 +53,6 @@ export class PaymentCollectComponent implements OnInit {
     private alertService: AlertService,
     private dialogService: DialogService,
     private modalService: BsModalService,
-    private apiCaseManagerService: ApiCaseManagerService,
     private apiPatientVisitService: ApiPatientVisitService,
     // private tempStore: TempStoreService,
     private paymentService: PaymentService,
@@ -77,20 +75,20 @@ export class PaymentCollectComponent implements OnInit {
 
     this.collectFormGroup = this.paymentService.getCollectFormGroup();
     this.consultationInfo = this.paymentService.getConsultationInfo();
-    if (!this.consultationInfo) {
-      this.apiCaseManagerService.getInvoiceBreakdown(this.store.getCaseId()).subscribe(
-        invoices => {
-          console.log('payload invoices', invoices);
-          this.paymentInfo = invoices.payload;
+    // if (!this.consultationInfo) {
+    //   this.apiCaseManagerService.getInvoiceBreakdown(this.store.getCaseId()).subscribe(
+    //     invoices => {
+    //       console.log('payload invoices', invoices);
+    //       this.paymentInfo = invoices.payload;
 
-          if (this.paymentInfo) {
-            this.updateCollectChargeFormGroup();
-            this.updatePaymentMethodFormGroup();
-          }
-        },
-        err => this.alertService.error(JSON.stringify(err.error.message))
-      );
-    }
+    //       if (this.paymentInfo) {
+    //         this.updateCollectChargeFormGroup();
+    //         this.updatePaymentMethodFormGroup();
+    //       }
+    //     },
+    //     err => this.alertService.error(JSON.stringify(err.error.message))
+    //   );
+    // }
 
     this.collectFormGroup
       .get('paymentFormGroup')
@@ -483,40 +481,40 @@ export class PaymentCollectComponent implements OnInit {
 
     // forkJoin(
     // bill.map( (payment,index) =>
-    this.apiCaseManagerService.recordNewPayment(this.store.getCaseId(), bill).subscribe(
-      arr => {
-        this.apiPatientVisitService.completed(this.store.getPatientVisitRegistryId()).subscribe(
-          res => {
-            this.billNo = res.payload.billPaymentId;
-            const initialState = {};
-            this.bsModalRef = this.modalService.show(PaymentConfirmComponent, {
-              initialState,
-              class: 'modal-lg',
-              backdrop: 'static'
-            });
+    // this.apiCaseManagerService.recordNewPayment(this.store.getCaseId(), bill).subscribe(
+    //   arr => {
+    //     this.apiPatientVisitService.completed(this.store.getPatientVisitRegistryId()).subscribe(
+    //       res => {
+    //         this.billNo = res.payload.billPaymentId;
+    //         const initialState = {};
+    //         this.bsModalRef = this.modalService.show(PaymentConfirmComponent, {
+    //           initialState,
+    //           class: 'modal-lg',
+    //           backdrop: 'static'
+    //         });
 
-            // Subscription for buttons on modal
-            this.bsModalRef.content.printClicked.subscribe(isPrint => {
-              this.printReceipt();
-              this.bsModalRef.hide();
-              this.router.navigate(['patient']);
-            });
+    //         // Subscription for buttons on modal
+    //         this.bsModalRef.content.printClicked.subscribe(isPrint => {
+    //           this.printReceipt();
+    //           this.bsModalRef.hide();
+    //           this.router.navigate(['patient']);
+    //         });
 
-            this.bsModalRef.content.nextClicked.subscribe(isNext => {
-              this.bsModalRef.hide();
-              this.router.navigate(['patient']);
-            });
-          },
-          err => {
-            this.alertService.error(JSON.stringify(err.error.message));
-            this.disablePayBtn = false;
-          }
-        );
-      },
-      err => {
-        this.alertService.error(JSON.stringify(err.error.message));
-      }
-    );
+    //         this.bsModalRef.content.nextClicked.subscribe(isNext => {
+    //           this.bsModalRef.hide();
+    //           this.router.navigate(['patient']);
+    //         });
+    //       },
+    //       err => {
+    //         this.alertService.error(JSON.stringify(err.error.message));
+    //         this.disablePayBtn = false;
+    //       }
+    //     );
+    //   },
+    //   err => {
+    //     this.alertService.error(JSON.stringify(err.error.message));
+    //   }
+    // );
     //  );
   }
 

@@ -8,19 +8,16 @@ import * as moment from 'moment';
 import { ControlValueAccessor, NG_VALUE_ACCESSOR } from '@angular/forms';
 import { take } from 'rxjs/operators';
 // Services
-import { ApiCaseManagerService } from './../../../../services/api-case-manager.service';
 import { mulitplierValidator } from './../../../../services/consultation-form.service';
 import { LoggerService } from './../../../../services/logger.service';
 import { AlertService } from './../../../../services/alert.service';
 import { StoreService } from './../../../../services/store.service';
 import { ApiPatientVisitService } from './../../../../services/api-patient-visit.service';
 import { ApiCmsManagementService } from './../../../../services/api-cms-management.service';
-import { CaseChargeFormService } from './../../../../services/case-charge-form.service';
 import { UtilsService } from '../../../../services/utils.service';
 
 // Objects
 import { ChargeItemDescription } from './../../../../objects/ChargeItemDescription';
-import { Case } from './../../../../objects/Case';
 import { DISPLAY_DATE_FORMAT, INPUT_DELAY } from '../../../../constants/app.constants';
 // import { ChargeDetailsItem}  from '../../../../objects/request/PaymentCheck';
 import { Uom } from '../../../../objects/Uom';
@@ -56,7 +53,6 @@ export class PrescriptionItemComponent implements OnInit {
   defaultQty = 1;
   FIXED_DECIMAL = 2;
   salesUom: string = '';
-  case: Case;
   price: number;
   totalPrice: FormControl;
   unitPriceDisplay: string;
@@ -75,8 +71,6 @@ export class PrescriptionItemComponent implements OnInit {
   constructor(
     private apiCmsManagementService: ApiCmsManagementService,
     private apiPatientVisitService: ApiPatientVisitService,
-    private apiCaseManagerService: ApiCaseManagerService,
-    private caseChargeFormService: CaseChargeFormService,
     private store: StoreService,
     private utils: UtilsService,
     private alertService: AlertService,
@@ -120,7 +114,7 @@ export class PrescriptionItemComponent implements OnInit {
       const purchaseQty = this.prescriptionItem.get('purchaseQty').value;
       if (purchaseQty === 0 || purchaseQty === '') {
         console.log('pre-it: purchaseQty is 0');
-        this.getCaseItemPrice(1);
+        // this.getCaseItemPrice(1);
       }
 
       this.salesUom = this.itemSelected.salesUom || '';
@@ -155,41 +149,6 @@ export class PrescriptionItemComponent implements OnInit {
     this.baseUom = this.store.uoms;
 
     console.log('Charge Active Items : ', this.chargeItems);
-
-    this.getCaseDetails();
-  }
-
-  getCaseDetails() {
-    if (this.store.getCaseId()) {
-      this.apiCaseManagerService.searchCase(this.store.getCaseId()).subscribe(
-        pagedData => {
-          console.log('Search Case', pagedData);
-          if (pagedData) {
-            const { payload } = pagedData;
-            this.populateData(payload);
-          }
-          return pagedData;
-        },
-        err => {
-          this.alertService.error(JSON.stringify(err.error.message));
-        }
-      );
-    }
-  }
-
-  populateData(data: Case) {
-    // console.log('populateData: ', data);
-    // this.case = data;
-    // this.plansInSO = this.case.coverages;
-    // if (!this.prescriptionItem.get('salesItemCode').value) {
-    //   const planIds = [];
-    //   this.plansInSO.forEach(element => {
-    //     planIds.push(element['planId']);
-    //   });
-    //   this.prescriptionItem.get('excludedCoveragePlanIds').patchValue(planIds);
-    // }
-    this.calculateCost(this.prescriptionItem.get('purchaseQty').value);
-    // this.setPlans();
   }
 
   setPlans() {
@@ -469,38 +428,38 @@ export class PrescriptionItemComponent implements OnInit {
     });
   }
 
-  getCaseItemPrice(qty) {
-    let excludedPlans = this.prescriptionItem.get('excludedCoveragePlanIds').value;
+  // getCaseItemPrice(qty) {
+  //   let excludedPlans = this.prescriptionItem.get('excludedCoveragePlanIds').value;
 
-    if (this.itemSelected) {
-      const caseItem = {
-        chargeDetails: [this.caseChargeFormService.buildChargeDetailsItem(this.itemSelected.id, excludedPlans, qty)]
-      };
-      this.apiCaseManagerService.getCaseItemPrices(this.store.getCaseId(), caseItem)
-      .pipe(debounceTime(INPUT_DELAY),take(1))
-      .subscribe(
-        data => {
-          var caseItems = data.payload.chargeDetails;
-          var caseItem = caseItems.find(data => {
-            return data.itemId === this.itemSelected.id;
-          });
-          if (caseItem) {
-            let price = caseItem.charge.price;
-            this.prescriptionItem
-              .get('unitPrice')
-              .get('price')
-              .patchValue(price / 100);
-            this.unitPriceDisplay = (price / 100).toFixed(2);
-            this.calculateCost(qty);
-            this.updatePrice.emit(true);
-          }
-        },
-        err => {
-          this.alertService.error(JSON.stringify(err.error.message));
-        }
-      );
-    }
-  }
+  //   if (this.itemSelected) {
+  //     const caseItem = {
+  //       chargeDetails: [this.caseChargeFormService.buildChargeDetailsItem(this.itemSelected.id, excludedPlans, qty)]
+  //     };
+  //     this.apiCaseManagerService.getCaseItemPrices(this.store.getCaseId(), caseItem)
+  //     .pipe(debounceTime(INPUT_DELAY),take(1))
+  //     .subscribe(
+  //       data => {
+  //         var caseItems = data.payload.chargeDetails;
+  //         var caseItem = caseItems.find(data => {
+  //           return data.itemId === this.itemSelected.id;
+  //         });
+  //         if (caseItem) {
+  //           let price = caseItem.charge.price;
+  //           this.prescriptionItem
+  //             .get('unitPrice')
+  //             .get('price')
+  //             .patchValue(price / 100);
+  //           this.unitPriceDisplay = (price / 100).toFixed(2);
+  //           this.calculateCost(qty);
+  //           this.updatePrice.emit(true);
+  //         }
+  //       },
+  //       err => {
+  //         this.alertService.error(JSON.stringify(err.error.message));
+  //       }
+  //     );
+  //   }
+  // }
 
   patchDosageInstruction() {
     const code = this.prescriptionItem.get('dosageInstruction').get('code');
@@ -866,7 +825,7 @@ export class PrescriptionItemComponent implements OnInit {
             this.updateDrugToTopDescription(chargeItemDetail);
             this.updateCautionariesToTopDescription(chargeItemDetail);
             this.updateRemarkToTopDescription(this.prescriptionItem.get('remark').value);
-            this.getCaseItemPrice(this.prescriptionItem.get('purchaseQty').value);
+            // this.getCaseItemPrice(this.prescriptionItem.get('purchaseQty').value);
 
             this.disableFields();
             this.setMandatoryFields();

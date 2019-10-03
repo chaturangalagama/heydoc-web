@@ -19,7 +19,6 @@ import * as moment from 'moment';
 import { Observable, Subject } from 'rxjs';
 import { UserRegistrationObject } from '../../../objects/UserRegistrationObject';
 import { DISPLAY_DATE_FORMAT } from '../../../constants/app.constants';
-import { ApiCaseManagerService } from '../../../services/api-case-manager.service';
 
 @Component({
   selector: 'app-consultation-patient-info',
@@ -60,7 +59,6 @@ export class ConsultationPatientInfoComponent implements OnInit, OnDestroy {
     private apiPatientInfoService: ApiPatientInfoService,
     private apiPatientVisitService: ApiPatientVisitService,
     private apiCmsManagementService: ApiCmsManagementService,
-    private apiCaseManagerService: ApiCaseManagerService,
     private storeService: StoreService,
     private router: Router,
     private alertService: AlertService,
@@ -90,7 +88,6 @@ export class ConsultationPatientInfoComponent implements OnInit, OnDestroy {
 
   initPatientDetails() {
     this.initPage();
-    this.initPriorityMedicalCoverage();
   }
 
   initPage() {
@@ -214,83 +211,8 @@ export class ConsultationPatientInfoComponent implements OnInit, OnDestroy {
     }
   }
 
-  initPriorityMedicalCoverage() {
-    if (this.storeService.getCaseId()) {
-      this.apiCaseManagerService.searchCase(this.storeService.getCaseId()).subscribe(
-        res => {
-          this.priorityMedicalCoverage = '';
-          this.attachedMedicalCoverages.controls = [];
-          res.payload.coverages.forEach((selectedPlan, index) => {
-            const selectedPlanId = selectedPlan.planId;
-            const coverage = this.storeService.getMedicalCoverages().find(coverage => coverage.coveragePlans.some(plans => plans.id === selectedPlanId));
-            if (coverage){
-              this.attachedMedicalCoverages.push(this.fb.group({
-                medicalCoverageId: coverage.id,
-                planId: selectedPlanId
-              }));
-  
-              if (index === 0){
-                this.priorityMedicalCoverage = coverage.name || '';
-              }
-            }
-          })
-        },
-        err => {
-          this.alertService.error(JSON.stringify(err));
-        }
-      );
-    }
-  }
-
-  showMedicalCoverages() {
-        this.displayMedicalCoveragesModal(
-          this.storeService.getPatientId(),
-          this.storeService.getPatientVisitRegistryId(),
-          this.attachedMedicalCoverages
-        );
-  }
-
   ngOnChanges(changes: SimpleChanges): void {
     console.log('changes: ', changes);
-  }
-
-  displayMedicalCoveragesModal(patientId: string, patientRegistryId: string, selectedCoverages: FormArray) {
-    console.log('con-pa selectedCoverages: ', selectedCoverages);
-    this.storeService.setPatientId(patientId);
-    const initialState = {
-      title: 'Assigned Medical Coverages',
-      type: 'DISPLAY_MEDICAL_COVERAGE',
-      selectedCoverages: selectedCoverages,
-      patientCoverages: new FormControl(),
-      displaySelectedCoverages: true
-    };
-
-    this.bsModalRef = this.modalService.show(MedicalCoverageComponent, {
-      initialState,
-      class: 'modal-lg'
-    });
-
-    this.bsModalRef.content.event.subscribe(data => {
-      if (data) {
-        if (data !== 'Close') {
-          // Patient Visit Attach Medical Coverage
-          this.apiPatientVisitService.attachMedicalCoverage(this.storeService.getCaseId(), data.attachedMedicalCoverages).subscribe(
-            res => {
-              this.bsModalRef.content.event.unsubscribe();
-              this.bsModalRef.hide();
-              this.storeService.setPatientId('');
-            },
-            err => {
-              this.alertService.error(JSON.stringify(err));
-            }
-          );
-        } else {
-          this.bsModalRef.hide();
-        }
-      } else {
-        console.log('No data emitted');
-      }
-    });
   }
 
   textTruncate(str: String){

@@ -1,7 +1,6 @@
 import { ApiCmsManagementService } from './../../../services/api-cms-management.service';
 import { AlertService } from './../../../services/alert.service';
 import { ChargeItemDescription } from './../../../objects/ChargeItemDescription';
-import { CaseChargeFormService } from './../../../services/case-charge-form.service';
 import { BsModalRef } from 'ngx-bootstrap/modal';
 import { ConsultationSearchComponent } from './consultation-search/consultation-search.component';
 import { BsModalService } from 'ngx-bootstrap';
@@ -43,7 +42,6 @@ export class ConsultationPrescriptionComponent implements OnInit, OnDestroy {
   constructor(
     private store: StoreService,
     private modalService: BsModalService,
-    private caseChargeFormService: CaseChargeFormService,
     private alertService: AlertService,
     private apiCmsManagementService: ApiCmsManagementService
   ) {}
@@ -135,7 +133,7 @@ export class ConsultationPrescriptionComponent implements OnInit, OnDestroy {
 
   onDrugSelect(option) {
     this.drugSelected = option;
-    this.dispatchItemEntities = this.caseChargeFormService.buildDrugDispatchDetails(option.item);
+    // this.dispatchItemEntities = this.caseChargeFormService.buildDrugDispatchDetails(option.item);
     this.searchKey.reset();
     this.searchKey.patchValue(null);
   }

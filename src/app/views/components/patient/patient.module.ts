@@ -24,7 +24,6 @@ import { PatientProfileComponent } from './patient-profile/patient-profile.compo
 import { PatientConsultationComponent } from './patient-consultation/patient-consultation.component';
 import { PatientDispensingComponent } from './patient-dispensing/patient-dispensing.component';
 import { PatientMedicalServicesComponent } from './patient-medical-services/patient-medical-services.component';
-import { CaseManagerComponentsModule } from '../../../components/case-manager/case-manager-componenets.module';
 @NgModule({
   imports: [
     CommonModule,
@@ -37,8 +36,7 @@ import { CaseManagerComponentsModule } from '../../../components/case-manager/ca
     PatientAddComponentsModule,
     PaymentRoutingModule,
     PaymentComponentsModule,
-    ConsultationComponentsModule,
-    CaseManagerComponentsModule
+    ConsultationComponentsModule
   ],
   declarations: [
     PatientDetailLayoutComponent,

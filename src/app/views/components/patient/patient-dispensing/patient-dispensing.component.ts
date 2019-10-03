@@ -9,8 +9,6 @@ import { Subscription, forkJoin } from '../../../../../../node_modules/rxjs';
 import { Observable } from 'rxjs';
 import { distinctUntilChanged, debounceTime } from 'rxjs/operators';
 // Services
-import { ApiCaseManagerService } from './../../../../services/api-case-manager.service';
-import { CaseChargeFormService } from './../../../../services/case-charge-form.service';
 import { ConsultationFormService } from './../../../../services/consultation-form.service';
 import { ApiCmsManagementService } from '../../../../services/api-cms-management.service';
 import { ApiPatientVisitService } from '../../../../services/api-patient-visit.service';
@@ -67,8 +65,6 @@ export class PatientDispensingComponent implements OnInit, OnDestroy {
     private paymentService: PaymentService,
     private consultationFormService: ConsultationFormService,
     private fb: FormBuilder,
-    private caseChargeFormService: CaseChargeFormService,
-    private apiCaseManagerService: ApiCaseManagerService,
     private visitManageService: VisitManagementService
   ) {}
 
@@ -79,9 +75,6 @@ export class PatientDispensingComponent implements OnInit, OnDestroy {
       return;
     }
 
-    // this.resetForms();
-    // this.getPatientDetails();
-    this.getCaseDetails();
     this.updateFormGroup();
 
     this.store
@@ -95,7 +88,6 @@ export class PatientDispensingComponent implements OnInit, OnDestroy {
           console.log('id changed: ', res);
           // this.resetForms();
           // this.getPatientDetails();
-          this.getCaseDetails();
           this.updateFormGroup();
         }
       });
@@ -121,7 +113,6 @@ export class PatientDispensingComponent implements OnInit, OnDestroy {
   }
 
   resetForms() {
-    this.caseChargeFormService.resetForm();
     this.consultationFormService.resetForm();
     this.paymentService.resetVisitCoverageArray();
   }
@@ -130,30 +121,6 @@ export class PatientDispensingComponent implements OnInit, OnDestroy {
     this.subscriptions.forEach(subscription => {
       (subscription as Subscription).unsubscribe();
     });
-  }
-
-  getCaseDetails() {
-    if (this.store.getCaseId()) {
-      this.apiCaseManagerService
-        .searchCase(this.store.getCaseId())
-        .pipe(
-          take(1),
-          debounceTime(INPUT_DELAY)
-        )
-        .subscribe(
-          pagedData => {
-            if (pagedData) {
-              const { payload } = pagedData;
-              this.caseStatus = payload.status;
-              this.getCoverageDetails(payload);
-            }
-            return pagedData;
-          },
-          err => {
-            this.alertService.error(JSON.stringify(err.error.message));
-          }
-        );
-    }
   }
 
   getCoverageDetails(payload) {
@@ -176,7 +143,6 @@ export class PatientDispensingComponent implements OnInit, OnDestroy {
       const coverageLimitItem = this.createCoverageLimitItem(coverage, plan);
       console.log('#0005 coverageLimitItem: ', coverageLimitItem);
       coverageLimitArray.push(coverageLimitItem);
-      this.processChasCoverage(coverage, element, coverageLimitItem);
     });
   }
 
@@ -213,40 +179,6 @@ export class PatientDispensingComponent implements OnInit, OnDestroy {
       });
 
     return coverageLimitItem;
-  }
-
-  processChasCoverage(coverage, element, coverageLimitItem) {
-    if (coverage.type === 'CHAS') {
-      this.apiPatientVisitService
-        .checkMhcpBalance(this.store.getClinicId(), element.planId, this.patientInfo.userId.number)
-        .subscribe(
-          response => {
-            console.log('MHCP Check Balance' + response);
-            if (response.payload.availableBalance) {
-              let availableBalance = response.payload.availableBalance;
-              if (availableBalance !== -1) {
-                availableBalance = availableBalance / 100;
-              }
-              coverageLimitItem.get('updatedLimit').patchValue(availableBalance);
-              if (availableBalance < 1) {
-                this.alertService.error(JSON.stringify(CHAS_BALANCE_UNAVAILABLE));
-                coverageLimitItem.get('updatedLimit').patchValue(-1);
-                coverageLimitItem.get('initialLimit').patchValue(-1);
-              }
-            } else {
-              this.alertService.error(JSON.stringify(CHAS_BALANCE_UNAVAILABLE));
-              coverageLimitItem.get('updatedLimit').patchValue(-1);
-              coverageLimitItem.get('initialLimit').patchValue(-1);
-            }
-          },
-          err => {
-            // this.alertService.error(JSON.stringify(err));
-            this.alertService.error(JSON.stringify(CHAS_BALANCE_UNAVAILABLE));
-            coverageLimitItem.get('updatedLimit').patchValue(-1);
-            coverageLimitItem.get('initialLimit').patchValue(-1);
-          }
-        );
-    }
   }
 
   @HostListener('window:beforeunload', ['$event'])
@@ -319,40 +251,40 @@ export class PatientDispensingComponent implements OnInit, OnDestroy {
       chargeDetails
     };
 
-    this.apiCaseManagerService
-      .getDynamicInvoiceBreakdown(this.store.getCaseId(), itemsToInvoice)
-      .pipe(
-        debounceTime(INPUT_DELAY),
-        distinctUntilChanged()
-      )
-      .subscribe(
-        res => {
-          const invoices = res.payload;
-          let totalAmount = 0;
-          console.log('invoices', invoices);
+    // this.apiCaseManagerService
+    //   .getDynamicInvoiceBreakdown(this.store.getCaseId(), itemsToInvoice)
+    //   .pipe(
+    //     debounceTime(INPUT_DELAY),
+    //     distinctUntilChanged()
+    //   )
+    //   .subscribe(
+    //     res => {
+    //       const invoices = res.payload;
+    //       let totalAmount = 0;
+    //       console.log('invoices', invoices);
 
-          invoices.forEach(invoice => {
-            console.log('invoice', invoice.invoiceType);
-            overallCharges.push({
-              paymentMode: invoice.invoiceType === 'DIRECT' ? 'Cash' : invoice.invoiceType,
-              charge: invoice.payableAmount - invoice.taxAmount,
-              gst: invoice.taxAmount,
-              planName: invoice.planName || '',
-              planId: invoice.planId || ''
-            });
+    //       invoices.forEach(invoice => {
+    //         console.log('invoice', invoice.invoiceType);
+    //         overallCharges.push({
+    //           paymentMode: invoice.invoiceType === 'DIRECT' ? 'Cash' : invoice.invoiceType,
+    //           charge: invoice.payableAmount - invoice.taxAmount,
+    //           gst: invoice.taxAmount,
+    //           planName: invoice.planName || '',
+    //           planId: invoice.planId || ''
+    //         });
 
-            totalAmount += invoice.payableAmount;
-          });
+    //         totalAmount += invoice.payableAmount;
+    //       });
 
-          const overallChargeFormGroup = this.chargeFormGroup.get('overallChargeFormGroup');
-          overallChargeFormGroup.patchValue({
-            overallCharges: { value: overallCharges },
-            totalAmount: totalAmount
-          });
-          overallChargeFormGroup.updateValueAndValidity();
-        },
-        err => this.alertService.error(JSON.stringify(err.error.message))
-      );
+    //       const overallChargeFormGroup = this.chargeFormGroup.get('overallChargeFormGroup');
+    //       overallChargeFormGroup.patchValue({
+    //         overallCharges: { value: overallCharges },
+    //         totalAmount: totalAmount
+    //       });
+    //       overallChargeFormGroup.updateValueAndValidity();
+    //     },
+    //     err => this.alertService.error(JSON.stringify(err.error.message))
+    //   );
   }
 
   // Action
@@ -366,9 +298,9 @@ export class PatientDispensingComponent implements OnInit, OnDestroy {
       .get('patientReferrals').value;
 
     if (this.paymentRequestInfo) {
-      this.paymentRequestInfo.dispatchItemEntities = this.caseChargeFormService.bindChargeItemsToDispatchitemEntities(
-        this.consultationFormGroup.get('dispatchItemEntities')['controls']
-      );
+      // this.paymentRequestInfo.dispatchItemEntities = this.caseChargeFormService.bindChargeItemsToDispatchitemEntities(
+      //   this.consultationFormGroup.get('dispatchItemEntities')['controls']
+      // );
       this.paymentRequestInfo = this.consultationFormService.flattenDiagnosis(this.paymentRequestInfo);
       this.paymentRequestInfo = this.consultationFormService.checkConsultation(this.paymentRequestInfo);
       this.paymentRequestInfo = this.consultationFormService.checkPatientReferral(this.paymentRequestInfo);

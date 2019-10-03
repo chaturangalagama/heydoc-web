@@ -47,7 +47,6 @@ export const routes: Routes = [
       { path: 'profile', loadChildren: './views/components/profile/profile.module#ProfileModule' },
       { path: 'patient', loadChildren: './views/components/patient/patient.module#PatientModule' },
       { path: 'appointments', loadChildren: './views/components/appointments/appointments.module#AppointmentsModule' },
-      { path: 'claim', loadChildren: './views/components/claim/claim.module#ClaimModule' },
       {
         path: 'consultation',
         loadChildren: './views/components/consultation/consultation.module#ConsultationModule',
@@ -59,10 +58,6 @@ export const routes: Routes = [
       {
         path: 'communications',
         loadChildren: './views/components/communications/communications.module#CommunicationsModule'
-      },
-      {
-        path: 'case',
-        loadChildren: './views/components/case-manager/case-manager.module#CaseManagerModule'
       },
       {
         path: 'test',
