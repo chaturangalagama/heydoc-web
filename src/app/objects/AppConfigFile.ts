@@ -11,7 +11,6 @@ export class AppConfigFile {
   API_CMS_MANAGEMENT_URL: string;
   API_PACKAGE_ITEM_INFO_URL: string;
   API_PAYMENT_URL: string;
-  REPORT_URL: string;
   SHOW_COPY_PRESCRIPTION_AFTER: string;
 
   constructor(
@@ -27,7 +26,6 @@ export class AppConfigFile {
     API_CMS_MANAGEMENT_URL?: string,
     API_PACKAGE_ITEM_INFO_URL?: string,
     API_PAYMENT_URL?: string,
-    REPORT_URL?: string,
     SHOW_COPY_PRESCRIPTION_AFTER?: string
   ) {
     this.API_URL = API_URL || '';
@@ -42,7 +40,6 @@ export class AppConfigFile {
     this.API_CMS_MANAGEMENT_URL = API_CMS_MANAGEMENT_URL || '';
     this.API_PACKAGE_ITEM_INFO_URL = API_PACKAGE_ITEM_INFO_URL || '';
     this.API_PAYMENT_URL = API_PAYMENT_URL || '';
-    this.REPORT_URL = REPORT_URL || '';
     this.SHOW_COPY_PRESCRIPTION_AFTER = SHOW_COPY_PRESCRIPTION_AFTER || '';
   }
 }

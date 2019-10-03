@@ -35,10 +35,6 @@ export const routes: Routes = [
     //     component: ClinicModule
     //   },
     //   {
-    //     path: 'report',
-    //     component: ReportModule
-    //   },
-    //   {
     //     path: 'communications',
     //     component: CommunicationsModule
     //   }
@@ -54,7 +50,6 @@ export const routes: Routes = [
       },
       { path: 'payment', loadChildren: './views/components/payment/payment.module#PaymentModule' },
       { path: 'clinic', loadChildren: './views/components/clinic/clinic.module#ClinicModule' },
-      { path: 'report', loadChildren: './views/components/report/report.module#ReportModule' },
       {
         path: 'communications',
         loadChildren: './views/components/communications/communications.module#CommunicationsModule'

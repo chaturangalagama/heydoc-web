@@ -17,7 +17,6 @@ export const environment = {
     API_INVENTORY_SYSTEM_URL: 'http://localhost:9090',
     API_VITAL_URL: 'http://localhost:9090/vital',
     API_PAYMENT_URL: 'http://localhost:9090/charging',
-    REPORT_URL: 'http://reports.healthwaymedical.com.sg/reporting-ui/',
     API_PACKAGE_ITEM_INFO_URL: 'http://localhost:9090/item',
     SHOW_COPY_PRESCRIPTION_AFTER: '26-07-2018T00:00:00'
 
@@ -29,10 +28,8 @@ export const environment = {
     // API_INVENTORY_SYSTEM_URL: 'https://devserver.lippoinnolab.com/cms-dua',
     // API_PATIENT_INFO_URL: 'https://devserver.lippoinnolab.com/cms-dua',
     // API_VITAL_URL: 'https://devserver.lippoinnolab.com/cms-dua/vital',
-    // API_CASE_INFO_URL: 'https://devserver.lippoinnolab.com/cms-dua/case',
     // API_PAYMENT_URL: 'https://devserver.lippoinnolab.com/cms-dua/charging',
     // API_CMS_MANAGEMENT_URL: 'https://devserver.lippoinnolab.com/cms-dua',
-    // REPORT_URL: 'https://reports.healthwaymedical.com.sg/reporting-ui/',
     // API_PACKAGE_ITEM_INFO_URL: 'https://devserver.lippoinnolab.com/cms-dua/item',
     // SHOW_COPY_PRESCRIPTION_AFTER: '26-07-2018T00:00:00'
   }

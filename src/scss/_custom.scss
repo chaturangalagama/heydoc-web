@@ -245,11 +245,6 @@ header.app-header.navbar {
     color: $brownish-grey;
 }
 
-.report-header {
-    @extend .font-weight-semi-bold; // font-size: 1rem;
-    color: $warm-grey;
-}
-
 .text-content-consultation {
     font-size: 14px;
     color: $grey-800;

@@ -117,8 +117,6 @@ export const HEADER_TITLES = [
   { url: '/pages/payment/collect', value: 'Collect Payment' },
   { url: '/pages/communications/main/follow-ups', value: 'Communications' },
   { url: '/pages/communications', value: 'Communications' },
-  { url: '/pages/report', value: 'Reports' },
-  { url: '/pages/report/search', value: 'Reports' },
   { url: '/pages/case/list', value: 'Case Manager' },
   { url: '/pages/case/detail', value: 'Case Details' }
 ];

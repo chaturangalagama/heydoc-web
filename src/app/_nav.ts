@@ -18,12 +18,6 @@ export const navigation = [
     svgIcon: '/assets/svg/patients.svg'
   },
   {
-    name: 'Reports',
-    url: '/pages/report',
-    icon: '',
-    svgIcon: '/assets/svg/reports.svg'
-  },
-  {
     name: 'Communications',
     url: '/pages/communications/',
     icon: '',

@@ -14,7 +14,6 @@ export const environment = {
       API_INVENTORY_SYSTEM_URL: 'https://devserver.lippoinnolab.com/cms-dua',
       API_PATIENT_INFO_URL: 'https://devserver.lippoinnolab.com/cms-dua',
       API_CMS_MANAGEMENT_URL: 'https://devserver.lippoinnolab.com/cms-dua',
-      REPORT_URL: 'https://reports.healthwaymedical.com.sg/reporting-ui/',
       SHOW_COPY_PRESCRIPTION_AFTER: '26-07-2018T00:00:00'
     }
   };
