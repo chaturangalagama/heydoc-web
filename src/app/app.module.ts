@@ -1,5 +1,5 @@
-import { VitalAddComponent } from './components/vital/vital-add/vital-add.component';
-import { VitalModule } from './components/vital/vital.module';
+import { VitalAddComponent } from './components/business-components/vital/vital-add/vital-add.component';
+import { VitalModule } from './components/business-components/vital/vital.module';
 import { PrintTemplateService } from './services/print-template.service';
 import { VitalService } from './services/vital.service';
 import { ErrorLogService } from './services/error-log.service';

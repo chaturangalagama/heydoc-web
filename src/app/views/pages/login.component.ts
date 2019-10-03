@@ -7,7 +7,7 @@ import { AuthService } from '../../services/auth.service';
 import { AlertService } from '../../services/alert.service';
 import { BsModalRef } from 'ngx-bootstrap/modal/bs-modal-ref.service';
 import { BsModalService } from 'ngx-bootstrap/modal';
-import { ClinicSelectComponent } from '../components/clinic/clinic-select/clinic-select.component';
+import { ClinicSelectComponent } from '../components/business/clinic/clinic-select/clinic-select.component';
 import { Validators, AbstractControl, ValidationErrors, ValidatorFn, AsyncValidatorFn } from '@angular/forms';
 
 @Component({
@@ -92,7 +92,7 @@ export class LoginComponent implements OnInit, OnDestroy {
         localStorage.setItem('access_token', resp.body['access_token']);
         localStorage.setItem('refresh_token', resp.body['refresh_token']);
         localStorage.setItem('user_details', JSON.stringify(resp.body['user_details']));
-        
+
         this.storeService.preInit();
         this.storeService.startNotificationPolling();
       },

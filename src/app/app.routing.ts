@@ -40,23 +40,23 @@ export const routes: Routes = [
     //   }
     // ]
     children: [
-      { path: 'profile', loadChildren: './views/components/profile/profile.module#ProfileModule' },
-      { path: 'patient', loadChildren: './views/components/patient/patient.module#PatientModule' },
-      { path: 'appointments', loadChildren: './views/components/appointments/appointments.module#AppointmentsModule' },
+      { path: 'profile', loadChildren: './views/components/business/profile/profile.module#ProfileModule' },
+      { path: 'patient', loadChildren: './views/components/business/patient/patient.module#PatientModule' },
+      { path: 'appointments', loadChildren: './views/components/business/appointments/appointments.module#AppointmentsModule' },
       {
         path: 'consultation',
-        loadChildren: './views/components/consultation/consultation.module#ConsultationModule',
+        loadChildren: './views/components/business/consultation/consultation.module#ConsultationModule',
         runGuardsAndResolvers: 'always'
       },
-      { path: 'payment', loadChildren: './views/components/payment/payment.module#PaymentModule' },
-      { path: 'clinic', loadChildren: './views/components/clinic/clinic.module#ClinicModule' },
+      { path: 'payment', loadChildren: './views/components/business/payment/payment.module#PaymentModule' },
+      { path: 'clinic', loadChildren: './views/components/business/clinic/clinic.module#ClinicModule' },
       {
         path: 'communications',
-        loadChildren: './views/components/communications/communications.module#CommunicationsModule'
+        loadChildren: './views/components/business/communications/communications.module#CommunicationsModule'
       },
       {
         path: 'test',
-        loadChildren: './views/components/test/test.module#TestModule'
+        loadChildren: './views/components/business/test/test.module#TestModule'
       }
     ]
   },

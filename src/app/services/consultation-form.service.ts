@@ -13,7 +13,7 @@ import {
 } from '@angular/forms';
 import { Injectable } from '@angular/core';
 import { AtLeastOneFieldValidator } from '../validators/AtLeastOneValidator';
-import { MedicalCertificateItemsArrayComponent } from './../components/consultation/consultation-medical-certificate/medical-certificate-items-array.component';
+import { MedicalCertificateItemsArrayComponent } from '../components/business-components/consultation/consultation-medical-certificate/medical-certificate-items-array.component';
 import * as moment from 'moment';
 import { AlertService } from './alert.service';
 
@@ -282,7 +282,7 @@ export class ConsultationFormService {
   }
 
   addDiagnosis(id: FormControl) {
-    
+
     const newDiagnosisItem = new FormGroup({
       id: id
     });

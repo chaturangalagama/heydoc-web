@@ -1,4 +1,4 @@
-import { ConsultationFollowUpComponent } from './../../components/consultation/consultation-follow-up/consultation-follow-up.component';
+import { ConsultationFollowUpComponent } from '../../components/business-components/consultation/consultation-follow-up/consultation-follow-up.component';
 import { IssuedMedicalTest } from './MedicalTest';
 import { DocumentStorage } from './DocumentStorage';
 import { MedicalServiceGiven } from './MedicalServiceGiven';
