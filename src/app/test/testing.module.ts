@@ -7,7 +7,6 @@ import { VaccinationService } from '../services/vaccination.service';
 import { PaymentService } from '../services/payment.service';
 import { ConsultationFormService } from '../services/consultation-form.service';
 import { UtilsService } from '../services/utils.service';
-import { MedicalCoverageFormService } from '../services/medical-coverage-form.service';
 import { SharedModule } from '../shared.module';
 import { RouterTestingModule } from '@angular/router/testing';
 import { NgxPermissionsService, NgxPermissionsModule } from 'ngx-permissions';
@@ -29,7 +28,6 @@ import { DatePipe } from '../../../node_modules/@angular/common';
 import { PrintTemplateService } from '../services/print-template.service';
 import { ErrorLogService } from '../services/error-log.service';
 import { DialogService } from '../services/dialog.service';
-import { PolicyHolderService } from '../services/policy-holder.service';
 import { TempStoreService } from '../services/temp-store.service';
 
 @NgModule({
@@ -63,14 +61,12 @@ import { TempStoreService } from '../services/temp-store.service';
     VitalService,
     ConsultationFormService,
     UtilsService,
-    MedicalCoverageFormService,
     NgxPermissionsService,
     BsModalRef,
     DatePipe,
     PrintTemplateService,
     ErrorLogService,
     DialogService,
-    PolicyHolderService,
 
     AppConfigServiceSpy
   ],

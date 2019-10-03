@@ -15,7 +15,6 @@ import { StoreService } from '../../../../../services/store.service';
 import { ConsultationFormService } from './../../../../../services/consultation-form.service';
 
 // Objects
-import { MedicalCoverageResponse } from './../../../../../objects/response/MedicalCoverageResponse';
 import { DispatchDrugDetail } from './../../../../../objects/request/DrugDispatch';
 import { PatientVisitHistory } from '../../../../../objects/request/PatientVisitHistory';
 
@@ -63,12 +62,6 @@ export class ConsultationComponent implements OnInit, OnDestroy, AfterViewInit {
   recentVisit: PatientVisitHistory;
 
   @Output() copiedPrescription = new EventEmitter<DispatchDrugDetail[]>();
-
-  // Medical Coverage Tab
-  @Input() selectedPlans: FormArray;
-  @Input() attachedMedicalCoverages: FormArray;
-  @Input() policyHolderInfo: FormArray;
-  coverages: MedicalCoverageResponse;
 
   // Medical Services Tab
   referralShown = false;

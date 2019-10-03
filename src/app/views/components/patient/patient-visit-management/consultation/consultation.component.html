@@ -23,21 +23,12 @@
                 <div>CONSULTATION ---- dispatchItems : {{visitManagementFormGroup.get('consultationFormGroup').get('dispatchItemEntities').value|json}} </div>
                 <br>
                 <div>CONSULTATION ----- diagnosis : {{visitManagementFormGroup.get('consultationFormGroup').get('diagnosisIds').value|json}} </div> -->
-                <app-patient-consultation [visitManagementFormGroup]='visitManagementFormGroup' [needRefresh]='needRefresh' [patientInfo]='patientInfo' [attachedMedicalCoverages]="attachedMedicalCoverages" (copiedPrescription)="copyPrescription($event)"></app-patient-consultation>
+                <app-patient-consultation [visitManagementFormGroup]='visitManagementFormGroup' [needRefresh]='needRefresh' [patientInfo]='patientInfo' (copiedPrescription)="copyPrescription($event)"></app-patient-consultation>
             </tab>
 
             <!-- Labs Tab -->
             <tab heading="Medical Services" (select)="onSelect($event)">
                 <app-patient-medical-services [consultationFormGroup]="visitManagementFormGroup.get('consultationFormGroup')"></app-patient-medical-services>
-            </tab>
-
-            <!-- Medical Coverage Tab -->
-            <tab heading="Coverage" (select)="onSelect($event)">
-                <span *ngIf="selectedPlans">
-                    <app-medical-coverage [hasAdd]='false' [hasDelete]='false' [popUpAddCoverage]='false' [hasUpdatePriority]='true'
-                        [patientCoverages]="selectedPlans" [selectedCoverages]="attachedMedicalCoverages" [policyHolderInfo]='policyHolderInfo'
-                        *ngxPermissionsOnly="['ROLE_MEDICAL_COVERAGE_MANAGEMENT']"></app-medical-coverage>
-                </span>
             </tab>
 
             <!-- Documents Tab -->
@@ -48,7 +39,7 @@
 
             <!-- Dispensing Tab -->
             <tab heading="Dispensing" (select)="onSelect($event)">
-                <app-patient-dispensing *ngIf="isVisitInPostConsult()" [chargeFormGroup]="visitManagementFormGroup.get('chargeFormGroup')" [attachedMedicalCoverages]="attachedMedicalCoverages" [consultationFormGroup]="visitManagementFormGroup.get('consultationFormGroup')"
+                <app-patient-dispensing *ngIf="isVisitInPostConsult()" [chargeFormGroup]="visitManagementFormGroup.get('chargeFormGroup')" [consultationFormGroup]="visitManagementFormGroup.get('consultationFormGroup')"
                     (tabSelected)="toggleTabTo($event)"></app-patient-dispensing>
             </tab>
 

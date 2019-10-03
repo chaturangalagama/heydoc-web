@@ -34,42 +34,6 @@ export class ApiCmsManagementService {
     );
   }
 
-  searchCoverage(value: string): Observable<HttpResponseBody> {
-    const list = this.http.post<HttpResponseBody>(
-      `${this.API_CMS_MANAGEMENT_URL}/coverage/search/${value}/false`,
-      {},
-      { headers: this.headers }
-    );
-    return list;
-  }
-
-  searchCoverageByPlanId(value: string): Observable<HttpResponseBody> {
-    const list = this.http.post<HttpResponseBody>(
-      `${this.API_CMS_MANAGEMENT_URL}/coverage/search/${value}`,
-      {},
-      { headers: this.headers }
-    );
-    return list;
-  }
-
-  listMedicalCoveragesWithPagination(page: number = 0, size: number = 10000): Observable<HttpResponseBody> {
-    const list = this.http.post<HttpResponseBody>(
-      `${this.API_CMS_MANAGEMENT_URL}/coverage/list/${page}/${size}/false`,
-      {},
-      { headers: this.headers }
-    );
-    return list;
-  }
-
-  listMedicalCoverages(page: number = 0, size: number = 100): Observable<HttpResponseBody> {
-    const list = this.http.post<HttpResponseBody>(
-      `${this.API_CMS_MANAGEMENT_URL}/coverage/list/all/false`,
-      {},
-      { headers: this.headers }
-    );
-    return list;
-  }
-
   listClinics(): Observable<HttpResponseBody> {
     const list = this.http.post<HttpResponseBody>(
       `${this.API_CMS_MANAGEMENT_URL}/clinic/list/all`,
@@ -149,8 +113,8 @@ export class ApiCmsManagementService {
     );
   }
 
-  searchDiagnosis(term: string, planIds?: Array<string>): Observable<HttpResponseBody> {
-    return this.http.post<HttpResponseBody>(`${this.API_CMS_MANAGEMENT_URL}/diagnosis/search/${term}`, planIds, {
+  searchDiagnosis(term: string): Observable<HttpResponseBody> {
+    return this.http.post<HttpResponseBody>(`${this.API_CMS_MANAGEMENT_URL}/diagnosis/search/${term}`, {
       headers: this.headers
     });
   }

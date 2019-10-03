@@ -2,7 +2,6 @@ import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { Observable } from 'rxjs';
 
-import { AttachedMedicalCoverage } from '../objects/AttachedMedicalCoverage';
 import { PatientVisit } from '../objects/request/PatientVisit';
 import { VitalData } from '../objects/request/VitalData';
 import { HttpResponseBody } from '../objects/response/HttpResponseBody';
@@ -68,15 +67,6 @@ export class ApiPatientVisitService {
     return this.http.post<HttpResponseBody>(
       `${this.API_PATIENT_VISIT_URL}/search/${visitId}`,
       {},
-      { headers: this.headers }
-    );
-  }
-
-  attachMedicalCoverage(caseId: string, medicalCoverages: Array<string>): Observable<HttpResponseBody> {
-    return this.http.post<HttpResponseBody>(
-      // `${this.API_PATIENT_VISIT_URL}/attach-coverage/${patientVisitRegistryId}`,
-      `${this.API_CMS_MANAGEMENT_URL}/case/update/medical-coverage/${caseId}`,
-      JSON.stringify(medicalCoverages),
       { headers: this.headers }
     );
   }

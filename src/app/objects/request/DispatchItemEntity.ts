@@ -10,7 +10,6 @@ interface DispatchItemEntity {
     expiryDate?: string;
     remarks?: string;
     itemPriceAdjustment?: ItemPriceAdjustment;
-    excludedCoveragePlanIds?: string[];
     itemCode?: string;
     itemName?: string;
   }

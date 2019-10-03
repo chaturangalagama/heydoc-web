@@ -179,7 +179,6 @@ export class AppointmentsOverviewComponent implements OnInit {
 
     const initialState = {
       title: 'Schedule Appointment'
-      // type: 'ATTACH_MEDICAL_COVERAGE'
     };
 
     this.bsModalRef = this.modalService.show(AppointmentsNewComponent, {

@@ -1,5 +1,4 @@
 import { DosageInstruction, Instruction } from './../DrugItem';
-import { AttachedMedicalCoverage } from '../AttachedMedicalCoverage';
 
 export interface DrugDispatch {
   dispatchDrugDetail: Array<DispatchDrugDetail>;
@@ -18,7 +17,6 @@ export interface DispatchDrugDetail {
   quantity?: number;
   duration?: number;
   priceAdjustment?: UserPaymentOption;
-  attachedMedicalCoverages?: AttachedMedicalCoverage;
 }
 
 interface UserPaymentOption {

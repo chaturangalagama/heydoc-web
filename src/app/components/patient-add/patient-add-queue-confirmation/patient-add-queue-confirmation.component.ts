@@ -1,11 +1,8 @@
 import { AlertService } from './../../../services/alert.service';
-import { MedicalCoverageResponse } from './../../../objects/response/MedicalCoverageResponse';
 import { ApiPatientInfoService } from './../../../services/api-patient-info.service';
 import { StoreService } from './../../../services/store.service';
-import { SelectedItem } from './../../../views/components/medical-coverage/assign-medical-coverage/assign-medical-coverage.component';
 import { Component, OnInit, Input, EventEmitter, Output } from '@angular/core';
 import { FormControl, FormGroup, FormBuilder, FormArray, Validators } from '@angular/forms';
-import { AttachedMedicalCoverage } from '../../../objects/AttachedMedicalCoverage';
 import * as moment from 'moment';
 import { distinctUntilChanged, debounceTime } from 'rxjs/operators';
 import { BsModalRef } from 'ngx-bootstrap';
@@ -17,25 +14,14 @@ import { BsModalRef } from 'ngx-bootstrap';
 })
 export class PatientAddQueueConfirmationComponent implements OnInit {
   @Input() hiddenTabs: boolean;
-  @Output() updateChange = new EventEmitter<Array<AttachedMedicalCoverage>>();
-  // @Input() selectedCoverages: Array<AttachedMedicalCoverage>;
-  selectedCoverages: FormArray;
 
-  confirmationInput: SelectedItem[];
   consultationFormGroup: FormGroup;
   patientAddFormGroup: FormGroup;
-  medicalCoverageSummaryFormGroup: FormGroup;
-  selectedItems: SelectedItem[] = [];
   public event: EventEmitter<any> = new EventEmitter();
   tabRefresh: boolean;
-  // selectedPlans: Array<Coverage>;
 
   // Input Data
   title: string;
-  type: string; // UNDEFINED || ATTACH_MEDICAL_COVERAGE
-  // Input Data
-  patientPlans: FormArray;
-  coverages: MedicalCoverageResponse;
 
   // DATA BINDING
   consultationInfo = {
@@ -44,8 +30,7 @@ export class PatientAddQueueConfirmationComponent implements OnInit {
     purposeOfVisit: '',
     priority: '',
     visitDate: '',
-    time: '',
-    attachedMedicalCoverages: ''
+    time: ''
   };
   visitDate: Date;
   time: string;
@@ -54,8 +39,6 @@ export class PatientAddQueueConfirmationComponent implements OnInit {
   purposeOfVisit: string;
   hasUpdatePriority: boolean;
 
-  indexesOfCheckedPlans = [];
-
   constructor(
     private fb: FormBuilder,
     private store: StoreService,
@@ -63,12 +46,10 @@ export class PatientAddQueueConfirmationComponent implements OnInit {
     private alertService: AlertService,
     private bsModalRef: BsModalRef
   ) {
-      this.selectedCoverages = this.fb.array([]);
   }
 
   onBtnSaveClicked($event) {
-    const cleanedData = this.checkissuedMedicalTest(this.consultationInfo);
-    this.event.emit(cleanedData);
+    this.event.emit(this.consultationInfo);
   }
 
   onBtnCloseClicked($event) {
@@ -76,48 +57,8 @@ export class PatientAddQueueConfirmationComponent implements OnInit {
   }
 
   ngOnInit() {
-    if (this.selectedCoverages) {
-      console.log('selected: ', this.selectedCoverages);
-    } else {
-      this.selectedCoverages = this.fb.array([]);
-    }
-    // this.patientAddFormGroup = this.patientService.getPatientAddFormGroup();
     this.consultationFormGroup = this.createConsultationPage();
-    this.medicalCoverageSummaryFormGroup = this.createMedicalCoverageFormGroup();
     this.subscribeToValueChanges();
-
-    if (!this.patientPlans) {
-      this.apiPatientInfoService.searchBy('systemuserid', this.store.getPatientId()).subscribe(
-        res => {
-          const patientInfo = res.payload;
-
-          this.apiPatientInfoService.searchAssignedPoliciesByUserId(patientInfo['userId']).subscribe(
-            value => {
-              if (value.payload) {
-                this.coverages = new MedicalCoverageResponse(
-                  value.payload.INSURANCE,
-                  value.payload.CORPORATE,
-                  value.payload.CHAS,
-                  value.payload.MEDISAVE
-                );
-
-                // this.selectedPlans = this.coverages;
-                this.medicalCoverageSummaryFormGroup.get('patientCoverages').patchValue(this.coverages);
-                // console.log("THIS MEDICAL SUMMARY: ", this.medicalCoverageSummaryFormGroup);
-              }
-            },
-            err => {
-              this.alertService.error(JSON.stringify(err.error.message));
-            }
-          );
-        },
-        err => {
-          this.alertService.error(JSON.stringify(err.error.message));
-        }
-      );
-    } else {
-      this.medicalCoverageSummaryFormGroup.controls['patientCoverages'] = this.patientPlans;
-    }
   }
 
   subscribeToValueChanges() {
@@ -141,18 +82,6 @@ export class PatientAddQueueConfirmationComponent implements OnInit {
 
         console.log(this.preferredDoctor);
       });
-
-    this.medicalCoverageSummaryFormGroup
-      .get('patientCoverages')
-      .valueChanges.pipe(
-        debounceTime(50),
-        distinctUntilChanged((a, b) => JSON.stringify(a) === JSON.stringify(b))
-      )
-      .subscribe(values => {
-        console.log('MEDICAL COVERAGE FORM:', values, this.consultationFormGroup);
-        this.consultationInfo.attachedMedicalCoverages = values.attachedMedicalCoverages;
-        // this.consultationInfo.attachedMedicalCoverages = values.attachedMedicalCoverages.map( x => { planId: x.planId});
-      });
   }
 
   createConsultationPage(): FormGroup {
@@ -167,60 +96,13 @@ export class PatientAddQueueConfirmationComponent implements OnInit {
     });
   }
 
-  createMedicalCoverageFormGroup(): FormGroup {
-    // console.log('returning MedicalCoverage Page Form');
-    return this.fb.group({
-      attachedMedicalCoverages: this.addMedicalCoverageForm(),
-      patientCoverages: ''
-    });
-  }
-
-  addMedicalCoverageForm() {
-    const medicalCoverage = this.fb.group({
-      coverageId: '',
-      medicalCoverageId: '',
-      planId: ''
-    });
-
-    return new FormArray([medicalCoverage]);
-  }
-
-  checkissuedMedicalTest(data) {
-    // const attachedMedicalCoverages = data.attachedMedicalCoverages;
-    const attachedMedicalCoverages = this.selectedCoverages.value;
-
-    console.log('ATTACHED ARE: ', attachedMedicalCoverages);
-    if (attachedMedicalCoverages) {
-      const newAttachedMedicalCoverages = attachedMedicalCoverages.filter(
-        value =>
-          null !== value.coverageId &&
-          value.coverageId !== '' &&
-          null !== value.planId &&
-          value.planId !== '' &&
-          null !== value.medicalCoverageId &&
-          value.medicalCoverageId !== ''
-      );
-
-      data.attachedMedicalCoverages = newAttachedMedicalCoverages;
-    }
-
-    return data;
-  }
-
   disableConfirmBtn() {
-    if (this.type === 'ATTACH_MEDICAL_COVERAGE') {
-      return false;
-    }
-
     if (!this.consultationFormGroup.valid) {
       return true;
     }
   }
 
   hideConsultationInfo() {
-    if (this.type === 'ATTACH_MEDICAL_COVERAGE' || this.type === 'DISPLAY_MEDICAL_COVERAGE') {
-      return true;
-    }
     return false;
   }
 

@@ -8,12 +8,10 @@ export default class PaymentCheck{
 
 export class ChargeDetailsItem {
   itemId?: string;
-  excludedPlans?: Array<string>;
   quantity?: number;
 
-  constructor(itemId?: string, excludedPlans?: Array<string>, quantity?: number) {
+  constructor(itemId?: string, quantity?: number) {
     this.itemId = itemId || '';
-    this.excludedPlans = excludedPlans ? excludedPlans : [];
     this.quantity = quantity || 0;
   }
 }

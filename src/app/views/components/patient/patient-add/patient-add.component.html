@@ -6,9 +6,6 @@
             </app-patient-add-patient-info>
             <app-patient-add-alerts-info [alertFormGroup]="patientAddFormGroup.get('alertFormGroup')"
                 [medicalAlertFormGroup]="patientAddFormGroup.get('medicalAlertFormGroup')" *ngxPermissionsOnly="['ROLE_PATIENT_MEDICAL_ALERTS']"></app-patient-add-alerts-info>
-            <app-medical-coverage [hasAdd]='false' [hasDelete]='true' [popUpAddCoverage]='true' [patientCoverages]="patientAddFormGroup.get('selectedPlans')"
-                *ngxPermissionsOnly="['ROLE_MEDICAL_COVERAGE_MANAGEMENT']"></app-medical-coverage>
-            <!-- <pre>{{patientAddFormGroup.get('selectedPlans').value|json}}</pre> -->
             <div id=addMorePatientInformation (click)="toggleHide()">
                 <div class="row addMorePatientInformation ml-0 mb-4 ">+ Add More Patient Information</div>
             </div>

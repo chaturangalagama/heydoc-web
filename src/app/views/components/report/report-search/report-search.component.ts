@@ -43,20 +43,10 @@ export class ReportSearchComponent implements OnInit {
 
   drugTypeahead = new Subject<string>();
   drugs: any;
-
   clinics: any;
-
-  medicalCoverages: any;
-
   endMinDate: Date;
   // End of Input Filter
 
-  coverageTypes = [
-    { value: 'CORPORATE', label: 'CORPORATE' },
-    { value: 'INSURANCE', label: 'INSURANCE' },
-    { value: 'MEDISAVE', label: 'MEDISAVE' },
-    { value: 'CHAS', label: 'CHAS' }
-  ];
   paymentStatus = [
     { value: 'PENDING_PAYMENT_CONFIRMATION', label: 'PENDING_PAYMENT_CONFIRMATION' },
     { value: 'PAID', label: 'PAID' }
@@ -99,7 +89,6 @@ export class ReportSearchComponent implements OnInit {
     this.logger.info('Reports', this.reportCategories);
 
     this.doctors = this.store.doctorList;
-    this.medicalCoverages = this.store.medicalCoverageList;
 
     this.subscribeChange();
   }
@@ -140,7 +129,6 @@ export class ReportSearchComponent implements OnInit {
   resetMainGroupForm() {
     // Manual reset Validators, somehow clearValidators doesn't reset them
     this.mainFormGroup.get('status').setValidators(null);
-    this.mainFormGroup.get('coverageType').setValidators(null);
     this.mainFormGroup.get('clinicId').setValidators(null);
     this.mainFormGroup.get('clinicIds').setValidators(null);
     this.mainFormGroup.get('doctorIds').setValidators(null);
@@ -149,7 +137,6 @@ export class ReportSearchComponent implements OnInit {
     this.mainFormGroup.get('endDate').setValidators(null);
     this.mainFormGroup.get('itemCodes').setValidators(null);
     this.mainFormGroup.get('itemCategoryCodes').setValidators(null);
-    this.mainFormGroup.get('financialPlanId').setValidators(null);
     this.mainFormGroup.get('patientId').setValidators(null);
     this.mainFormGroup.get('monthlyReport').setValidators(null);
     this.mainFormGroup.updateValueAndValidity();
@@ -178,8 +165,6 @@ export class ReportSearchComponent implements OnInit {
           value[param] &&
           (param === 'clinicIds' ||
             param === 'doctorIds' ||
-            param === 'financialPlanId' ||
-            param === 'coverageType' ||
             param === 'status')
         ) {
           // data[param] = value[param].map((innerValue, index) => {
@@ -314,12 +299,6 @@ export class ReportSearchComponent implements OnInit {
     }
   }
 
-  onMedicalCoverageSelect(event) {
-    if (!event) {
-      // re-register the typeahead when ng-select is being cleared
-      // this.onDrugInputChanged();
-    }
-  }
   /** End of Event Listeners **/
 
   /** UTILS */
@@ -345,7 +324,6 @@ export class ReportSearchComponent implements OnInit {
         value === 'doctorIds' ||
         value === 'itemCodes' ||
         value === 'itemCategoryCodes' ||
-        value === 'coverageType' ||
         value === 'status'
       ) {
         return;
@@ -367,8 +345,6 @@ export class ReportSearchComponent implements OnInit {
       drugCode: '',
       itemCodes: '',
       itemCategoryCodes: '',
-      financialPlanId: '',
-      coverageType: '',
       status: '',
       patientId: '',
       monthlyReport: ''

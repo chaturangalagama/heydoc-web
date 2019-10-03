@@ -235,22 +235,6 @@ header.app-header.navbar {
     font-weight: 500;
 }
 
-.plan-details span {
-    font-weight: 500;
-    color: #333333;
-}
-
-.plan-details {
-    @extend .modal-body1;
-    @extend .pl-1;
-    @extend .pt-3;
-    @extend .pb-4;
-    font-weight: normal; // font-size: 0.75rem;
-    line-height: 1.5;
-    letter-spacing: 0.3px;
-    text-align: left;
-}
-
 .text-header-sm {
     font-size: 1rem;
     font-weight: 600;
@@ -330,19 +314,6 @@ header.app-header.navbar {
         // float: none!important;
         font-size: 12px;
     }
-}
-
-.plan-remark-headers div {
-    padding: 5px;
-    background-color: $warm-grey;
-    min-height: 2rem; // line-height: 2rem;
-    border-style: solid;
-    border-width: 0;
-    border-right-width: 1px;
-    border-color: #ffffff;
-    color: #ffffff;
-    font-size: 14px;
-    font-weight: 500;
 }
 
 .modal-content {
@@ -951,33 +922,6 @@ bs-modal-backdrop.modal-backdrop.show app-root {
 
 .checkmarkUpdate {
     width: 1rem;
-}
-
-.policyHolderExpired {
-    color: red;
-}
-
-.case-card-header {
-    background-color: white;
-    padding: 10px;
-}
-
-.case-card-search {
-    background-color: white;
-    padding: 2px;
-    margin-top: 10px;
-    margin-left: 4px;
-    margin-right: 4px;
-    padding-bottom: 10px;
-}
-
-.case-hr {
-    margin-top: 0;
-}
-
-.case-background {
-    background-color: #ececec;
-    min-height: 100vh;
 }
 
 .negative {

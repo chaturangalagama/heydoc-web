@@ -129,53 +129,6 @@ export class ApiPatientInfoService {
     }
   }
   
-  // Policy Holder
-  assignPolicy(coverageType, body): Observable<HttpResponseBody> {
-    console.log('assignPolicy() body', body);
-    const headers = new HttpHeaders({ 'Content-Type': 'application/json' });
-    console.log('body:::::', body);
-    return this.http.post<HttpResponseBody>(
-      `${this.API_PATIENT_INFO_URL}/policyholder/add/${coverageType}`,
-      JSON.stringify(body),
-      {
-        headers: headers
-      }
-    );
-  }
-
-  removePolicy(policyHolderId, coverageType, medicalCoverageId, planId): Observable<HttpResponseBody> {
-    const headers = new HttpHeaders({ 'Content-Type': 'application/json' });
-    return this.http.post<HttpResponseBody>(
-      `${
-        this.API_PATIENT_INFO_URL
-      }/policyholder/remove/${policyHolderId}/${coverageType}/${medicalCoverageId}/${planId}`,
-      JSON.stringify({}),
-      { headers: headers }
-    );
-  }
-
-  searchAssignedPoliciesByUserId(body): Observable<HttpResponseBody> {
-    const headers = new HttpHeaders({ 'Content-Type': 'application/json' });
-    return this.http.post<HttpResponseBody>(
-      `${this.API_PATIENT_INFO_URL}/policyholder/search-by-user-id`,
-      JSON.stringify(body),
-      {
-        headers: headers
-      }
-    );
-  }
-
-  editPolicy(policyHolderType, policyHolderId, body): Observable<HttpResponseBody> {
-    const headers = new HttpHeaders({ 'Content-Type': 'application/json' });
-    return this.http.post<HttpResponseBody>(
-      `${this.API_PATIENT_INFO_URL}/policyholder/edit/${policyHolderType}/${policyHolderId}`,
-      JSON.stringify(body),
-      {
-        headers: headers
-      }
-    );
-  }
-
   // Allergy Management
   listAllergyGroups(): Observable<HttpResponseBody> {
     return this.http.post<HttpResponseBody>(

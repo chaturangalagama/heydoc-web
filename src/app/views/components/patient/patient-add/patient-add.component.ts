@@ -1,4 +1,3 @@
-import { MedicalCoverageFormService } from './../../../../services/medical-coverage-form.service';
 import { UtilsService } from './../../../../services/utils.service';
 import { MedicalAlerts } from './../../../../objects/request/MedicalAlerts';
 import { Component, OnInit, HostListener } from '@angular/core';
@@ -10,7 +9,6 @@ import { BsModalService } from 'ngx-bootstrap/modal';
 import { BsModalRef } from 'ngx-bootstrap/modal/bs-modal-ref.service';
 import { forkJoin } from 'rxjs';
 import { distinctUntilChanged, debounceTime } from 'rxjs/operators';
-import { SelectedPlans } from '../../../../objects/MedicalCoverage';
 import { PatientVisit, PatientVisitRegistryEntity } from '../../../../objects/request/PatientVisit';
 import { UserRegistration } from '../../../../objects/UserRegistration';
 import { ApiPatientInfoService } from '../../../../services/api-patient-info.service';
@@ -24,10 +22,8 @@ import {
   ALERT_TYPES,
   ALLERGIES
 } from './../../../../constants/app.constants';
-import { SelectedPlan } from './../../../../objects/MedicalCoverage';
 import { AlertService } from './../../../../services/alert.service';
 import { StoreService } from './../../../../services/store.service';
-import { SelectedItem } from './../../medical-coverage/assign-medical-coverage/assign-medical-coverage.component';
 import {
   UserRegistrationObject,
   Company,
@@ -85,39 +81,23 @@ export class PatientAddComponent implements OnInit {
 
   error: string;
 
-  // Medical Coverage
-  coverageBsModalRef: BsModalRef;
-  specialRemarks: string;
-  startDate: Date;
-  endDate: Date;
-  selectedMedicalCoverage: any;
-  selectedCoverageType = new Set();
-
   // Medical Alerts
   medicalAlerts: MedicalAlerts[] = [];
   // Confirmation
   confirmationBsModalRef: BsModalRef;
-  confirmationInput: SelectedItem[];
+  confirmationInput;
 
   // Registry Entry
   preferredDoctorId: string;
   registryRemarks: string;
   purposeOfVisit: string;
   priority: string;
-  // @Input() attachedMedicalCoverages: FormArray;
-
-  plans: SelectedPlans[] = [];
-  newPlans: SelectedPlan[] = [];
-  attachedPlans;
-  selectedPlans: Array<SelectedPlan> = new Array<SelectedPlan>();
-  attachedPlansForConsultation;
 
   constructor(
     private apiPatientService: ApiPatientVisitService,
     private apiPatientInfoService: ApiPatientInfoService,
     private apiCmsManagementService: ApiCmsManagementService,
     private patientService: PatientService,
-    private medicalCoverageFormService: MedicalCoverageFormService,
     private store: StoreService,
     private alertService: AlertService,
     private modalService: BsModalService,
@@ -152,9 +132,7 @@ export class PatientAddComponent implements OnInit {
 
   onBtnNextClicked(event) {
     const initialState = {
-      title: 'Confirmation of Patient Visit',
-      patientPlans: <FormArray>this.patientAddFormGroup.get('selectedPlans'),
-      attachedMedicalCoverages: <FormArray>this.patientAddFormGroup.get('attachedPlans').value
+      title: 'Confirmation of Patient Visit'
     };
 
     this.confirmationBsModalRef = this.modalService.show(PatientAddQueueConfirmationComponent, {
@@ -169,9 +147,6 @@ export class PatientAddComponent implements OnInit {
         this.registryRemarks = data.remarks;
         this.purposeOfVisit = data.purposeOfVisit;
         this.priority = data.priority;
-        this.attachedPlansForConsultation = data.attachedMedicalCoverages;
-        this.newPlans = this.patientAddFormGroup.get('selectedPlans').value;
-        this.attachedPlans = data.attachedMedicalCoverages;
       } else {
         console.log('No data emitted');
       }
@@ -189,25 +164,6 @@ export class PatientAddComponent implements OnInit {
     const medicalAlertFormGroup = this.patientAddFormGroup.get('medicalAlertFormGroup');
     const alertArray = alertFormGroup.get('alertArray') as FormArray;
     const medicalAlertArray = medicalAlertFormGroup.get('alertArray') as FormArray;
-
-    // Medical Coverages
-    this.patientAddFormGroup.get('medicalCoverageFormGroup').valueChanges.subscribe(values => {
-      this.selectedMedicalCoverage = values.selectedPlans;
-      // this.createMedicalCoverages(this.selectedMedicalCoverage);
-
-      this.plans = this.medicalCoverageFormService.patchMCValuesToPlans(this.selectedMedicalCoverage);
-    });
-
-    this.patientAddFormGroup
-      .get('selectedPlans')
-      .valueChanges.pipe(
-        debounceTime(50),
-        distinctUntilChanged((a, b) => JSON.stringify(a) === JSON.stringify(b))
-      )
-      .subscribe(values => {
-        console.log('VALUE CHANGES: ', values);
-        this.patientAddFormGroup.get('selectedPlans').updateValueAndValidity();
-      });
 
     // Allergy
     alertFormGroup.valueChanges
@@ -333,11 +289,7 @@ export class PatientAddComponent implements OnInit {
           console.log('Patient ID not found');
         }
 
-        if ((<FormArray>this.patientAddFormGroup.get('selectedPlans')).length > 0) {
-          this.assignPolicy();
-        } else {
-          this.addPatientToRegistry([]);
-        }
+        this.addPatientToRegistry([]);
       },
       err => {
         this.alertService.error(JSON.stringify(err.error.message));
@@ -417,71 +369,7 @@ export class PatientAddComponent implements OnInit {
     return false;
   }
 
-  assignPolicy() {
-    const policyHolders = [];
-    const policyTypes = [];
-    const plans = this.patientAddFormGroup.get('selectedPlans').value;
-    console.log('ATTACHED PLANS: ', plans);
-    console.log('ATTACHED MEDICAL COVERAGE: ', this.patientAddFormGroup.get('attachedPlans').value);
-
-    plans.forEach(plan => {
-      const holderDetails = {
-        identificationNumber: {
-          idType: this.patientInfo[0].idType,
-          number: this.patientInfo[0].idNumber
-        },
-        name: this.patientInfo[0].name,
-        medicalCoverageId: plan.medicalCoverageId,
-        planId: plan.planId,
-        patientCoverageId: plan.patientCoverageId,
-        specialRemarks: plan.remarks,
-        status: 'ACTIVE',
-        startDate: plan.startDate,
-        endDate: plan.endDate,
-        costCenter: plan.costCenter
-      };
-      const policyType = plan.coverageSelected.type;
-
-      policyHolders.push(holderDetails);
-      policyTypes.push(policyType);
-
-      this.selectedCoverageType.add(plan.coverageType);
-    });
-
-    forkJoin(
-      policyHolders.map((plan, index) =>
-        this.apiPatientInfoService.assignPolicy(policyTypes[index], policyHolders[index])
-      )
-    ).subscribe(
-      arr => {
-        console.log('POLICY RESULTS: ', arr);
-
-        const policies = arr || [];
-        this.addPatientToRegistry(policies);
-      },
-      err => {
-        this.alertService.error(JSON.stringify(err.error.message));
-      }
-    );
-  }
-
   addPatientToRegistry(policies) {
-    console.log('thisattachedplan: ', this.attachedPlans);
-
-    const planIds: Array<string> = [];
-
-    if (this.attachedPlans.length > 0) {
-      this.attachedPlans.forEach(plan => {
-        const p = policies.find(function(policy) {
-          console.log('p: ', p);
-          return policy.payload.medicalCoverageId === plan.medicalCoverageId && policy.payload.planId === plan.planId;
-        });
-
-        if (p && p.payload && p.payload.planId) {
-          planIds.push(p.payload.planId);
-        }
-      });
-    }
 
     const patientRegistryEntry: PatientVisit = new PatientVisit(
       new PatientVisitRegistryEntity(
@@ -491,8 +379,7 @@ export class PatientAddComponent implements OnInit {
         this.purposeOfVisit,
         this.priority,
         this.registryRemarks
-      ),
-      planIds
+      )
     );
 
     console.log('PATIENT REIGSTRY:', patientRegistryEntry);

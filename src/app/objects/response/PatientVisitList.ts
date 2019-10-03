@@ -35,7 +35,6 @@ export interface PatientVisitList {
     expiryDate: string;
     remarks: string;
     itemPriceAdjustment: ItemPriceAdjustment;
-    excludedCoveragePlanIds: string[];
   }
   
   interface ItemPriceAdjustment {

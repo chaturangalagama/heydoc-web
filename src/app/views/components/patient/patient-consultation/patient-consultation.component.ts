@@ -23,7 +23,6 @@ import { PatientVisitList } from './../../../../objects/response/PatientVisitLis
 })
 export class PatientConsultationComponent implements OnInit {
   @Input() visitManagementFormGroup: FormGroup;
-  @Input() attachedMedicalCoverages: FormArray;
   @Input() needRefresh: Subject<boolean>;
   @Input() patientInfo;
 

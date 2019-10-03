@@ -14,7 +14,6 @@ import { PaymentPatientInfoComponent } from './payment-patient-info/payment-pati
 import { PaymentOverallChargeComponent } from './payment-overall-charge/payment-overall-charge.component';
 import { PaymentFollowUpComponent } from './payment-follow-up/payment-follow-up.component';
 import { PaymentReferralComponent } from './payment-referral/payment-referral.component';
-import { PaymentCoverageLimitComponent } from './payment-coverage-limit/payment-coverage-limit.component';
 import { PaymentCollectMethodComponent } from './payment-collect-method/payment-collect-method.component';
 import { PaymentMethodItemComponent } from './payment-collect-method/payment-method-item/payment-method-item.component';
 import { PaymentCollectSummaryComponent } from './payment-collect-summary/payment-collect-summary.component';
@@ -35,7 +34,6 @@ import { PaymentCollectSummaryComponent } from './payment-collect-summary/paymen
     PaymentPatientInfoComponent,
     PaymentFollowUpComponent,
     PaymentReferralComponent,
-    PaymentCoverageLimitComponent,
     PaymentMultiStepLayoutComponent
   ],
   declarations: [
@@ -52,7 +50,6 @@ import { PaymentCollectSummaryComponent } from './payment-collect-summary/paymen
     PaymentOverallChargeComponent,
     PaymentFollowUpComponent,
     PaymentReferralComponent,
-    PaymentCoverageLimitComponent,
     PaymentCollectComponent,
     PaymentMultiStepLayoutComponent
   ]

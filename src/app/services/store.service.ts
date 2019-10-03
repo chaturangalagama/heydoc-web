@@ -19,8 +19,6 @@ import { User } from './../objects/response/User';
 
 import { Instruction, DosageInstruction } from './../objects/DrugItem';
 import { Uom } from './../objects/Uom';
-import { MedicalCoverageSelected } from './../objects/MedicalCoverage';
-
 import { AlertService } from '../services/alert.service';
 import { ApiCmsManagementService } from '../services/api-cms-management.service';
 
@@ -49,9 +47,6 @@ export class StoreService implements OnDestroy {
   consultationId: string;
   private patientVisitRegistryId: string;
   private user: User;
-
-  medicalCoverageList: Array<MedicalCoverageSelected> = [];
-  medicalCoverageListWithExpired: Array<MedicalCoverageSelected> = [];
   visitPurposeList = [];
 
   authorizedClinicList = [];
@@ -261,41 +256,6 @@ export class StoreService implements OnDestroy {
       }
     );
 
-    // this.apiCmsManagementService.listMedicalCoveragesWithPagination(0, 10000).subscribe(
-    //   res => {
-    //     console.log('GOT MEDICAL COVERAGE LIST');
-    //     console.log('res payload: ', res.payload.content);
-
-    //     const data = res.payload.content;
-    //     const today = moment();
-
-    //     this.medicalCoverageListWithExpired = data;
-    //     // console.log("today: ", today);
-    //     data.forEach(item => {
-    //       const isValid = this.utilsService.validateDates(today, moment(item.endDate, DISPLAY_DATE_FORMAT));
-    //       if (item.coveragePlans.length !== 0) {
-    //         if (isValid) {
-    //           this.medicalCoverageList.push(item);
-    //         }
-    //       }
-    //     });
-
-    //     this.medicalCoverageList.map(item => {
-    //       return {
-    //         name: item.name,
-    //         coveragePlans: item.coveragePlans.map(plan => plan.name)
-    //       };
-    //     });
-
-    //     this.setStoreReady(true);
-    //   },
-    //   err => {
-    //     this.alertService.error(JSON.stringify(err));
-    //     this.errorMessages['listMedicalCoveragesWithPagination'] = err;
-    //     this.setStoreReady(false);
-    //   }
-    // );
-
     this.apiCmsManagementService.listInstructions().subscribe(
       data => {
         const { payload } = data;
@@ -420,27 +380,6 @@ export class StoreService implements OnDestroy {
       this.registryPolling.unsubscribe();
       this.registryPolling = null;
     }
-  }
-
-  getMedicalCoveragesWithPagination() {
-    this.apiCmsManagementService.listMedicalCoverages().subscribe(
-      res => {
-        console.log('GOT MEDICAL COVERAGE LIST---', res.payload.content);
-        this.medicalCoverageList = res.payload.content;
-        console.log(
-          this.medicalCoverageList.map(item => {
-            return {
-              name: item.name,
-              coveragePlans: item.coveragePlans.map(plan => plan.name)
-            };
-          })
-        );
-      },
-      err => {
-        this.alertService.error(JSON.stringify(err));
-        this.errorMessages['getMedicalCoveragesWithPagination'] = err;
-      }
-    );
   }
 
   getVitalConfigurations() {
@@ -648,66 +587,6 @@ export class StoreService implements OnDestroy {
     return this.consultationId;
   }
 
-  getPlansByCoverageId(medicalCoverageId: string) {
-    // return this.getPlanByCoverageId(this.medicalCoverageList, medicalCoverageId);
-    return this.getPlanByCoverageId(this.medicalCoverageListWithExpired, medicalCoverageId);
-  }
-
-  getPlanByCoverageId(medicalCoverages, medicalCoverageId: string) {
-    return medicalCoverages.filter(elem => elem.id === medicalCoverageId);
-  }
-
-  getPlan(medicalCoverageId: string, planId: string) {
-    const coverage = this.getPlansByCoverageId(medicalCoverageId);
-    if (coverage.length === 0) {
-      return {
-        id: '0',
-        name: 'CASH',
-        coveragePlans: [
-          {
-            id: '0'
-          }
-        ]
-      };
-    }
-    const plan = this.getPlanFromCoveragesByPlanId(coverage[0].coveragePlans, planId);
-    coverage[0].coveragePlans = plan;
-    return coverage[0];
-  }
-
-  getMedicalCoverages() {
-    return this.medicalCoverageList;
-  }
-
-  getMedicalCoverageByPlanId(planId) {
-    return this.medicalCoverageListWithExpired.find(element => {
-      const plan = element.coveragePlans.find(childElement => childElement.id === planId);
-      // console.log('search plan', plan)
-      return plan ? true : false;
-    });
-  }
-
-  getCoverageByPlanId(planId) {
-    // let coverage = '';
-    let coverage = null;
-    this.medicalCoverageListWithExpired.forEach(element => {
-      console.log('​StoreService -> getCoverageByPlanId -> element', element);
-      const _coverage = element.coveragePlans.find(childElement => childElement.id === planId);
-      // console.log('search plan', plan)
-
-      if (_coverage) {
-        console.log('​StoreService -> getCoverageByPlanId -> coverage', coverage);
-        coverage = _coverage;
-        return;
-      }
-    });
-
-    return coverage;
-  }
-
-  getPlanFromCoveragesByPlanId(plans, planId: string) {
-    return plans.filter(elem => elem.id === planId);
-  }
 
   getClinicList(page: number = 0, size: number = 10000) {
     return this.clinicList.slice(size * page, size * (page + 1));

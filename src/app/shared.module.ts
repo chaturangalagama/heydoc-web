@@ -15,13 +15,8 @@ import { ConsultationDiagnosisItemComponent } from './components/consultation/co
 import { ConsultationNotesComponent } from './components/consultation/consultation-notes/consultation-notes.component';
 import { ConsultationPatientInfoComponent } from './components/consultation/consultation-patient-info/consultation-patient-info.component';
 import { AppointmentsNewComponent } from './views/components/appointments/appointments-new/appointments-new.component';
-import { MedicalCoverageItemDetailComponent } from './views/components/medical-coverage/medical-coverage/medical-coverage-item-detail/medical-coverage-item-detail.component';
-import { MedicalCoverageItemComponent } from './views/components/medical-coverage/medical-coverage/medical-coverage-item/medical-coverage-item.component';
-import { MedicalCoverageComponent } from './views/components/medical-coverage/medical-coverage/medical-coverage.component';
 import { PatientAddQueueConfirmationComponent } from './components/patient-add/patient-add-queue-confirmation/patient-add-queue-confirmation.component';
 import { PatientAddConsultationComponent } from './components/patient-add/patient-add-consultation/patient-add-consultation.component';
-import { AddQueueMedicalCoverageItemComponent } from './components/patient-add/patient-add-queue-confirmation/add-queue-medical-coverage/add-queue-medical-coverage-item/add-queue-medical-coverage-item.component';
-import { AddQueueMedicalCoverageComponent } from './components/patient-add/patient-add-queue-confirmation/add-queue-medical-coverage/add-queue-medical-coverage.component';
 import { CommonModule } from '@angular/common';
 import { NgModule } from '@angular/core';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
@@ -61,10 +56,7 @@ import { AlertComponent } from './directives/alert/alert.component';
 import { DisplayDatePipe } from './pipes/display-date.pipe';
 import { DisplayHour } from './pipes/display-hour.pipe';
 import { ClinicSelectComponent } from './views/components/clinic/clinic-select/clinic-select.component';
-import { FollowUpsComponent } from './views/components/communications/follow-ups/follow-ups.component';
-import { AssignMedicalCoverageItemComponent } from './views/components/medical-coverage/assign-medical-coverage/assign-medical-coverage-item/assign-medical-coverage-item.component';
-import { AssignMedicalCoverageComponent } from './views/components/medical-coverage/assign-medical-coverage/assign-medical-coverage.component';
-import { ReferralItemComponent } from './components/consultation/consultation-referral/referral-item/referral-item.component';
+import { FollowUpsComponent } from './views/components/communications/follow-ups/follow-ups.component';import { ReferralItemComponent } from './components/consultation/consultation-referral/referral-item/referral-item.component';
 import { RouterModule } from '../../node_modules/@angular/router';
 import { LoadingComponent } from './components/loading/loading.component';
 import { LoadingRetryComponent } from './components/loading-retry/loading-retry.component';
@@ -157,9 +149,6 @@ const APP_VITAL = [
     LoadingRetryComponent,
     PatientAddQueueConfirmationComponent,
     PatientAddConsultationComponent,
-    MedicalCoverageComponent,
-    MedicalCoverageItemComponent,
-    MedicalCoverageItemDetailComponent,
     DiscountComponent,
     AddAppointmentComponent,
     AppointmentsNewComponent,
@@ -189,16 +178,12 @@ const APP_VITAL = [
   ],
   declarations: [
     AlertComponent,
-    AssignMedicalCoverageComponent,
-    AssignMedicalCoverageItemComponent,
     ErrorsComponent,
     DisplayDatePipe,
     DisplayHour,
     DisplayDollarPipe,
-    AssignMedicalCoverageComponent,
     PatientDetailTagAddAlertComponent,
     PatientAddAlertsInfoAddClinicalComponent,
-    AssignMedicalCoverageItemComponent,
     PatientDetailAddDocumentComponent,
     PatientHistoryDetailAddDocumentComponent,
     PatientHistoryDetailEditNoteComponent,
@@ -216,13 +201,8 @@ const APP_VITAL = [
     ReferralItemComponent,
     LoadingComponent,
     LoadingRetryComponent,
-    AddQueueMedicalCoverageComponent,
-    AddQueueMedicalCoverageItemComponent,
     PatientAddConsultationComponent,
     PatientAddQueueConfirmationComponent,
-    MedicalCoverageComponent,
-    MedicalCoverageItemComponent,
-    MedicalCoverageItemDetailComponent,
     DiscountComponent,
     DiscountComponent,
     AddAppointmentComponent,
@@ -255,7 +235,6 @@ const APP_VITAL = [
     ...APP_VITAL
   ],
   entryComponents: [
-    AssignMedicalCoverageComponent,
     PatientAddAlertsInfoAddClinicalComponent,
     PatientAddConsultationComponent,
     PatientDetailTagAddAlertComponent,
@@ -273,10 +252,6 @@ const APP_VITAL = [
     PatientAddQueueConfirmationComponent,
 
     PatientAddQueueConfirmationComponent,
-    MedicalCoverageComponent,
-    MedicalCoverageItemComponent,
-    MedicalCoverageItemDetailComponent,
-    MedicalCoverageItemDetailComponent,
     AppointmentsNewComponent,
     ConsultationPatientInfoComponent,
     ConsultationPatientAlertInfoComponent,

@@ -128,13 +128,6 @@ export class ConsultationFormService {
     });
   }
 
-  buildAttachedMedicalCoverage(medicalCoverageId: string, planId: string) {
-    return new FormGroup({
-      medicalCoverageId: new FormControl(medicalCoverageId),
-      planId: new FormControl(planId)
-    });
-  }
-
   // PATIENT REFERRAL //
   initPatientReferral() {
     console.log('entering patient referral:', this.patientReferral);
@@ -388,12 +381,10 @@ export class ConsultationFormService {
               paymentType: purchaseItem.itemPriceAdjustment.paymentType || 'DOLLAR',
               remark: purchaseItem.itemPriceAdjustment.remark || ''
             }),
-            attachedMedicalCoverages: purchaseItem.medicalCoverages || [],
             purchaseQty: purchaseItem.quantity || '',
             duration: purchaseItem.duration || '',
             stock: '',
             inventoryInvalid: '',
-            excludedCoveragePlanIds: purchaseItem.excludedCoveragePlanIds || [],
             cautionary: item.cautionary || '',
             salesItemCode: (item || { code: '' }).code,
             isChecked: false,

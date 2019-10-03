@@ -40,10 +40,8 @@ export class PrescriptionItemComponent implements OnInit {
   isCollapsed = false;
   isDiscountShown = false;
 
-  plans = [];
   errors = [];
   baseUom = [];
-  plansInSO = [];
   chargeItems = [];
   selectedItems = [];
 
@@ -151,19 +149,6 @@ export class PrescriptionItemComponent implements OnInit {
     console.log('Charge Active Items : ', this.chargeItems);
   }
 
-  setPlans() {
-    const plans = this.prescriptionItem.get('excludedCoveragePlanIds').value;
-    const selectedItems = [];
-    if (plans) {
-      this.plansInSO.forEach(element => {
-        if (plans.indexOf(element['planId']) === -1) {
-          selectedItems.push(element);
-        }
-      });
-    }
-    this.selectedItems = selectedItems;
-  }
-
   calculateCost(qty) {
     let sellingPrice = this.prescriptionItem.get('unitPrice').get('price').value * 100;
     let oriTotalPrice = this.prescriptionItem.get('oriTotalPrice');
@@ -221,19 +206,6 @@ export class PrescriptionItemComponent implements OnInit {
     adjustedAmount.patchValue(adjustedAmountInCents);
 
     this.updatePrice.emit(true);
-  }
-
-  onItemDeSelect(item: any) {
-    let plans = this.prescriptionItem.get('excludedCoveragePlanIds').value;
-    plans.push(item['value']['planId']);
-  }
-
-  onClear() {
-    const plans = this.prescriptionItem.get('excludedCoveragePlanIds').value;
-    plans.splice(0);
-    this.plansInSO.forEach(element => {
-      plans.push(element['planId']);
-    });
   }
 
   subscribeChangeOnItem() {
@@ -427,39 +399,6 @@ export class PrescriptionItemComponent implements OnInit {
       stock: 9999
     });
   }
-
-  // getCaseItemPrice(qty) {
-  //   let excludedPlans = this.prescriptionItem.get('excludedCoveragePlanIds').value;
-
-  //   if (this.itemSelected) {
-  //     const caseItem = {
-  //       chargeDetails: [this.caseChargeFormService.buildChargeDetailsItem(this.itemSelected.id, excludedPlans, qty)]
-  //     };
-  //     this.apiCaseManagerService.getCaseItemPrices(this.store.getCaseId(), caseItem)
-  //     .pipe(debounceTime(INPUT_DELAY),take(1))
-  //     .subscribe(
-  //       data => {
-  //         var caseItems = data.payload.chargeDetails;
-  //         var caseItem = caseItems.find(data => {
-  //           return data.itemId === this.itemSelected.id;
-  //         });
-  //         if (caseItem) {
-  //           let price = caseItem.charge.price;
-  //           this.prescriptionItem
-  //             .get('unitPrice')
-  //             .get('price')
-  //             .patchValue(price / 100);
-  //           this.unitPriceDisplay = (price / 100).toFixed(2);
-  //           this.calculateCost(qty);
-  //           this.updatePrice.emit(true);
-  //         }
-  //       },
-  //       err => {
-  //         this.alertService.error(JSON.stringify(err.error.message));
-  //       }
-  //     );
-  //   }
-  // }
 
   patchDosageInstruction() {
     const code = this.prescriptionItem.get('dosageInstruction').get('code');

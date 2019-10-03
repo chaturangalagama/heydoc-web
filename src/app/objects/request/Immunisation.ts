@@ -1,4 +1,3 @@
-import { AttachedMedicalCoverage } from '../AttachedMedicalCoverage';
 
 export interface ImmunisationGiven {
     immunisation: Array<Immunisation>;
@@ -12,7 +11,6 @@ export interface Immunisation {
     nextDose: string;
     vaccinationId: string;
     doseId: string;
-    attachedMedicalCoverages: AttachedMedicalCoverage;
 }
 
 export interface DiscountGiven {

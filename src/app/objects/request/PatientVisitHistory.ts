@@ -1,5 +1,4 @@
 import { DispatchDrugDetail } from './DrugDispatch';
-import { AttachedMedicalCoverage } from '../AttachedMedicalCoverage';
 
 export class PatientVisitHistory {
   consultation: Consultation;
@@ -194,7 +193,6 @@ interface IssuedMedicalTestDetail {
   testId: string;
   suggestedLocation: string;
   priceAdjustment: DiscountGiven;
-  attachedMedicalCoverages: AttachedMedicalCoverages;
 }
 
 class DrugDispatch {
@@ -217,7 +215,6 @@ class DrugDispatch {
 //     remark: string;
 //     duration: number;
 //     userPaymentOption: DiscountGiven;
-//     attachedMedicalCoverages: AttachedMedicalCoverages;
 // }
 
 interface Instruction {
@@ -283,7 +280,6 @@ interface Immunisation {
   doseId: string;
   chargeAmount: ChargeAmount;
   availablePriceAdjustment: DiscountGiven;
-  attachedMedicalCoverages: AttachedMedicalCoverages;
 }
 
 interface MedicalServiceGiven {
@@ -293,12 +289,6 @@ interface MedicalServiceGiven {
   name: string;
   chargeAmount: ChargeAmount;
   availablePriceAdjustment: DiscountGiven;
-  attachedMedicalCoverages: AttachedMedicalCoverages;
-}
-
-interface AttachedMedicalCoverages {
-  medicalCoverageId: string;
-  planId: string;
 }
 
 class ChargeAmount {

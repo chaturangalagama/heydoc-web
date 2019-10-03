@@ -16,17 +16,12 @@
         </div>
         <div class="card-body">
             <!-- <br> Patient Diagnosis: {{ consultationFormGroup.get('diagnosisIds').value | json }} -->
-            <app-consultation-diagnosis [diagnosisIds]="consultationFormGroup.get('diagnosisIds')" [attachedMedicalCoverages]="attachedMedicalCoverages"></app-consultation-diagnosis>
+            <app-consultation-diagnosis [diagnosisIds]="consultationFormGroup.get('diagnosisIds')"></app-consultation-diagnosis>
         </div>
     </div>
     <!-- <div> DISPENSING ---- dispatchItems : {{ consultationFormGroup.get('dispatchItemEntities').value|json}} </div>
     <br>
     <div> DISPENSING ----- diagnosis : {{ consultationFormGroup.get('diagnosisIds').value|json}} </div> -->
-    <!-- <app-case-charge class="mt-0" [itemsFormArray]="consultationFormGroup.get('dispatchItemEntities')" [caseStatus]="caseStatus" (handleChargeItemChange)="handleChargeItemChange($event)"></app-case-charge> -->
-    <!-- <br>{{ attachedMedicalCoverages.value | json }} -->
-    <!-- <br>coverage limit: {{ chargeFormGroup.get('coverageLimitFormGroup').value | json }} -->
-    <app-payment-coverage-limit [coverageLimitFormGroup]="chargeFormGroup.get('coverageLimitFormGroup')">
-    </app-payment-coverage-limit>
     <div class="btn-toolbar float-right" role="toolbar">
         <div class="btn-group" role="group">
             <button class="btn btn-large btn-brand-secondary" [disabled]="!(chargeFormGroup.valid && consultationFormGroup.valid)" (click)="onBtnSaveClicked()" (keyup)="onKeyUp($event)">SAVE & NEXT (F4)</button>

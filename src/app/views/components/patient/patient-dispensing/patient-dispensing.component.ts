@@ -30,7 +30,6 @@ import { CHAS_BALANCE_UNAVAILABLE, INPUT_DELAY } from './../../../../constants/a
 })
 export class PatientDispensingComponent implements OnInit, OnDestroy {
   // Output Variable to emit index of tab selected
-  @Input() attachedMedicalCoverages: FormArray;
   @Input() chargeFormGroup: FormGroup;
   @Input() consultationFormGroup: FormGroup;
   @Output() tabSelected = new EventEmitter<String>();
@@ -46,9 +45,7 @@ export class PatientDispensingComponent implements OnInit, OnDestroy {
   drugErrors = [];
   isSave = false;
   navigatingUrl: string;
-  isMedicalCoverageChanged = false;
 
-  // patientCoverages = [];
   postConsultTempStoreKey = this.store.getPatientVisitRegistryId()
     ? 'POST_CONSULT_' + this.store.getPatientVisitRegistryId()
     : '';
@@ -114,71 +111,12 @@ export class PatientDispensingComponent implements OnInit, OnDestroy {
 
   resetForms() {
     this.consultationFormService.resetForm();
-    this.paymentService.resetVisitCoverageArray();
   }
 
   ngOnDestroy() {
     this.subscriptions.forEach(subscription => {
       (subscription as Subscription).unsubscribe();
     });
-  }
-
-  getCoverageDetails(payload) {
-    const attachedMedicalCoverage: Array<any> = payload.coverages;
-    const coverageLimitFormGroup = this.chargeFormGroup.get('coverageLimitFormGroup');
-    const coverageLimitArray = coverageLimitFormGroup.get('coverageLimitArray') as FormArray;
-
-    while (coverageLimitArray.length > 0) {
-      coverageLimitArray.removeAt(0);
-    }
-
-    console.log('#0005 attachedMedicalCoverage: ', attachedMedicalCoverage);
-    console.log('#0005 coverageLimitArray: ', coverageLimitArray);
-
-    attachedMedicalCoverage.forEach(element => {
-      const coverage = this.store.getMedicalCoverageByPlanId(element.planId);
-      const plan = coverage.coveragePlans.find(x => {
-        return x.id === element.planId;
-      });
-      const coverageLimitItem = this.createCoverageLimitItem(coverage, plan);
-      console.log('#0005 coverageLimitItem: ', coverageLimitItem);
-      coverageLimitArray.push(coverageLimitItem);
-    });
-  }
-
-  createVisitCoverageArrayItem(coverage, plan) {
-    const item = {
-      name: `${coverage.name}\n${plan.name}`,
-      type: coverage.type,
-      planDetail: plan
-    };
-    return item;
-  }
-
-  createCoverageLimitItem(coverage, plan) {
-    const initialLimit = plan.capPerVisit.limit || 0;
-    const coverageLimitItem = this.fb.group({
-      name: `${coverage.name}\n${plan.name}`,
-      planId: plan.id,
-      type: coverage.type,
-      initialLimit: { value: initialLimit, disabled: true },
-      updatedLimit: initialLimit,
-      disabled: coverage.type === 'CORPORATE' ? true : false
-    });
-
-    coverageLimitItem.valueChanges
-      .pipe(
-        distinctUntilChanged(),
-        debounceTime(200)
-      )
-      .subscribe(values => {
-        if (values.updatedLimit == null) {
-          return;
-        }
-        this.updateOverallPrice();
-      });
-
-    return coverageLimitItem;
   }
 
   @HostListener('window:beforeunload', ['$event'])
@@ -231,60 +169,10 @@ export class PatientDispensingComponent implements OnInit, OnDestroy {
             itemPriceAdjustment: {
               adjustedValue: item.priceAdjustment.adjustedValue || 0,
               paymentType: item.priceAdjustment.paymentType || 'DOLLAR'
-            },
-            excludedPlans:
-              (Array.isArray(item.excludedCoveragePlanIds)
-                ? item.excludedCoveragePlanIds
-                : [item.excludedCoveragePlanIds]) || []
-            // excludedPlans : []
+            }
           };
         }) || [];
     console.log('items', chargeDetails);
-
-    const coverageLimitFormGroup = this.chargeFormGroup.get('coverageLimitFormGroup');
-    const coverageLimitArray = coverageLimitFormGroup.get('coverageLimitArray') as FormArray;
-    const itemsToInvoice = {
-      planMaxUsage: coverageLimitArray.value.reduce((obj, item) => {
-        obj[item.planId] = item.updatedLimit;
-        return obj;
-      }, {}),
-      chargeDetails
-    };
-
-    // this.apiCaseManagerService
-    //   .getDynamicInvoiceBreakdown(this.store.getCaseId(), itemsToInvoice)
-    //   .pipe(
-    //     debounceTime(INPUT_DELAY),
-    //     distinctUntilChanged()
-    //   )
-    //   .subscribe(
-    //     res => {
-    //       const invoices = res.payload;
-    //       let totalAmount = 0;
-    //       console.log('invoices', invoices);
-
-    //       invoices.forEach(invoice => {
-    //         console.log('invoice', invoice.invoiceType);
-    //         overallCharges.push({
-    //           paymentMode: invoice.invoiceType === 'DIRECT' ? 'Cash' : invoice.invoiceType,
-    //           charge: invoice.payableAmount - invoice.taxAmount,
-    //           gst: invoice.taxAmount,
-    //           planName: invoice.planName || '',
-    //           planId: invoice.planId || ''
-    //         });
-
-    //         totalAmount += invoice.payableAmount;
-    //       });
-
-    //       const overallChargeFormGroup = this.chargeFormGroup.get('overallChargeFormGroup');
-    //       overallChargeFormGroup.patchValue({
-    //         overallCharges: { value: overallCharges },
-    //         totalAmount: totalAmount
-    //       });
-    //       overallChargeFormGroup.updateValueAndValidity();
-    //     },
-    //     err => this.alertService.error(JSON.stringify(err.error.message))
-    //   );
   }
 
   // Action
@@ -306,14 +194,6 @@ export class PatientDispensingComponent implements OnInit, OnDestroy {
       this.paymentRequestInfo = this.consultationFormService.checkPatientReferral(this.paymentRequestInfo);
       this.paymentRequestInfo = MedicalCertificateItemsArrayComponent.checkMedicalCertificates(this.paymentRequestInfo);
       this.paymentRequestInfo = this.consultationFormService.checkFollowUp(this.paymentRequestInfo);
-
-      const maxUsageValue = this.chargeFormGroup.get('coverageLimitFormGroup').get('coverageLimitArray').value;
-      if (maxUsageValue) {
-        this.paymentRequestInfo.planMaxUsage = maxUsageValue.reduce((obj, item) => {
-          obj[item.planId] = item.updatedLimit;
-          return obj;
-        }, {});
-      }
     }
 
     this.apiPatientVisitService.payment(this.store.getPatientVisitRegistryId(), this.paymentRequestInfo).subscribe(

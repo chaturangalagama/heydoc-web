@@ -104,8 +104,6 @@ export class PatientAddAlertsInfoAddClinicalComponent implements OnInit {
     console.log('form saved: ', form);
     this.bsModalRef.hide();
     console.log('Save button clicked');
-
-    // let form be medical coverage form group
   }
 
   onBtnExit(form: FormGroup) {
@@ -123,8 +121,6 @@ export class PatientAddAlertsInfoAddClinicalComponent implements OnInit {
     // });
     this.bsModalRef.hide();
     console.log('exit button clicked');
-
-    // let form be medical coverage form group
   }
 
   formatToTitleCase(input: any) {

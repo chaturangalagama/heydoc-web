@@ -16,10 +16,7 @@ export const DB_FULL_DATE_TIMEZONE_NO_SPACE = 'YYYY-MM-DDTHH:mm:ss.SSS';
 export const DB_VISIT_DATE_FORMAT = 'DD-MM-YYYYT00:00:00';
 
 export const INPUT_DELAY = 500;
-
 export const GST = 1.07;
-
-export const MEDICAL_COVERAGES = ['INSURANCE', 'CORPORATE', 'CHAS', 'MEDISAVE'];
 
 export const PATIENT_LIST_TABLE_CONFIG = [
   { name: 'Number', prop: 'number', flexGrow: 1 }, // Let display name be #
@@ -154,7 +151,6 @@ export const VISIT_MANAGEMENT_TABS = [
   'Vital Signs',
   'Consultation',
   'Medical Services',
-  'Coverage',
   'Documents',
   'Dispensing',
   'Printing',

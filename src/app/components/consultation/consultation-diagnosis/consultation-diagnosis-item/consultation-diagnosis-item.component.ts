@@ -16,11 +16,8 @@ import { distinctUntilChanged, debounceTime, switchMap, tap } from 'rxjs/operato
 })
 export class ConsultationDiagnosisItemComponent implements OnInit {
   @Input() itemGroup: FormGroup;
-  @Input() attachedMedicalCoverages: FormArray;
   @Input() index: number;
   @Output() onDelete = new EventEmitter<number>();
-
-  attachedPlanId: Array<string> = new Array();
 
   codes: Array<SelectItemOptions<Diagnosis>>;
   searchTerm = new FormControl();
@@ -50,12 +47,6 @@ export class ConsultationDiagnosisItemComponent implements OnInit {
       // this.itemGroup.get('id').value.reset();
       this.itemGroup.get('id').markAsTouched();
     }
-
-    this.attachedPlanId =
-      this.attachedMedicalCoverages && this.attachedMedicalCoverages.value.map(coverage => coverage.planId);
-    this.attachedMedicalCoverages.valueChanges.subscribe(coverages => {
-      this.attachedPlanId = coverages.map(coverage => coverage.planId);
-    });
 
     this.onFilterInputChanged();
   }
@@ -89,7 +80,7 @@ export class ConsultationDiagnosisItemComponent implements OnInit {
           debounceTime(400),
           tap(() => (this.loading = true)),
           switchMap((term: string) => {
-            return this.apiCmsManagementService.searchDiagnosis(term, this.attachedPlanId);
+            return this.apiCmsManagementService.searchDiagnosis(term);
           })
         )
         .subscribe(

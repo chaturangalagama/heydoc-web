@@ -13,7 +13,6 @@ import * as moment from 'moment';
 // Service
 import { PatientService } from './../../../../services/patient.service';
 import { UtilsService } from './../../../../services/utils.service';
-import { MedicalCoverageFormService } from './../../../../services/medical-coverage-form.service';
 import { ApiPatientVisitService } from '../../../../services/api-patient-visit.service';
 import { AlertService } from './../../../../services/alert.service';
 import { ConsultationFormService } from './../../../../services/consultation-form.service';
@@ -24,8 +23,6 @@ import { PaymentService } from './../../../../services/payment.service';
 import { NgxPermissionsService } from 'ngx-permissions';
 
 // Objects
-import { MedicalCoverageResponse } from './../../../../objects/response/MedicalCoverageResponse';
-import { MedicalCoverageSelected } from './../../../../objects/MedicalCoverage';
 import { MedicalAlertResponse } from './../../../../objects/response/MedicalAlertResponse';
 import { Allergy } from './../../../../objects/response/Allergy';
 import { MedicalCertificateItemsArrayComponent } from './../../../../components/consultation/consultation-medical-certificate/medical-certificate-items-array.component';
@@ -72,13 +69,6 @@ export class PatientVisitManagementComponent implements OnInit, OnDestroy {
 
   drugErrors = [];
 
-  // Medical Coverage Tab
-  selectedPlans: FormArray;
-  attachedMedicalCoverages: FormArray;
-  coverages: MedicalCoverageResponse;
-  policyHolderInfo: FormArray;
-  selectedCoverageType = new Set();
-
   // Charge Panel
   chargeFormGroup: FormGroup;
 
@@ -97,7 +87,6 @@ export class PatientVisitManagementComponent implements OnInit, OnDestroy {
     private store: StoreService,
     private tempStore: TempStoreService,
     private fb: FormBuilder,
-    private medicalCoverageFormService: MedicalCoverageFormService,
     private alertService: AlertService,
     private router: Router
   ) {
@@ -191,17 +180,12 @@ export class PatientVisitManagementComponent implements OnInit, OnDestroy {
 
   resetForm() {
     this.consultationFormService.resetForm();
-    this.paymentService.resetVisitCoverageArray();
     this.paymentService.resetChargeFormGroup();
     // this.createForm();
     // this.initialisePatient();
   }
 
   createForm() {
-    // Initialise Medical Coverage FormArrays for Sub-Component Medical Coverage
-    this.policyHolderInfo = this.fb.array([]);
-    this.selectedPlans = this.fb.array([]);
-    this.attachedMedicalCoverages = this.fb.array([]);
 
     // Initalise FormGroups
     this.visitManagementFormGroup = this.fb.group({
@@ -254,7 +238,6 @@ export class PatientVisitManagementComponent implements OnInit, OnDestroy {
             res => {
               
               this.patientInfo = this.updatePatient(res.payload);
-              this.getMedicalCoverages();
               this.getAlertsAndAllergies();
               this.getDocumentsByPatient();
               this.updateProfileTab();
@@ -352,80 +335,6 @@ export class PatientVisitManagementComponent implements OnInit, OnDestroy {
         err => console.log(err)
       );
   }
-
-  // Get Medical Coverages
-  getMedicalCoverages() {
-    this.apiPatientInfoService
-      .searchAssignedPoliciesByUserId(this.patientInfo['userId'])
-      .pipe(
-        distinctUntilChanged(),
-        debounceTime(INPUT_DELAY)
-      )
-      .subscribe(
-        resp => {
-          if (resp.payload) {
-            this.coverages = new MedicalCoverageResponse(
-              resp.payload.INSURANCE,
-              resp.payload.CORPORATE,
-              resp.payload.CHAS,
-              resp.payload.MEDISAVE
-            );
-            this.populateData(this.coverages);
-          }
-        },
-        err => this.alertService.error(JSON.stringify(err))
-      );
-
-    // this.apiCaseManagerService
-    //   .searchCase(this.store.getCaseId())
-    //   .pipe(
-    //     distinctUntilChanged(),
-    //     debounceTime(INPUT_DELAY)
-    //   )
-    //   .subscribe(
-    //     res => {
-    //       console.log('res MC: ', res.payload);
-    //       res.payload.coverages.forEach(selectedPlan => {
-    //         const id = selectedPlan.planId;
-    //         const coverage = this.store
-    //           .getMedicalCoverages()
-    //           .find(coverage => coverage.coveragePlans.some(plans => plans.id === id));
-    //         if (coverage) {
-    //           this.attachedMedicalCoverages.push(
-    //             this.fb.group({
-    //               medicalCoverageId: coverage.id,
-    //               planId: id
-    //             })
-    //           );
-    //         }
-    //       });
-    //     },
-    //     err => {
-    //       this.alertService.error(JSON.stringify(err));
-    //     }
-    //   );
-  }
-
-  // getVisitDetail() {
-  //   this.apiPatientVisitService.consultationSearchByPatientVisitId(this.store.getPatientVisitRegistryId())
-  //   .pipe(distinctUntilChanged(), debounceTime(INPUT_DELAY))
-  //   .subscribe(
-  //     res => {
-  //       if (!res.payload) {
-  //         return;
-  //       }
-
-  //       if (res.payload.visitStatus === 'CONSULT') {
-  //         //patch data for consultation save
-  //         const consultation = res.payload;
-  //         this.patchValueToConsultationFormGroup(consultation);
-  //       }
-  //     },
-  //     err => {
-  //       this.alertService.error(JSON.stringify(err));
-  //     }
-  //   );
-  // }
 
   subscribeOnInit() {
     this.visitManagementFormGroup
@@ -611,42 +520,6 @@ export class PatientVisitManagementComponent implements OnInit, OnDestroy {
     this.visitManagementFormGroup.get('profileFormGroup').disable();
   }
 
-  populateData(payload: MedicalCoverageResponse) {
-    this.selectedPlans = this.fb.array([]);
-    console.log('PAYLOAD: ', payload);
-
-    for (const key of Object.keys(payload)) {
-      if (payload[key].length > 0) {
-        payload[key].forEach(element => {
-          // Getting policyholder information
-          const policyHolder = element.policyHolder;
-
-          this.policyHolderInfo.push(this.medicalCoverageFormService.createCoverageSelectedFB(policyHolder));
-
-          // Create medical coverage to be populated into formgroup
-          const medicalCoverageSelected =
-            this.store.getPlansByCoverageId(element.policyHolder.medicalCoverageId).length === 0
-              ? new MedicalCoverageSelected()
-              : <MedicalCoverageSelected>this.store.getPlansByCoverageId(element.policyHolder.medicalCoverageId);
-
-          // Creating plan object to be pushed into Patient's selected plans array
-          const plan = this.medicalCoverageFormService.createSelectedPlan(
-            false,
-            policyHolder,
-            '',
-            medicalCoverageSelected,
-            element.coveragePlan,
-            key,
-            false
-          );
-
-          this.selectedPlans.push(this.fb.group(plan));
-        });
-      }
-    }
-    return this.selectedPlans;
-  }
-
   updatePatient(info) {
     return this.utilsService.pick(info, PATIENT_INFO_KEYS);
   }
@@ -664,122 +537,6 @@ export class PatientVisitManagementComponent implements OnInit, OnDestroy {
     this.patientInfo = this.patientService.checkCompanyInfo(this.patientInfo, companyInfo);
 
     console.log('this.patientInfo: ', this.patientInfo);
-  }
-
-  checkMedicalCoverages() {
-    // Refactor this guy pls
-    const newPolicyHolders = [];
-    const newPolicyTypes = [];
-
-    const currentPolicyHolders = [];
-    const currentPolicyTypes = [];
-    const plans = this.selectedPlans.value;
-
-    if (plans.length < 1) {
-      this.endUpdating();
-      return;
-    }
-
-    plans.forEach(plan => {
-      let { medicalCoverageId, planId, patientCoverageId, remarks, startDate, endDate, costCenter } = plan;
-
-      if (plan.isNew) {
-        const holderDetails = {
-          identificationNumber: {
-            idType: this.patientInfo.userId.idType,
-            number: this.patientInfo.userId.number
-          },
-          name: this.patientInfo.name,
-          medicalCoverageId: medicalCoverageId,
-          planId: planId,
-          patientCoverageId: patientCoverageId,
-          specialRemarks: remarks,
-          status: 'ACTIVE',
-          startDate: startDate,
-          endDate: endDate,
-          costCenter: costCenter
-        };
-        const policyType = plan.coverageType;
-
-        newPolicyHolders.push(holderDetails);
-        newPolicyTypes.push(policyType);
-      } else {
-        const today = moment().format(DISPLAY_DATE_FORMAT);
-        const endDate = plan.coverageSelected.endDate;
-
-        const policyExpired = !moment(today, DISPLAY_DATE_FORMAT).isSameOrBefore(moment(endDate, DISPLAY_DATE_FORMAT));
-        if (!policyExpired) {
-          const policyHolder = this.policyHolderInfo.value.find(function(x) {
-            return x.planId === plan.planId && x.medicalCoverageId === plan.medicalCoverageId;
-          });
-
-          const holderDetails = {
-            id: policyHolder.id,
-            identificationNumber: {
-              idType: this.patientInfo.userId.idType,
-              number: this.patientInfo.userId.number
-            },
-            name: this.patientInfo.name,
-            medicalCoverageId: medicalCoverageId,
-            planId: planId,
-            patientCoverageId: patientCoverageId,
-            specialRemarks: remarks,
-            status: policyHolder.status,
-            startDate: startDate,
-            endDate: endDate,
-            costCenter: costCenter
-          };
-          const policyType = plan.coverageType;
-
-          currentPolicyHolders.push(holderDetails);
-          currentPolicyTypes.push(policyType);
-        }
-      }
-      this.selectedCoverageType.add(plan.coverageType);
-    });
-
-    // Skip updating policy when nothing new, and update patient instead
-    if (newPolicyHolders.length < 1 && currentPolicyHolders.length < 1) {
-      this.endUpdating();
-      return;
-    }
-
-    forkJoin(
-      currentPolicyHolders.map((plan, index) =>
-        this.apiPatientInfoService.editPolicy(
-          currentPolicyTypes[index],
-          currentPolicyHolders[index].id,
-          currentPolicyHolders[index]
-        )
-      )
-    )
-      .pipe(
-        debounceTime(INPUT_DELAY),
-        distinctUntilChanged((a, b) => JSON.stringify(a) === JSON.stringify(b))
-      )
-      .subscribe(
-        arr => {
-          console.log('updated policy holders');
-          this.endUpdating();
-        },
-        err => this.alertService.error(JSON.stringify(err.error['message']))
-      );
-
-    forkJoin(
-      newPolicyHolders.map((plan, index) =>
-        this.apiPatientInfoService.assignPolicy(newPolicyTypes[index], newPolicyHolders[index])
-      )
-    )
-      .pipe(
-        debounceTime(INPUT_DELAY),
-        distinctUntilChanged((a, b) => JSON.stringify(a) === JSON.stringify(b))
-      )
-      .subscribe(
-        arr => {
-          this.endUpdating();
-        },
-        err => this.alertService.error(JSON.stringify(err.error['message']))
-      );
   }
 
   checkMultipleUserAccess() {

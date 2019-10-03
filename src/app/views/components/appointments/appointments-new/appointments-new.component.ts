@@ -148,7 +148,7 @@ export class AppointmentsNewComponent implements OnInit {
           }
         );
       }catch (err) {
-        console.log('Search Coverage Error', err);
+        console.log('Search Error', err);
       }
   }
 

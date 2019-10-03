@@ -20,8 +20,6 @@ export class PaymentService {
   chargeFormGroup: FormGroup;
   collectFormGroup: FormGroup;
 
-  visitCoverageArray = [];
-
   static readonly GST_VALUE = 0.07;
   static readonly DEFAULT_PRICE_ADJUSTMENT = {
     decreaseValue: 0,
@@ -41,9 +39,6 @@ export class PaymentService {
   createChargeFormGroupDua(): FormGroup {
     return this.fb.group({
       needRefresh: true,
-      coverageLimitFormGroup: this.fb.group({
-        coverageLimitArray: this.fb.array([])
-      }),
       overallChargeFormGroup: this.fb.group({
         gstValue: 0.07,
         totalAmount: 0,
@@ -85,9 +80,6 @@ export class PaymentService {
       }),
       diagnosisFormGroup: this.fb.group({
         diagnosisArray: this.fb.array([])
-      }),
-      coverageLimitFormGroup: this.fb.group({
-        coverageLimitArray: this.fb.array([])
       }),
       prescriptionFormGroup: this.fb.group({
         isAdd: false,
@@ -270,10 +262,6 @@ export class PaymentService {
     this.consultationInfoObservable.next(consultationInfo);
   }
 
-  resetVisitCoverageArray() {
-    this.visitCoverageArray = [];
-  }
-
   reproportionChargeAndGst(charge, gst, gstValue): [number, number] {
     const taxedCharge = gst / gstValue;
     const untaxedCharge = charge - taxedCharge;
@@ -285,14 +273,6 @@ export class PaymentService {
     discountGiven.decreaseValue = values.priceAdjustment.decreaseValue;
     discountGiven.increaseValue = values.priceAdjustment.increaseValue;
     discountGiven.remarks = values.priceAdjustment.remark;
-  }
-
-  updateExcludedCoveragePlanIds(info, excludedPlanIds) {
-    if (excludedPlanIds) {
-      info.excludedCoveragePlanIds = excludedPlanIds;
-    } else {
-      info.excludedCoveragePlanIds = [];
-    }
   }
 
   convertPriceAdjustmentToAbsolutePriceAdjustment(unitPrice: number, priceAdjustment) {
@@ -332,10 +312,6 @@ export class PaymentService {
       stock: 9999,
       remarks: '',
       isCollapsed: true,
-
-      plans: { value: [] },
-      plan: '',
-
       isDelete: false,
       deleteIndex: -1
     };
@@ -355,8 +331,6 @@ export class PaymentService {
     adjustTotalPrice,
     stock,
     priceRemarks,
-    plans: any,
-    plan: any
   ) {
     return {
       unitPrice,
@@ -370,9 +344,6 @@ export class PaymentService {
 
       stock,
       isCollapsed: discount === 0 && increase === 0,
-
-      plans: { value: plans },
-      plan: { value: plan },
 
       isDelete: false,
       deleteIndex: -1

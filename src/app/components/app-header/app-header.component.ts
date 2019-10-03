@@ -1,5 +1,4 @@
 import { FormArray } from '@angular/forms';
-import { MedicalCoverageResponse } from './../../objects/response/MedicalCoverageResponse';
 import { AlertService } from './../../services/alert.service';
 import { UtilsService } from './../../services/utils.service';
 import { AuthService } from './../../services/auth.service';
@@ -28,8 +27,6 @@ export class AppHeaderComponent {
   doctorGroup;
   speciality;
   patientInfo;
-  coverages: MedicalCoverageResponse;
-  medicalCoverageFormArray: FormArray;
 
   constructor(
     private router: Router,
@@ -95,22 +92,6 @@ export class AppHeaderComponent {
         this.apiPatientInfoService.searchBy('systemuserid', this.store.getPatientId()).subscribe(
           res => {
             const pInfo = res.payload;
-            this.apiPatientInfoService.searchAssignedPoliciesByUserId(pInfo['userId']).subscribe(
-              resp => {
-                if (resp.payload) {
-                  this.coverages = new MedicalCoverageResponse(
-                    resp.payload.INSURANCE,
-                    resp.payload.CORPORATE,
-                    resp.payload.CHAS,
-                    resp.payload.MEDISAVE
-                  );
-                  // this.populateData(this.coverages);
-                  // this.medicalCoverageFormArray.updateValueAndValidity();
-                  // this.updateFormGroup();
-                }
-              },
-              err => this.alertService.error(JSON.stringify(err))
-            );
 
             console.log("pInfo: ",pInfo);
 
@@ -145,8 +126,6 @@ export class AppHeaderComponent {
       'maritalStatus',
       'contactNumber',
       'address'
-      // 'Address',
-      // 'Medical Coverage',
     ];
     this.patientInfo = this.pick(arr, keys);
     console.log("UPDATE USER",  this.patientInfo);

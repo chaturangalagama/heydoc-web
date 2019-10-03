@@ -16,11 +16,10 @@
                                 <app-patient-add-consultation [hidden]="hideConsultationInfo()" [consultationInfoFormGroup]="consultationFormGroup" [showPrioritySelect]="true"></app-patient-add-consultation>
                             </div>
                         </div>
-                        <app-medical-coverage [hasUpdatePriority]='true' [patientCoverages]="medicalCoverageSummaryFormGroup.get('patientCoverages')" [selectedCoverages]="selectedCoverages" *ngxPermissionsOnly="['ROLE_MEDICAL_COVERAGE_MANAGEMENT']"></app-medical-coverage>
                         <div class="btn-toolbar float-right" role="toolbar">
                             <div class="btn-group" role="group">
-                                <button [hidden]="type ==='DISPLAY_MEDICAL_COVERAGE'" class="btn btn-large btn-brand-secondary mr-2" (click)="hideModal()">Back</button>
-                                <button [hidden]="type ==='DISPLAY_MEDICAL_COVERAGE'" class="btn btn-large btn-brand-primary" (click)="onBtnSaveClicked($event)" [disabled]="disableConfirmBtn()">Confirm
+                                <button class="btn btn-large btn-brand-secondary mr-2" (click)="hideModal()">Back</button>
+                                <button class="btn btn-large btn-brand-primary" (click)="onBtnSaveClicked($event)" [disabled]="disableConfirmBtn()">Confirm
                                     & Register</button>
                             </div>
                         </div>
@@ -46,8 +45,8 @@
                         </div>
                         <div class="btn-toolbar float-right" role="toolbar">
                             <div class="btn-group" role="group">
-                                <button [hidden]="type ==='DISPLAY_MEDICAL_COVERAGE'" class="btn btn-large btn-brand-secondary mr-2" (click)="hideModal()">Cancel</button>
-                                <button [hidden]="type ==='DISPLAY_MEDICAL_COVERAGE'" class="btn btn-large btn-brand-primary" (click)="onBtnSaveClicked($event)" [disabled]="!consultationFormGroup.valid">Save
+                                <button class="btn btn-large btn-brand-secondary mr-2" (click)="hideModal()">Cancel</button>
+                                <button class="btn btn-large btn-brand-primary" (click)="onBtnSaveClicked($event)" [disabled]="!consultationFormGroup.valid">Save
                                     Appointment</button>
                             </div>
                         </div>
@@ -57,8 +56,3 @@
         </tab>
     </tabset>
 </div>
-
-
-
-
-<!-- <code>{{medicalCoverageSummaryFormGroup.value|json}}</code> -->

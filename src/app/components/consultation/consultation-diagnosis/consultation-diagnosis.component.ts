@@ -15,7 +15,6 @@ import { takeUntil } from 'rxjs/operators';
 })
 export class ConsultationDiagnosisComponent implements OnInit, OnDestroy {
   @Input() diagnosisIds: FormArray;
-  @Input() attachedMedicalCoverages: FormArray;
 
   private componentDestroyed: Subject<void> = new Subject();
 

@@ -1,4 +1,3 @@
-import { SelectedPlan } from './../../../objects/MedicalCoverage';
 import { Component, OnInit, Input, EventEmitter, Output } from '@angular/core';
 import { FormControl, FormGroup, FormBuilder, FormArray } from '@angular/forms';
 import * as moment from 'moment';
@@ -11,14 +10,11 @@ import { distinctUntilChanged, debounceTime } from 'rxjs/operators';
 })
 export class PatientAddConfirmationComponent implements OnInit {
   @Input() confirmationFormGroup: FormGroup;
-  @Input() attachedMedicalCoverages: FormArray;
   @Output() updateChange = new EventEmitter();
   consultationFormGroup: FormGroup;
-  @Input() selectedCoverages: FormArray;
   public event: EventEmitter<any> = new EventEmitter();
 
   title: string;
-  selectedPlans: FormArray;
 
   // DATA BINDING
   consultationInfo = [
@@ -27,8 +23,7 @@ export class PatientAddConfirmationComponent implements OnInit {
       remarks: '',
       purposeOfVisit: '',
       visitDate: '',
-      time: '',
-      attachedMedicalCoverages: [],
+      time: ''
     }
   ];
   visitDate: Date;
@@ -37,55 +32,22 @@ export class PatientAddConfirmationComponent implements OnInit {
   remarks: string;
   purposeOfVisit: string;
 
-  indexesOfCheckedPlans = [];
-
-  // HAN
-  // input from parent who called this pop-up
-  selectedPlan: Array<SelectedPlan>;
-
   //HAN
   constructor(
     private fb: FormBuilder
   ) {
-    this.selectedPlans = this.fb.array([]);
-    this.selectedCoverages = this.fb.array([]);
   }
 
   onBtnSaveClicked($event) {
-    this.consultationInfo[1] = this.selectedPlans.value;
-    this.consultationInfo[2] = this.selectedCoverages.value;
     this.event.emit(this.consultationInfo);
   }
 
-  reduceAttachedCoverages() {
-    const coverages = [];
-    this.attachedMedicalCoverages.value.forEach(coverage => {
-      coverages.push({
-        medicalCoverageId: coverage.medicalCoverageId,
-        planId: coverage.planId
-      });
-    });
-
-    return coverages;
-  }
-
   ngOnInit() {
-    if (this.selectedPlan) {
-      this.convertSelectedPlanToFormArray();
-    }
-    console.log('existing plan', this.selectedPlan);
-    this.attachedMedicalCoverages = this.fb.array([]);
-
     this.consultationFormGroup = this.createConsultationPage();
     this.confirmationFormGroup = this.createConfirmationFormGroup();
     this.subscribeToValueChanges();
   }
 
-  convertSelectedPlanToFormArray() {
-    this.selectedPlan.forEach(item => {
-      this.selectedPlans.push(this.fb.group(item));
-    });
-  }
 
   createConfirmationFormGroup(): FormGroup {
     return this.fb.group({
@@ -106,10 +68,8 @@ export class PatientAddConfirmationComponent implements OnInit {
         this.consultationInfo[0].remarks = values.remarks;
         this.consultationInfo[0].purposeOfVisit = values.purposeOfVisit;
         this.consultationInfo[0].preferredDoctor = values.preferredDoctor;
-        this.consultationInfo[0].attachedMedicalCoverages = this.reduceAttachedCoverages();
 
         console.log("Tthis.consultationInfo[0]: ", this.consultationInfo[0]);
-        console.log("THIS ATTACHED MEDICAL: ", this.attachedMedicalCoverages);
       });
 
   }

@@ -20,7 +20,6 @@ describe('ConsultationPatientInfoComponent', () => {
   beforeEach(() => {
     fixture = TestBed.createComponent(ConsultationPatientInfoComponent);
     component = fixture.componentInstance;
-    component.selectedPlans = new FormBuilder().array([]);
     fixture.detectChanges();
   });
 

@@ -1,6 +1,4 @@
 import { debounceTime, distinctUntilChanged, switchMap, takeUntil } from 'rxjs/operators';
-import { MedicalCoverageResponse } from './../../../objects/response/MedicalCoverageResponse';
-import { MedicalCoverageComponent } from './../../../views/components/medical-coverage/medical-coverage/medical-coverage.component';
 import { ApiCmsManagementService } from './../../../services/api-cms-management.service';
 import { ApiPatientVisitService } from './../../../services/api-patient-visit.service';
 import { UtilsService } from './../../../services/utils.service';
@@ -34,7 +32,6 @@ export class ConsultationPatientInfoComponent implements OnInit, OnDestroy {
   alerts: Array<Allergy>;
   medicalAlerts: Array<MedicalAlertResponse>;
   patientInfo: UserRegistrationObject;
-  coverages;
 
   patientId: string;
   patientNo: string;
@@ -50,8 +47,6 @@ export class ConsultationPatientInfoComponent implements OnInit, OnDestroy {
   postal: string;
   maritalStatus: string;
   contactNo: string;
-  priorityMedicalCoverage: string;
-  attachedMedicalCoverages: FormArray;
 
   private componentDestroyed: Subject<void> = new Subject();
 
@@ -69,7 +64,6 @@ export class ConsultationPatientInfoComponent implements OnInit, OnDestroy {
 
   ngOnInit() {
   
-    this.attachedMedicalCoverages = this.fb.array([]);
     this.initPatientInfo('', '', null, '', '', '', '', '', '', '', '', '', '');
     this.initPatientDetails();
 

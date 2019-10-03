@@ -24,7 +24,7 @@
         <div>VSM ----- diagnosis : {{visitManagementFormGroup.get('consultationFormGroup').get('diagnosisIds').value|json}} </div> -->
         <div *ngIf="selectedTabIndex > -1" class="row">
             <div [ngClass]="{'col-md-8': showSidePane, 'col-md-12': !showSidePane}">
-                <app-consultation [visitManagementFormGroup]='visitManagementFormGroup' [needRefresh]="needRefresh" [patientInfo]='patientInfo' [selectedPlans]='selectedPlans' [attachedMedicalCoverages]='attachedMedicalCoverages' [policyHolderInfo]='policyHolderInfo'
+                <app-consultation [visitManagementFormGroup]='visitManagementFormGroup' [needRefresh]="needRefresh" [patientInfo]='patientInfo' 
                     [selectedTabIndex]='selectedTabIndex' (tabSelected)='toggleTabs($event)'></app-consultation>
             </div>
             <div *ngIf="showSidePane" class="col-4 pl-0">

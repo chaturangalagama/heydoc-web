@@ -52,12 +52,10 @@ import { DialogService } from './services/dialog.service';
 import { LoggerService } from './services/logger.service';
 import { PatientService } from './services/patient.service';
 import { PaymentService } from './services/payment.service';
-import { PolicyHolderService } from './services/policy-holder.service';
 import { StoreService } from './services/store.service';
 import { UtilsService } from './services/utils.service';
 import { VaccinationService } from './services/vaccination.service';
 import { SharedModule } from './shared.module';
-import { MedicalCoverageFormService } from './services/medical-coverage-form.service';
 import { BsModalService } from 'ngx-bootstrap/modal';
 import { API_DOMAIN } from './constants/app.constants';
 import { TempStoreService } from './services/temp-store.service';
@@ -173,11 +171,9 @@ const appInitializerFn = (appConfig: AppConfigService) => {
     PermissionsGuardService,
     CanDeactivateGuardService,
     JwtHelperService,
-    PolicyHolderService,
     PaymentService,
     ConsultationFormService,
     UtilsService,
-    MedicalCoverageFormService,
     BsModalService,
     NgxPermissionsService,
     PrintTemplateService

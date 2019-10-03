@@ -460,7 +460,6 @@ export class PatientListComponent implements OnInit, OnDestroy {
         this.showAddVitalSigns(row.patientId);
         break;
       case this.actionList[1]:
-        // this.showUpdateMedicalCoverage(row);
         break;
       default:
         break;
@@ -487,81 +486,6 @@ export class PatientListComponent implements OnInit, OnDestroy {
       this.vitalFormService.resetVitalSignFormArray();
       // TODO: need to enable all dropdowns
       this.vitalFormService.initVitals();
-    });
-  }
-
-  // showUpdateMedicalCoverage(row) {
-  //   console.log('row: ', row);
-  //   this.apiCaseManagerService.searchCase(row.caseId).subscribe(
-  //     res => {
-  //       let attachedMedicalCoverages = [];
-  //       if (res.payload.coverages) {
-  //         attachedMedicalCoverages = res.payload.coverages;
-  //       }
-
-  //       console.log('ATTACHED MEDICAL COVERAGES: ', attachedMedicalCoverages);
-  //       this.proceedToUpdateMedicalCoverage(row.caseId, row.patientId, row.visitId, attachedMedicalCoverages);
-  //     },
-  //     err => {
-  //       this.alertService.error(JSON.stringify(err));
-  //       this.proceedToUpdateMedicalCoverage(row.caseId, row.patientId, row.visitId, []);
-  //     }
-  //   );
-  // }
-
-  proceedToUpdateMedicalCoverage(
-    caseId: string,
-    patientId: string,
-    patientRegistryId: string,
-    attachedMedicalCoverages: any[]
-  ) {
-    this.store.setPatientId(patientId);
-    const selectedMC = new FormArray([]);
-
-    attachedMedicalCoverages.forEach(mc => {
-      console.log('pa li attachedMedicalCoverages: ', mc);
-
-      const mcFG = this.fb.group({ planId: mc.planId });
-      // selectedMC.controls.push(this.fb.control('AAA'));
-      // const planId = this.fb.control(mc.planId)
-      // console.log("mcFG: ",planId);
-      selectedMC.push(mcFG);
-    });
-
-    // selectedMC.patchValue(plans)
-
-    console.log('pa li plans: ', selectedMC);
-    console.log('pa li selectedMC: ', selectedMC);
-    const initialState = {
-      title: 'Update Medical Coverage',
-      type: 'ATTACH_MEDICAL_COVERAGE',
-      hiddenTabs: true,
-      selectedCoverages: selectedMC
-    };
-
-    this.confirmationBsModalRef = this.modalService.show(PatientAddQueueConfirmationComponent, {
-      initialState,
-      class: 'modal-lg'
-    });
-
-    this.confirmationBsModalRef.content.event.subscribe(data => {
-      if (data) {
-        // Patient Visit Attach Medical Coverage
-        this.apiPatientVisitService
-          .attachMedicalCoverage(caseId, data.attachedMedicalCoverages.map(coverage => coverage.planId))
-          .subscribe(
-            res => {
-              this.confirmationBsModalRef.content.event.unsubscribe();
-              this.confirmationBsModalRef.hide();
-              this.store.setPatientId('');
-            },
-            err => {
-              this.alertService.error(JSON.stringify(err));
-            }
-          );
-      } else {
-        console.log('No data emitted');
-      }
     });
   }
 

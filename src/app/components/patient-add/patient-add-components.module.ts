@@ -8,9 +8,7 @@ import { PatientAddEmergencyContactComponent } from './patient-add-emergency-con
 import { PatientAddOtherPatientInfoComponent } from './patient-add-other-patient-info/patient-add-other-patient-info.component';
 import { PatientAddCompanyInfoComponent } from './patient-add-company-info/patient-add-company-info.component';
 import { PatientAddConfirmationComponent } from './patient-add-confirmation/patient-add-confirmation.component';
-import { PatientAddMedicalCoverageSummaryComponent } from './patient-add-medical-coverage-summary/patient-add-medical-coverage-summary.component';
 import { PatientAddAlertsInfoAddAllergyComponent } from './patient-add-alerts-info/patient-add-alerts-info-add-allergy/patient-add-alerts-info-add-allergy/patient-add-alerts-info-add-allergy.component';
-import { PatientAddMedicalCoverageSummaryItemComponent } from './patient-add-medical-coverage-summary/patient-add-medical-coverage-summary-item/patient-add-medical-coverage-summary-item.component';
 import { PatientUpdateConfirmationComponent } from './patient-update-confirmation/patient-update-confirmation.component';
 @NgModule({
   imports: [CommonModule, SharedModule],
@@ -20,8 +18,7 @@ import { PatientUpdateConfirmationComponent } from './patient-update-confirmatio
     PatientAddEmergencyContactComponent,
     PatientAddOtherPatientInfoComponent,
     PatientAddCompanyInfoComponent,
-    PatientUpdateConfirmationComponent,
-    PatientAddMedicalCoverageSummaryComponent
+    PatientUpdateConfirmationComponent
   ],
   declarations: [
     PatientAddPatientInfoComponent,
@@ -30,9 +27,7 @@ import { PatientUpdateConfirmationComponent } from './patient-update-confirmatio
     PatientAddOtherPatientInfoComponent,
     PatientAddCompanyInfoComponent,
     PatientAddConfirmationComponent,
-    PatientAddMedicalCoverageSummaryComponent,
     PatientAddAlertsInfoAddAllergyComponent,
-    PatientAddMedicalCoverageSummaryItemComponent,
     PatientUpdateConfirmationComponent
   ],
   entryComponents: [

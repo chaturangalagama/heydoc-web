@@ -11,7 +11,7 @@
 <!-- CONTENT -->
 
 <div class="row" *ngFor="let item of diagnosisIds.controls; let i = index;">
-    <app-consultation-diagnosis-item class="col-md mb-2" [itemGroup]="item" [index]=i (onDelete)="onBtnDeleteClicked($event)" [attachedMedicalCoverages]="attachedMedicalCoverages"></app-consultation-diagnosis-item>
+    <app-consultation-diagnosis-item class="col-md mb-2" [itemGroup]="item" [index]=i (onDelete)="onBtnDeleteClicked($event)"></app-consultation-diagnosis-item>
 </div>
 <hr class="p-1 m-0"> <button class="btn-light float-left" (click)="onBtnAddClicked()">+ Add Another Row</button>
 <!-- <button class="btn-sm-sub  btn-pink float-right">Delete Row(s)</button> -->

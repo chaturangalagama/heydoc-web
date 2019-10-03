@@ -54,17 +54,6 @@
             <br><span class="app-header-data-info">{{textTruncate(address1 + ' ' + address2 +' '+ postal)}} </span>
         </div>
         <div class="col-auto">
-            <span class="app-header-data-title">
-                Medical Coverage
-            </span><br>
-            <span *ngIf="priorityMedicalCoverage!==''" (click)="showMedicalCoverages()">
-                <span class="app-header-data-info text-truncate">
-                  {{textTruncate(priorityMedicalCoverage)}}
-                </span>
-            </span>
-            <span *ngIf="priorityMedicalCoverage===''" style="color:darkgray;">
-                      <span class="app-header-data-info"><i>Unassigned</i></span>
-            </span>
         </div>
     </div>
     <!-- <app-consultation-patient-alert-info [hidden]='hideAlerts' [patientInfo]='patientInfo' [alerts]="alerts" [medicalAlerts]="medicalAlerts"></app-consultation-patient-alert-info> -->

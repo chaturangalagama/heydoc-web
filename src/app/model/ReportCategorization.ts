@@ -8,8 +8,6 @@ export const ReportParams = {
     'drugCode',
     'itemCodes',
     'itemCategoryCodes',
-    'financialPlanId',
-    'coverageType',
     'status',
     'patientId',
     'monthlyReport'
@@ -101,13 +99,13 @@ export const ReportCategorization = {
         {
           reportName: 'private_corporate_patient_listing',
           reportDisplayName: 'Private Corporate Patient Listing',
-          params: ['doctorIds', 'startDate', 'endDate', 'coverageType', 'status', 'clinicIds'],
+          params: ['doctorIds', 'startDate', 'endDate', 'status', 'clinicIds'],
           roles: ['ROLE_PRIVATE_CORPORATE']
         },
         {
           reportName: 'report_on_outstanding_bill_invoice',
           reportDisplayName: 'Report on Outstanding Bill Invoice',
-          params: ['clinicIds', 'doctorIds', 'startDate', 'endDate', 'coverageType', 'status'],
+          params: ['clinicIds', 'doctorIds', 'startDate', 'endDate', 'status'],
           roles: ['ROLE_REPORT_ON_OUTSTANDING_BILL_INVOICE']
         },
         {

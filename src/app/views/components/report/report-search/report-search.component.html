@@ -105,32 +105,12 @@
         </div>
       </div> -->
 
-        <!-- Medical Coverage -->
-        <div class="col-md-4" *ngIf="selectedReport.params.includes('financialPlanId')">
-          <div class="form-group">
-            <label>Medical Coverage</label>
-            <ng-select class="p-0 form-control form-control-sm" [items]="medicalCoverages" [multiple]="true
- " [hideSelected]="true" bindLabel='name' bindValue='id' (change)="onMedicalCoverageSelect($event)" formControlName='financialPlanId'></ng-select>
-            <errors [control]="mainFormGroup.get('financialPlanId')"></errors>
-          </div>
-        </div>
-
-        <!-- Coverage Type -->
-        <div class="col-md-4" *ngIf="selectedReport.params.includes('coverageType')">
-          <div class="form-group">
-            <label>Coverage Type</label>
-            <ng-select class="p-0 form-control form-control-sm" [items]="coverageTypes" [multiple]="true" [hideSelected]="true" bindLabel='label'
-              bindValue='value' (change)="onMedicalCoverageSelect($event)" formControlName='coverageType'></ng-select>
-            <errors [control]="mainFormGroup.get('coverageType')"></errors>
-          </div>
-        </div>
-
         <!-- Payment Status -->
         <div class="col-md-4" *ngIf="selectedReport.params.includes('status')">
           <div class="form-group">
             <label>Payment Status</label>
             <ng-select class="p-0 form-control form-control-sm" [items]="paymentStatus" [multiple]="true" [hideSelected]="true" bindLabel='label'
-              bindValue='value' (change)="onMedicalCoverageSelect($event)" formControlName='status'></ng-select>
+              bindValue='value' formControlName='status'></ng-select>
             <errors [control]="mainFormGroup.get('status')"></errors>
           </div>
         </div>

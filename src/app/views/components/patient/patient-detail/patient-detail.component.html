@@ -74,29 +74,6 @@
     </div>
   </tab>
 
-  <tab heading="MEDICAL COVERAGE" *ngxPermissionsOnly="['ROLE_MEDICAL_COVERAGE_MANAGEMENT']" (select)="setOnTabSelected(1)">
-    <div class="container-fluid h-100">
-      <div class="row">
-        <div class="col-md-12">
-          <app-medical-coverage [hasAdd]='false' [hasDelete]='true' [popUpAddCoverage]='true' [patientCoverages]="patientDetailFormGroup.get('selectedPlans')"
-            [policyHolderInfo]='policyHolderInfo'></app-medical-coverage>
-        </div>
-      </div>
-      <div class="row">
-        <div class="col-md-12">
-          <div class="btn-toolbar float-right" role="toolbar">
-            <div class="btn-group" role="group">
-              <button class="btn btn-large btn-brand-primary" (click)="assignPolicy()" (keyup)="onKeyUp($event)"
-                [disabled]="!patientDetailFormGroup.get('selectedPlans').valid">
-                SAVE& NEXT (F4)
-              </button>
-            </div>
-          </div>
-        </div>
-      </div>
-    </div>
-  </tab>
-
   <!-- <tab heading="DOCUMENTS" *ngxPermissionsOnly="['ROLE_FILE_MANAGEMENT']" (select)="isInHistoryListTab=false">
         <div class="container-fluid h-100">
             <div class="row">

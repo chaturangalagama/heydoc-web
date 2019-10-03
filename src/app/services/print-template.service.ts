@@ -9,15 +9,10 @@ import { ApiCmsManagementService } from './api-cms-management.service';
 import { StoreService } from './store.service';
 
 import { refferalLetterTemplate } from '../views/templates/refferal.letter';
-import moment = require('moment');
-import { DB_FULL_DATE_FORMAT, DISPLAY_DATE_FORMAT } from '../constants/app.constants';
-import { store } from '@angular/core/src/render3/instructions';
-import { MedicalCoverageSelected } from '../objects/MedicalCoverage';
 
 @Injectable()
 export class PrintTemplateService {
   paymentInfo;
-  medicalCoverageInfo: Array<MedicalCoverageSelected> = [];
 
   clinic;
 
@@ -30,7 +25,6 @@ export class PrintTemplateService {
   ) {}
 
   ngOnInit() {
-    this.medicalCoverageInfo = this.store.medicalCoverageList;
     this.clinic = this.store.clinic;
   }
 
@@ -353,16 +347,11 @@ export class PrintTemplateService {
 
     creditPayments.forEach(payment => {
       if (payment.payableAmount > 0) {
-        const coverageName = this.getCoverageName(payment.planId);
         breakdownString += this.mapToHtmlBoldNameAndValue([
           {
-            name: 'PAY BY ' + coverageName,
             price: payment.payableAmount
           }
         ]);
-
-        summaryString += summaryString === '' ? coverageName : ' / ' + coverageName;
-        console.log('summary string credit: ', summaryString);
       }
     });
 
@@ -414,14 +403,6 @@ export class PrintTemplateService {
     }
 
     return checkIsSummaryOrBreakdown === 'summary' ? summaryString : breakdownString;
-  }
-
-  getCoverageName(planId) {
-    this.medicalCoverageInfo = this.store.medicalCoverageList;
-    const coverage = this.medicalCoverageInfo.find(function(x) {
-      return x.coveragePlans.some(plan => plan.id === planId);
-    });
-    return coverage.name.toUpperCase();
   }
 
   updateLabelTemplate(id, templateName, template) {

@@ -119,8 +119,7 @@ export class PatientSearchComponent implements OnInit {
   showAddConfirmation(patientId) {
     this.currPatientId = patientId;
     const initialState = {
-      title: 'Confirmation of Patient Visit',
-      selectedCoverages: this.fb.array([])
+      title: 'Confirmation of Patient Visit'
     };
 
     this.confirmationBsModalRef = this.modalService.show(PatientAddQueueConfirmationComponent, {
@@ -149,8 +148,7 @@ export class PatientSearchComponent implements OnInit {
         data.purposeOfVisit,
         data.priority,
         data.remarks
-      ),
-      data.attachedMedicalCoverages.map(value => value.planId)
+      )
     );
 
     console.log('patient to be added to registry', patientRegistryEntry);

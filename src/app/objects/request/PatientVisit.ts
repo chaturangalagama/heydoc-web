@@ -1,15 +1,11 @@
-import { AttachedMedicalCoverage } from '../AttachedMedicalCoverage';
 
 export class PatientVisit {
   registryEntity: PatientVisitRegistryEntity;
-  attachedMedicalCoverages: Array<string>;
 
   constructor(
-    registryEntity: PatientVisitRegistryEntity = new PatientVisitRegistryEntity(),
-    attachedMedicalCoverages: Array<string> = []
+    registryEntity: PatientVisitRegistryEntity = new PatientVisitRegistryEntity()
   ) {
     this.registryEntity = registryEntity;
-    this.attachedMedicalCoverages = attachedMedicalCoverages;
   }
 }
 

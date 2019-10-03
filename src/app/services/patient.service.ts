@@ -7,7 +7,6 @@ import { map, switchMap, catchError } from 'rxjs/operators';
 import { PhoneNumberUtil } from 'google-libphonenumber';
 import * as moment from 'moment';
 import { ApiPatientInfoService } from './api-patient-info.service';
-import { MedicalCoverageResponse } from './../objects/response/MedicalCoverageResponse';
 import { COUNTRIES } from '../constants/countries';
 import { COMMUNICATIONS } from '../constants/communications';
 import { ETHNICITIES } from '../constants/ethnicities';
@@ -54,14 +53,6 @@ export class PatientService {
     });
 
     return new FormArray([medicalAlerts]);
-  }
-
-  addMedicalCoverageForm(): FormArray {
-    const medicalCoverage = this.fb.group({
-      coverage: new MedicalCoverageResponse()
-    });
-
-    return new FormArray([medicalCoverage]);
   }
 
   createPatientAddFormGroup(): FormGroup {
@@ -145,12 +136,6 @@ export class PatientService {
         isAdd: false,
         requiredSave: false
       }),
-      medicalCoverageFormGroup: this.fb.group({
-        selectedPlans: '',
-        testCoverage: this.addMedicalCoverageForm()
-      }),
-      selectedPlans: this.fb.array([]),
-      attachedPlans: this.fb.array([]),
       emergencyContactFormGroup: this.fb.group({
         name: '',
         contact: '',
@@ -444,7 +429,6 @@ export class PatientService {
         documentsArray: this.fb.array([]),
         newDocumentsArray: this.fb.array([])
       }),
-      selectedPlans: this.fb.array([]),
       consultationFormGroup: this.fb.group({
         search: '',
         dateFrom: new Date(),
