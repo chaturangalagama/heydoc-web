@@ -115,8 +115,6 @@ export const HEADER_TITLES = [
   { url: '/pages/patient/add', value: 'Add New Patient' },
   { url: '/pages/payment/charge', value: 'Collect Payment' },
   { url: '/pages/payment/collect', value: 'Collect Payment' },
-  { url: '/pages/communications/main/follow-ups', value: 'Communications' },
-  { url: '/pages/communications', value: 'Communications' },
   { url: '/pages/case/list', value: 'Case Manager' },
   { url: '/pages/case/detail', value: 'Case Details' }
 ];
@@ -154,5 +152,3 @@ export const VISIT_MANAGEMENT_TABS = [
   'Printing',
   'Payment'
 ];
-
-export const CHAS_BALANCE_UNAVAILABLE = "CHAS balance can't be retrieved. Please check with the portal.";

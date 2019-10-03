@@ -16,11 +16,5 @@ export const navigation = [
     url: '/pages/patient/search',
     icon: 'icon-patients',
     svgIcon: '/assets/svg/patients.svg'
-  },
-  {
-    name: 'Communications',
-    url: '/pages/communications/',
-    icon: '',
-    svgIcon: '/assets/svg/communications.svg'
   }
 ];

@@ -18,10 +18,8 @@ import { AlertService } from '../../../../../services/alert.service';
 import { TempStoreService } from '../../../../../services/temp-store.service';
 // Components
 import { MedicalCertificateItemsArrayComponent } from '../../../../../components/business-components/consultation/consultation-medical-certificate/medical-certificate-items-array.component';
-import { MedicalCertificateItemControlComponent } from '../../../../../components/business-components/consultation/consultation-medical-certificate/medical-certificate-item-control.component';
-
 // Objects
-import { CHAS_BALANCE_UNAVAILABLE, INPUT_DELAY } from '../../../../../constants/app.constants';
+import { INPUT_DELAY } from '../../../../../constants/app.constants';
 
 @Component({
   selector: 'app-patient-dispensing',

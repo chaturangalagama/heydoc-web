@@ -56,7 +56,7 @@ import { AlertComponent } from './directives/alert/alert.component';
 import { DisplayDatePipe } from './pipes/display-date.pipe';
 import { DisplayHour } from './pipes/display-hour.pipe';
 import { ClinicSelectComponent } from './views/components/business/clinic/clinic-select/clinic-select.component';
-import { FollowUpsComponent } from './views/components/business/communications/follow-ups/follow-ups.component';import { ReferralItemComponent } from './components/business-components/consultation/consultation-referral/referral-item/referral-item.component';
+import { ReferralItemComponent } from './components/business-components/consultation/consultation-referral/referral-item/referral-item.component';
 import { RouterModule } from '../../node_modules/@angular/router';
 import { LoadingComponent } from './components/app-components/loading/loading.component';
 import { LoadingRetryComponent } from './components/app-components/loading-retry/loading-retry.component';
@@ -142,7 +142,6 @@ const APP_VITAL = [
     DrugInputSearchComponent,
     DrugInputSearchModalComponent,
     ClinicSelectComponent,
-    FollowUpsComponent,
     ReferralItemComponent,
     RouterModule,
     LoadingComponent,
@@ -197,7 +196,6 @@ const APP_VITAL = [
     DrugInputSearchComponent,
     DrugInputSearchModalComponent,
     ClinicSelectComponent,
-    FollowUpsComponent,
     ReferralItemComponent,
     LoadingComponent,
     LoadingRetryComponent,
@@ -247,7 +245,6 @@ const APP_VITAL = [
     PaymentSelectionComponent,
     DrugInputSearchModalComponent,
     ClinicSelectComponent,
-    FollowUpsComponent,
     ReferralItemComponent,
     PatientAddQueueConfirmationComponent,
 

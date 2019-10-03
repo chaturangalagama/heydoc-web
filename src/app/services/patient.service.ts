@@ -16,7 +16,6 @@ import { MARITAL_STATUS } from '../constants/marital.status';
 import { NATIONALITIES } from '../constants/nationalities';
 import { OCCUPATIONS } from '../constants/occupations';
 import { TITLES } from '../constants/titles';
-import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { FormGroup, FormBuilder, FormArray, Validators, AbstractControl, AsyncValidatorFn } from '@angular/forms';
 
