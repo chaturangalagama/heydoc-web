@@ -7,7 +7,7 @@ import { ConsultationHistoryComponent } from '../../../components/consultation/c
 import { ConsultationPatientInfoComponent } from '../../../components/consultation/consultation-patient-info/consultation-patient-info.component';
 import { DISPLAY_DATE_FORMAT } from '../../../../app/util/constants/app.constants';
 import { Router, ActivatedRoute, Params } from '@angular/router';
-import { StoreService } from '../../../../app/services/store.service';
+import { StoreService } from '../../../services/store.service';
 import { DispatchDrugDetail } from '../../../../app/util/objects/request/DrugDispatch';
 import { UtilsService } from '../../../../app/services/utils.service';
 import { Consultation } from '../../../../app/util/objects/request/Consultation';

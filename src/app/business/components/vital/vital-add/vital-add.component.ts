@@ -4,7 +4,7 @@ import { ApiPatientVisitService } from '../../../services/api-patient-visit.serv
 import { VitalFormService } from '../../../services/vital-form.service';
 import { FormGroup, FormArray } from '@angular/forms';
 import { Component, OnInit, Input } from '@angular/core';
-import { StoreService } from '../../../../app/services/store.service';
+import { StoreService } from '../../../services/store.service';
 import { VitalConfiguration } from '../../../../app/util/objects/response/VitalConfiguration';
 
 @Component({

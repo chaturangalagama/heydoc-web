@@ -13,7 +13,7 @@ import { ConsultationFormService } from '../../../services/consultation-form.ser
 import { ApiCmsManagementService } from '../../../services/api-cms-management.service';
 import { ApiPatientVisitService } from '../../../services/api-patient-visit.service';
 import { PaymentService } from '../../../services/payment.service';
-import { StoreService } from '../../../../app/services/store.service';
+import { StoreService } from '../../../services/store.service';
 import { AlertService } from '../../../services/alert.service';
 import { TempStoreService } from '../../../../app/services/temp-store.service';
 // Components

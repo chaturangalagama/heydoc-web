@@ -1,5 +1,5 @@
 import { ApiCmsManagementService } from '../../../../services/api-cms-management.service';
-import { StoreService } from '../../../../../app/services/store.service';
+import { StoreService } from '../../../../services/store.service';
 import { PatientVisitList } from '../../../../../app/util/objects/response/PatientVisitList';
 import { DB_FULL_DATE_FORMAT } from '../../../../../app/util/constants/app.constants';
 import { AppConfigService } from '../../../../../app/services/app-config.service';

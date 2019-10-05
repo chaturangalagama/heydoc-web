@@ -4,7 +4,7 @@ import { Component, OnInit, Output, EventEmitter, Input, SimpleChanges, OnDestro
 import * as moment from 'moment';
 
 import { AlertService } from '../../../../services/alert.service';
-import { StoreService } from '../../../../../app/services/store.service';
+import { StoreService } from '../../../../services/store.service';
 import { DISPLAY_DATE_FORMAT, INPUT_DELAY } from '../../../../../app/util/constants/app.constants';
 import { PatientVisitHistory } from '../../../../../app/util/objects/request/PatientVisitHistory';
 import { ApiPatientVisitService } from '../../../../services/api-patient-visit.service';

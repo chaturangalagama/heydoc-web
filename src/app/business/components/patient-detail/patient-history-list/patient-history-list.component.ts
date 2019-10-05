@@ -1,6 +1,6 @@
 import { Component, OnInit, Input, Output, EventEmitter } from '@angular/core';
 import { FormGroup } from '@angular/forms';
-import { StoreService } from '../../../../app/services/store.service';
+import { StoreService } from '../../../services/store.service';
 import { Router } from '@angular/router';
 import { Page } from '../../../../app/util/model/page';
 

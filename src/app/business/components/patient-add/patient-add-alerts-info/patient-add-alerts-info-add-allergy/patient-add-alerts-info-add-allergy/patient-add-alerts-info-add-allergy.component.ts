@@ -4,7 +4,7 @@ import { EventEmitter } from '@angular/core';
 import { IOption } from 'ng-select';
 import { FormGroup, FormArray } from '@angular/forms';
 import { BsModalRef } from 'ngx-bootstrap/modal';
-import { StoreService } from '../../../../../../app/services/store.service';
+import { StoreService } from '../../../../../services/store.service';
 import { timer } from 'rxjs';
 
 @Component({

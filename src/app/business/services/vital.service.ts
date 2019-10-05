@@ -1,4 +1,4 @@
-import { StoreService } from '../../app/services/store.service';
+import { StoreService } from './store.service';
 import { ApiPatientVisitService } from './api-patient-visit.service';
 import { AlertService } from './alert.service';
 import { Injectable } from '@angular/core';

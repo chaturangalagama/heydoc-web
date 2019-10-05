@@ -7,7 +7,7 @@ import { BsModalRef } from 'ngx-bootstrap/modal/bs-modal-ref.service';
 import { Observable, forkJoin } from 'rxjs';
 import { distinctUntilChanged } from 'rxjs/operators';
 
-import { StoreService } from '../../../../app/services/store.service';
+import { StoreService } from '../../../services/store.service';
 import { AlertService } from '../../../services/alert.service';
 import { DialogService } from '../../../../app/services/dialog.service';
 import { ApiPatientInfoService } from '../../../services/api-patient-info.service';

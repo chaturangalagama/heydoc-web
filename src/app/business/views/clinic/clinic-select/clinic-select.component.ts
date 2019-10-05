@@ -2,7 +2,7 @@ import { Clinic } from '../../../../app/util/objects/response/Clinic';
 
 import { Router } from '@angular/router';
 import { navigation } from '../../../../app/_nav';
-import { StoreService } from '../../../../app/services/store.service';
+import { StoreService } from '../../../services/store.service';
 import { Component, OnInit, EventEmitter } from '@angular/core';
 
 import { timer } from 'rxjs';

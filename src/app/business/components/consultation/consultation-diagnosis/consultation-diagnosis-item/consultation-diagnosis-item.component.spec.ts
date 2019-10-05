@@ -13,7 +13,7 @@ import { ApiCmsManagementService } from '../../../../services/api-cms-management
 import { AlertService } from '../../../../services/alert.service';
 import { ConsultationFormService } from '../../../../services/consultation-form.service';
 import { ConsultationComponentsModule } from '../../consultation-components.module';
-import { StoreService } from '../../../../../app/services/store.service';
+import { StoreService } from '../../../../services/store.service';
 import { TestingModule } from '../../../../../app/util/test/testing.module';
 
 describe('ConsultationDiagnosisItemComponent', () => {

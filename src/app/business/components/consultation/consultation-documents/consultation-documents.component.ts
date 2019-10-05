@@ -9,7 +9,7 @@ import { FormGroup, FormBuilder } from '@angular/forms';
 import { AlertService } from '../../../services/alert.service';
 import { DISPLAY_DATE_FORMAT } from '../../../../app/util/constants/app.constants';
 import { ApiPatientVisitService } from '../../../services/api-patient-visit.service';
-import { StoreService } from '../../../../app/services/store.service';
+import { StoreService } from '../../../services/store.service';
 
 @Component({
   selector: 'app-consultation-documents',

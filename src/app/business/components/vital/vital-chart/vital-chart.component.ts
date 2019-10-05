@@ -4,7 +4,7 @@ import {
   DISPLAY_DATE_TIME_NO_SECONDS_FORMAT,
   DB_FULL_DATE_FORMAT_NO_SECOND
 } from '../../../../app/util/constants/app.constants';
-import { StoreService } from '../../../../app/services/store.service';
+import { StoreService } from '../../../services/store.service';
 import { BaseChartDirective } from 'ng2-charts';
 import { Component, OnInit, ViewChild, AfterViewInit, SimpleChanges, OnDestroy } from '@angular/core';
 import { VitalConfiguration } from '../../../../app/util/objects/response/VitalConfiguration';

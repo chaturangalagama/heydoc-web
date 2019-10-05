@@ -1,4 +1,4 @@
-import { PatientVisitManagementComponent } from './patient-visit-management/patient-visit-management.component';
+import { PatientVisitComponent } from '../patient-visit/patient-visit/patient-visit.component';
 import { NgModule } from '@angular/core';
 import { Routes, RouterModule } from '@angular/router';
 import { NgxPermissionsGuard } from 'ngx-permissions';
@@ -48,7 +48,7 @@ export const routes: Routes = [
       },
       {
         path: 'management',
-        component: PatientVisitManagementComponent,
+        component: PatientVisitComponent,
         data: {
           requiresLogin: true,
           permissions: {

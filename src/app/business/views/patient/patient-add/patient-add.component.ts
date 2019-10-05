@@ -23,7 +23,7 @@ import {
   ALLERGIES
 } from '../../../../app/util/constants/app.constants';
 import { AlertService } from '../../../services/alert.service';
-import { StoreService } from '../../../../app/services/store.service';
+import { StoreService } from '../../../services/store.service';
 import {
   UserRegistrationObject,
   Company,

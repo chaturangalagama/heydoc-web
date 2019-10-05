@@ -1,6 +1,6 @@
 // import { PatientNote } from './../../../../objects/response/PatientNote';
 import { FormControl } from '@angular/forms';
-import { StoreService } from '../../../../../app/services/store.service';
+import { StoreService } from '../../../../services/store.service';
 import { ApiCmsManagementService } from '../../../../services/api-cms-management.service';
 import { DisplayDatePipe } from '../../../../../app/util/pipes/display-date.pipe';
 import { Component, OnInit, Input, HostListener } from '@angular/core';

@@ -5,7 +5,7 @@ import { FormGroup, FormBuilder, FormArray } from '@angular/forms';
 import { Subject, BehaviorSubject } from 'rxjs';
 import { OngoingMedicationItemComponent } from './ongoing-medication-item/ongoing-medication-item.component';
 import { Component, OnInit, Input} from '@angular/core';
-import { StoreService } from '../../../../app/services/store.service';
+import { StoreService } from '../../../services/store.service';
 import { debounceTime, distinctUntilChanged, debounce } from 'rxjs/operators';
 // import { moment } from 'ngx-bootstrap/chronos/test/chain';
 import * as moment from 'moment';

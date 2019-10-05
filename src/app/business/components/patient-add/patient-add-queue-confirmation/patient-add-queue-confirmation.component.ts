@@ -1,6 +1,6 @@
 import { AlertService } from '../../../services/alert.service';
 import { ApiPatientInfoService } from '../../../services/api-patient-info.service';
-import { StoreService } from '../../../../app/services/store.service';
+import { StoreService } from '../../../services/store.service';
 import { Component, OnInit, Input, EventEmitter, Output } from '@angular/core';
 import { FormControl, FormGroup, FormBuilder, FormArray, Validators } from '@angular/forms';
 import * as moment from 'moment';

@@ -9,7 +9,7 @@ import { saveAs } from 'file-saver';
 
 // Services
 import { AppConfigService } from '../../../../app/services/app-config.service';
-import { StoreService } from '../../../../app/services/store.service';
+import { StoreService } from '../../../services/store.service';
 import { AlertService } from '../../../services/alert.service';
 import { ApiPatientVisitService } from '../../../services/api-patient-visit.service';
 

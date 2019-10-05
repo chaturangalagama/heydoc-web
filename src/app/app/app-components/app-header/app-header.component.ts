@@ -6,7 +6,7 @@ import { Router, NavigationEnd } from '@angular/router';
 import { Component } from '@angular/core';
 import * as moment from 'moment';
 import { timer } from 'rxjs';
-import { StoreService } from '../../services/store.service';
+import { StoreService } from '../../../business/services/store.service';
 import { ApiPatientInfoService } from '../../../business/services/api-patient-info.service';
 import { DB_FULL_DATE_FORMAT } from '../../util/constants/app.constants';
 import { HEADER_TITLES } from '../../util/constants/app.constants';

@@ -1,10 +1,10 @@
-import { VisitManagementService } from '../../../../services/visit-management.service';
-import { AlertService } from '../../../../services/alert.service';
-import { INPUT_DELAY } from '../../../../../app/util/constants/app.constants';
+import { VisitManagementService } from '../../../services/visit-management.service';
+import { AlertService } from '../../../services/alert.service';
+import { INPUT_DELAY } from '../../../../app/util/constants/app.constants';
 import { debounceTime, distinctUntilChanged } from 'rxjs/operators';
-import { ApiPatientVisitService } from '../../../../services/api-patient-visit.service';
+import { ApiPatientVisitService } from '../../../services/api-patient-visit.service';
 import { Component, OnInit, Input, EventEmitter, Output } from '@angular/core';
-import { StoreService } from '../../../../../app/services/store.service';
+import { StoreService } from '../../../services/store.service';
 import { Subject } from 'rxjs';
 @Component({
   selector: 'app-queue',

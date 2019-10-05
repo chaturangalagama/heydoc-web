@@ -5,7 +5,7 @@ import * as moment from 'moment';
 import { VitalData } from '../../app/util/objects/request/VitalData';
 import { DB_FULL_DATE_FORMAT_NO_SECOND } from '../../app/util/constants/app.constants';
 import { ApiPatientVisitService } from './api-patient-visit.service';
-import { StoreService } from '../../app/services/store.service';
+import { StoreService } from './store.service';
 import { Subject, BehaviorSubject } from 'rxjs';
 import { VitalConfiguration } from '../../app/util/objects/response/VitalConfiguration';
 

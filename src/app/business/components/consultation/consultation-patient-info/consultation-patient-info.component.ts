@@ -10,7 +10,7 @@ import { FormControl, FormGroup, FormBuilder, FormArray } from '@angular/forms';
 import { Router } from '@angular/router';
 import { ApiPatientInfoService } from '../../../services/api-patient-info.service';
 import { Component, OnInit, Input, SimpleChanges, OnDestroy } from '@angular/core';
-import { StoreService } from '../../../../app/services/store.service';
+import { StoreService } from '../../../services/store.service';
 import { BsModalService } from 'ngx-bootstrap/modal';
 import { BsModalRef } from 'ngx-bootstrap/modal';
 import * as moment from 'moment';

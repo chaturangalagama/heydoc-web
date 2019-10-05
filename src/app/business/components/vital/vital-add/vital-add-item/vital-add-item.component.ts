@@ -2,7 +2,7 @@ import { distinctUntilChanged } from 'rxjs/operators';
 import { FormGroup, Validators } from '@angular/forms';
 import { Component, OnInit, Input, AfterViewInit } from '@angular/core';
 import { VitalConfiguration } from '../../../../../app/util/objects/response/VitalConfiguration';
-import { StoreService } from '../../../../../app/services/store.service';
+import { StoreService } from '../../../../services/store.service';
 import { VitalFormService } from '../../../../services/vital-form.service';
 
 @Component({

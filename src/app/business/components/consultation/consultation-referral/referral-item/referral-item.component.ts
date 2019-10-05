@@ -1,5 +1,5 @@
 import { debounceTime } from 'rxjs/operators';
-import { StoreService } from '../../../../../app/services/store.service';
+import { StoreService } from '../../../../services/store.service';
 import { LoggerService } from '../../../../../app/services/logger.service';
 import { DB_FULL_DATE_FORMAT } from '../../../../../app/util/constants/app.constants';
 import { Practice } from '../../../../../app/util/objects/SpecialityByClinic';

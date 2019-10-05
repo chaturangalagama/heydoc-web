@@ -16,7 +16,7 @@ import { PatientHistoryDetailEditNoteComponent } from './patient-history-detail-
 import { PatientHistoryDetailEditCertificateComponent } from './patient-history-detail-edit-certificate/patient-history-detail-edit-certificate.component';
 
 import { UtilsService } from '../../../../app/services/utils.service';
-import { StoreService } from '../../../../app/services/store.service';
+import { StoreService } from '../../../services/store.service';
 import { AlertService } from '../../../services/alert.service';
 import { ApiPatientVisitService } from '../../../services/api-patient-visit.service';
 import { ApiCmsManagementService } from '../../../services/api-cms-management.service';

@@ -11,7 +11,7 @@ import { take } from 'rxjs/operators';
 import { mulitplierValidator } from '../../../../services/consultation-form.service';
 import { LoggerService } from '../../../../../app/services/logger.service';
 import { AlertService } from '../../../../services/alert.service';
-import { StoreService } from '../../../../../app/services/store.service';
+import { StoreService } from '../../../../services/store.service';
 import { ApiPatientVisitService } from '../../../../services/api-patient-visit.service';
 import { ApiCmsManagementService } from '../../../../services/api-cms-management.service';
 import { UtilsService } from '../../../../../app/services/utils.service';

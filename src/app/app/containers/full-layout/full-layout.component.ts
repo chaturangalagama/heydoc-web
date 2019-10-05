@@ -1,5 +1,5 @@
 import { StoreStatus } from '../../util/objects/StoreStatus';
-import { StoreService } from '../../services/store.service';
+import { StoreService } from '../../../business/services/store.service';
 import { Component } from '@angular/core';
 
 @Component({

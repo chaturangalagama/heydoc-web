@@ -1,5 +1,5 @@
-import { VisitManagementService } from '../../../../services/visit-management.service';
-import { MedicalCertificateItemsArrayComponent } from '../../../../components/consultation/consultation-medical-certificate/medical-certificate-items-array.component';
+import { VisitManagementService } from '../../../services/visit-management.service';
+import { MedicalCertificateItemsArrayComponent } from '../../../components/consultation/consultation-medical-certificate/medical-certificate-items-array.component';
 import { NgxPermissionsService } from 'ngx-permissions';
 
 // General Libraries
@@ -11,16 +11,16 @@ import { Component, OnInit, EventEmitter, Output, ViewChild, Input, AfterViewIni
 import * as moment from 'moment';
 import { debounceTime, distinctUntilChanged, takeUntil, take } from 'rxjs/operators';
 // Services
-import { StoreService } from '../../../../../app/services/store.service';
-import { ConsultationFormService } from '../../../../services/consultation-form.service';
+import { StoreService } from '../../../services/store.service';
+import { ConsultationFormService } from '../../../services/consultation-form.service';
 
 // Objects
-import { DispatchDrugDetail } from '../../../../../app/util/objects/request/DrugDispatch';
-import { PatientVisitHistory } from '../../../../../app/util/objects/request/PatientVisitHistory';
+import { DispatchDrugDetail } from '../../../../app/util/objects/request/DrugDispatch';
+import { PatientVisitHistory } from '../../../../app/util/objects/request/PatientVisitHistory';
 
 // Constants
-import { VISIT_MANAGEMENT_TABS, DISPLAY_DATE_FORMAT, INPUT_DELAY } from '../../../../../app/util/constants/app.constants';
-import { ApiPatientVisitService } from '../../../../services/api-patient-visit.service';
+import { VISIT_MANAGEMENT_TABS, DISPLAY_DATE_FORMAT, INPUT_DELAY } from '../../../../app/util/constants/app.constants';
+import { ApiPatientVisitService } from '../../../services/api-patient-visit.service';
 
 @Component({
   selector: 'app-consultation',

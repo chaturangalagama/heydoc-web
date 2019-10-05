@@ -10,7 +10,7 @@ import { ConsultationComponentsModule } from '../consultation-components.module'
 import { ApiPatientVisitService } from '../../../services/api-patient-visit.service';
 import { AlertService } from '../../../services/alert.service';
 import { AppConfigService } from '../../../../app/services/app-config.service';
-import { StoreService } from '../../../../app/services/store.service';
+import { StoreService } from '../../../services/store.service';
 import { LoggerService } from '../../../../app/services/logger.service';
 import { TestingModule } from '../../../../app/util/test/testing.module';
 

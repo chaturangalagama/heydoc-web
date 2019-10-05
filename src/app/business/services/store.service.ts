@@ -1,31 +1,31 @@
 import { distinctUntilChanged, debounceTime } from 'rxjs/operators';
-import { UtilsService } from './utils.service';
-import { DISPLAY_DATE_FORMAT, DB_FULL_DATE_FORMAT, INPUT_DELAY } from '../util/constants/app.constants';
-import { StoreStatus } from '../util/objects/StoreStatus';
-import { Practice } from '../util/objects/SpecialityByClinic';
+import { UtilsService } from '../../app/services/utils.service';
+import { DISPLAY_DATE_FORMAT, DB_FULL_DATE_FORMAT, INPUT_DELAY } from '../../app/util/constants/app.constants';
+import { StoreStatus } from '../../app/util/objects/StoreStatus';
+import { Practice } from '../../app/util/objects/SpecialityByClinic';
 import { Router } from '@angular/router';
 import { Observable, Subject, timer, BehaviorSubject } from 'rxjs';
-import { Clinic } from '../util/objects/response/Clinic';
+import { Clinic } from '../../app/util/objects/response/Clinic';
 import { Injectable, OnDestroy } from '@angular/core';
 import { NgxPermissionsService } from 'ngx-permissions';
 
-import { LoggerService } from './logger.service';
-import { ApiPatientVisitService } from '../../business/services/api-patient-visit.service';
-import { ApiPatientInfoService } from '../../business/services/api-patient-info.service';
-import { AllergyGroup } from '../util/objects/response/AllergyGroup';
-import { PatientRegistryListResponse } from '../util/objects/response/PatientRegistryListResponse';
-import { AuthService } from './auth.service';
-import { User } from '../util/objects/response/User';
+import { LoggerService } from '../../app/services/logger.service';
+import { ApiPatientVisitService } from './api-patient-visit.service';
+import { ApiPatientInfoService } from './api-patient-info.service';
+import { AllergyGroup } from '../../app/util/objects/response/AllergyGroup';
+import { PatientRegistryListResponse } from '../../app/util/objects/response/PatientRegistryListResponse';
+import { AuthService } from '../../app/services/auth.service';
+import { User } from '../../app/util/objects/response/User';
 
-import { Instruction, DosageInstruction } from '../util/objects/DrugItem';
-import { Uom } from '../util/objects/Uom';
-import { AlertService } from '../../business/services/alert.service';
-import { ApiCmsManagementService } from '../../business/services/api-cms-management.service';
+import { Instruction, DosageInstruction } from '../../app/util/objects/DrugItem';
+import { Uom } from '../../app/util/objects/Uom';
+import { AlertService } from './alert.service';
+import { ApiCmsManagementService } from './api-cms-management.service';
 
-import { PatientService } from '../../business/services/patient.service';
-import { PaymentService } from '../../business/services/payment.service';
+import { PatientService } from './patient.service';
+import { PaymentService } from './payment.service';
 import * as moment from 'moment';
-import { VitalConfiguration } from '../util/objects/response/VitalConfiguration';
+import { VitalConfiguration } from '../../app/util/objects/response/VitalConfiguration';
 import { JwtHelperService } from '@auth0/angular-jwt';
 @Injectable()
 export class StoreService implements OnDestroy {

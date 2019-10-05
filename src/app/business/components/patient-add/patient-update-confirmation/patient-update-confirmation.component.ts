@@ -1,5 +1,5 @@
 import { ApiPatientInfoService } from '../../../services/api-patient-info.service';
-import { StoreService } from '../../../../app/services/store.service';
+import { StoreService } from '../../../services/store.service';
 
 import { Component, OnInit, Input, EventEmitter } from '@angular/core';
 import { FormGroup, FormBuilder, FormArray } from '@angular/forms';

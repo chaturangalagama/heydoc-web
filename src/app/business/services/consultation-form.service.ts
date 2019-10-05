@@ -1,6 +1,6 @@
 import { debounceTime, distinctUntilChanged } from 'rxjs/operators';
 import { ApiCmsManagementService } from './api-cms-management.service';
-import { StoreService } from '../../app/services/store.service';
+import { StoreService } from './store.service';
 import { DISPLAY_DATE_FORMAT, INPUT_DELAY } from '../../app/util/constants/app.constants';
 import {
   FormGroup,

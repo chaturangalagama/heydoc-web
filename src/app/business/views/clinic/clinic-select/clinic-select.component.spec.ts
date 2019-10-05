@@ -2,7 +2,7 @@ import { async, ComponentFixture, TestBed } from '@angular/core/testing';
 
 import { ClinicSelectComponent } from './clinic-select.component';
 import { TestingModule } from '../../../../app/util/test/testing.module';
-import { StoreService } from '../../../../app/services/store.service';
+import { StoreService } from '../../../services/store.service';
 
 describe('ClinicSelectComponent', () => {
   let component: ClinicSelectComponent;

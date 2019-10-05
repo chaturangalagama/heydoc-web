@@ -2,7 +2,7 @@ import { externalReferralDetails } from '../../../../app/util/objects/request/Pa
 import { FormArray, FormGroup, FormControl, FormBuilder } from '@angular/forms';
 import { Component, OnInit, Input } from '@angular/core';
 import { ConsultationFormService } from '../../../services/consultation-form.service';
-import { StoreService } from '../../../../app/services/store.service';
+import { StoreService } from '../../../services/store.service';
 
 @Component({
   selector: 'app-payment-referral',

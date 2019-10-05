@@ -6,7 +6,7 @@ import { Clinic } from '../../../../app/util/objects/response/Clinic';
 import { Component, OnInit, Input, HostListener, Output, EventEmitter } from '@angular/core';
 import { FormGroup, FormArray, FormBuilder } from '@angular/forms';
 import { DISPLAY_DATE_FORMAT, DB_FULL_DATE_FORMAT, MC_HALFDAY_OPTIONS } from '../../../../app/util/constants/app.constants';
-import { StoreService } from '../../../../app/services/store.service';
+import { StoreService } from '../../../services/store.service';
 import { AlertService } from '../../../services/alert.service';
 import { ApiCmsManagementService } from '../../../services/api-cms-management.service';
 import { NgxPermissionsService } from 'ngx-permissions';

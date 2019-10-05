@@ -6,16 +6,16 @@ import * as moment from 'moment';
 import { debounceTime, distinctUntilChanged } from 'rxjs/operators';
 
 // Services
-import { StoreService } from '../../../../app/services/store.service';
-import { ApiPatientVisitService } from '../../../services/api-patient-visit.service';
+import { StoreService } from '../../../../services/store.service';
+import { ApiPatientVisitService } from '../../../../services/api-patient-visit.service';
 
 // Objects
-import { PatientVisitHistory } from '../../../../app/util/objects/request/PatientVisitHistory';
-import { DispatchDrugDetail } from '../../../../app/util/objects/request/DrugDispatch';
+import { PatientVisitHistory } from '../../../../../app/util/objects/request/PatientVisitHistory';
+import { DispatchDrugDetail } from '../../../../../app/util/objects/request/DrugDispatch';
 
 // Constants
-import { DB_FULL_DATE_FORMAT, INPUT_DELAY } from '../../../../app/util/constants/app.constants';
-import { PatientVisitList } from '../../../../app/util/objects/response/PatientVisitList';
+import { DB_FULL_DATE_FORMAT, INPUT_DELAY } from '../../../../../app/util/constants/app.constants';
+import { PatientVisitList } from '../../../../../app/util/objects/response/PatientVisitList';
 @Component({
   selector: 'app-patient-consultation',
   templateUrl: './patient-consultation.component.html',

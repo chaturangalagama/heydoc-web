@@ -14,7 +14,7 @@ import { ConsultationHistoryMainContainerComponent } from '../business/component
 import { ConsultationDiagnosisItemComponent } from '../business/components/consultation/consultation-diagnosis/consultation-diagnosis-item/consultation-diagnosis-item.component';
 import { ConsultationNotesComponent } from '../business/components/consultation/consultation-notes/consultation-notes.component';
 import { ConsultationPatientInfoComponent } from '../business/components/consultation/consultation-patient-info/consultation-patient-info.component';
-import { AppointmentsNewComponent } from '../business/views/appointments/appointments-new/appointments-new.component';
+import { AppointmentsNewComponent } from '../business/views/patient-visit/appointments/appointments-new/appointments-new.component';
 import { PatientAddQueueConfirmationComponent } from '../business/components/patient-add/patient-add-queue-confirmation/patient-add-queue-confirmation.component';
 import { PatientAddConsultationComponent } from '../business/components/patient-add/patient-add-consultation/patient-add-consultation.component';
 import { CommonModule } from '@angular/common';
@@ -61,7 +61,7 @@ import { RouterModule } from '@angular/router';
 import { LoadingComponent } from './app-components/loading/loading.component';
 import { LoadingRetryComponent } from './app-components/loading-retry/loading-retry.component';
 import { DiscountComponent } from '../business/components/consultation/discount/discount.component';
-import { AddAppointmentComponent } from '../business/components/appointments/add-appointment/add-appointment.component';
+import { AddAppointmentComponent } from '../business/components/appointments/add-appointment.component';
 import { ConsultationDiagnosisComponent } from '../business/components/consultation/consultation-diagnosis/consultation-diagnosis.component';
 import { ConsultationProblemListComponent } from '../business/components/consultation/consultation-problem-list/consultation-problem-list.component';
 import { ConsultationDocumentsComponent } from '../business/components/consultation/consultation-documents/consultation-documents.component';

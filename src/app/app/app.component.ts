@@ -1,6 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { Router, NavigationEnd } from '@angular/router';
-import { StoreService } from './services/store.service';
+import { StoreService } from '../business/services/store.service';
 
 @Component({
   selector: 'app-root',

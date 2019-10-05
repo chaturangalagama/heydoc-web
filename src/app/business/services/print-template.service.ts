@@ -6,7 +6,7 @@ import { Injectable } from '@angular/core';
 import { ApiPatientVisitService } from './api-patient-visit.service';
 import { AlertService } from './alert.service';
 import { ApiCmsManagementService } from './api-cms-management.service';
-import { StoreService } from '../../app/services/store.service';
+import { StoreService } from './store.service';
 
 import { refferalLetterTemplate } from '../../app/util/templates/refferal.letter';
 

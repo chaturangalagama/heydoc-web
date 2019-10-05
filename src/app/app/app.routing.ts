@@ -14,9 +14,9 @@ export const routes: Routes = [
     canActivate: [AuthGuard, PermissionsGuard],
     data: { title: 'Home' },
     children: [
-      { path: 'profile', loadChildren: '../business/views/profile/profile.module#ProfileModule' },
+      { path: 'profile', loadChildren: './pages/profile/profile.module#ProfileModule' },
       { path: 'patient', loadChildren: '../business/views/patient/patient.module#PatientModule' },
-      { path: 'appointments', loadChildren: '../business/views/appointments/appointments.module#AppointmentsModule' },
+      { path: 'appointments', loadChildren: '../business/views/patient-visit/appointments/appointments.module#AppointmentsModule' },
       { path: 'consultation', loadChildren: '../business/views/consultation/consultation.module#ConsultationModule', runGuardsAndResolvers: 'always'},
       { path: 'payment', loadChildren: '../business/views/payment/payment.module#PaymentModule' },
       { path: 'clinic', loadChildren: '../business/views/clinic/clinic.module#ClinicModule' }

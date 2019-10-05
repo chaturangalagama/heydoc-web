@@ -4,7 +4,7 @@ import { BsModalRef } from 'ngx-bootstrap/modal';
 
 import { AlertService } from '../../../../services/alert.service';
 import { ApiCmsManagementService } from '../../../../services/api-cms-management.service';
-import { StoreService } from '../../../../../app/services/store.service';
+import { StoreService } from '../../../../services/store.service';
 
 @Component({
   selector: 'app-patient-history-detail-edit-note',

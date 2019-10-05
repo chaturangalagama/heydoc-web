@@ -9,7 +9,7 @@ import { Subject, timer } from 'rxjs';
 import { FormArray, FormControl, Validators, FormGroup } from '@angular/forms';
 import { Component, OnInit, Input, Output, EventEmitter, OnDestroy } from '@angular/core';
 import { TopDrugDescription } from '../../../../app/util/objects/DrugDescription';
-import { StoreService } from '../../../../app/services/store.service';
+import { StoreService } from '../../../services/store.service';
 import { takeUntil, filter, distinctUntilChanged, tap, debounceTime, switchMap} from 'rxjs/operators';
 @Component({
   selector: 'app-consultation-prescription',

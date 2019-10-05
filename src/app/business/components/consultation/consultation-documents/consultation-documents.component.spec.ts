@@ -2,7 +2,7 @@ import { async, ComponentFixture, TestBed } from '@angular/core/testing';
 
 import { ConsultationDocumentsComponent } from './consultation-documents.component';
 import { ApiPatientVisitService } from '../../../services/api-patient-visit.service';
-import { StoreService } from '../../../../app/services/store.service';
+import { StoreService } from '../../../services/store.service';
 import { AlertService } from '../../../services/alert.service';
 import { SharedModule } from '../../../../app/shared.module';
 import { FormBuilder } from '@angular/forms';

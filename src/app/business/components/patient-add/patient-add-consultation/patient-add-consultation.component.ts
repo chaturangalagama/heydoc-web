@@ -1,4 +1,4 @@
-import { StoreService } from '../../../../app/services/store.service';
+import { StoreService } from '../../../services/store.service';
 import { FormGroup } from '@angular/forms';
 import { Component, OnInit, Input, ElementRef, HostListener, OnDestroy } from '@angular/core';
 import { SelectItemOptions } from '../../../../app/util/objects/SelectItemOptions';

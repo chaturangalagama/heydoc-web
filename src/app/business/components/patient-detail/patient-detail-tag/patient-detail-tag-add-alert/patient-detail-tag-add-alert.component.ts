@@ -1,4 +1,4 @@
-import { StoreService } from '../../../../../app/services/store.service';
+import { StoreService } from '../../../../services/store.service';
 import { AlertService } from '../../../../services/alert.service';
 import { Component, OnInit } from '@angular/core';
 import { EventEmitter } from '@angular/core';

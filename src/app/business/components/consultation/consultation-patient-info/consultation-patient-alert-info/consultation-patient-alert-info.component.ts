@@ -10,7 +10,7 @@ import { BsModalRef, BsModalService } from 'ngx-bootstrap/modal';
 import { Allergy } from '../../../../../app/util/objects/response/Allergy';
 import { ALLERGY_TYPES, ALLERGIES, ALERT_TYPES, ALERT_PRIORITY } from '../../../../../app/util/constants/app.constants';
 import { MedicalAlertResponse } from '../../../../../app/util/objects/response/MedicalAlertResponse';
-import { StoreService } from '../../../../../app/services/store.service';
+import { StoreService } from '../../../../services/store.service';
 import { PatientDetailTagAddAlertComponent } from '../../../patient-detail/patient-detail-tag/patient-detail-tag-add-alert/patient-detail-tag-add-alert.component';
 import { PatientAddAlertsInfoAddClinicalComponent } from '../../../patient-add/patient-add-alerts-info/patient-add-alerts-info-add-clinical/patient-add-alerts-info-add-clinical.component';
 

@@ -1,6 +1,6 @@
 import { NgModule } from '@angular/core';
 import { AppConfigService } from '../../services/app-config.service';
-import { StoreService } from '../../services/store.service';
+import { StoreService } from '../../../business/services/store.service';
 import { AlertService } from '../../../business/services/alert.service';
 import { PatientService } from '../../../business/services/patient.service';
 import { VaccinationService } from '../../../business/services/vaccination.service';

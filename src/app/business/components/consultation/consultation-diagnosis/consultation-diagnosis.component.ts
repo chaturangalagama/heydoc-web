@@ -1,6 +1,6 @@
 import { AlertService } from '../../../services/alert.service';
 import { ConsultationFormService } from '../../../services/consultation-form.service';
-import { StoreService } from '../../../../app/services/store.service';
+import { StoreService } from '../../../services/store.service';
 import { Input, OnDestroy } from '@angular/core';
 import { FormArray, FormBuilder } from '@angular/forms';
 import { ApiCmsManagementService } from '../../../services/api-cms-management.service';

@@ -5,7 +5,7 @@ import { AlertService } from '../../../../business/services/alert.service';
 import { PatientRegistryListResponse } from '../../../util/objects/response/PatientRegistryListResponse';
 import { Router } from '@angular/router';
 import { Component, OnInit, Output, EventEmitter } from '@angular/core';
-import { StoreService } from '../../../services/store.service';
+import { StoreService } from '../../../../business/services/store.service';
 
 @Component({
   selector: 'app-header-registry-content',

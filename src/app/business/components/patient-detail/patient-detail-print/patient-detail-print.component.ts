@@ -1,7 +1,7 @@
 import { PrintTemplateService } from '../../../services/print-template.service';
 import { Component, OnInit, Input } from '@angular/core';
 
-import { StoreService } from '../../../../app/services/store.service';
+import { StoreService } from '../../../services/store.service';
 import { AlertService } from '../../../services/alert.service';
 import { ApiCmsManagementService } from '../../../services/api-cms-management.service';
 

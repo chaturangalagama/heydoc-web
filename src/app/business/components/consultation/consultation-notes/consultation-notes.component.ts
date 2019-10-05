@@ -1,6 +1,6 @@
 import { AlertService } from '../../../services/alert.service';
 import { ApiCmsManagementService } from '../../../services/api-cms-management.service';
-import { StoreService } from '../../../../app/services/store.service';
+import { StoreService } from '../../../services/store.service';
 import { FormControl } from '@angular/forms';
 import { Component, OnInit, Input } from '@angular/core';
 

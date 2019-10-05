@@ -18,7 +18,7 @@ import * as moment from 'moment';
 import { AlertService } from '../../../services/alert.service';
 import { ConsultationFormService } from '../../../services/consultation-form.service';
 import { LoggerService } from '../../../../app/services/logger.service';
-import { StoreService } from '../../../../app/services/store.service';
+import { StoreService } from '../../../services/store.service';
 import { AuthService } from '../../../../app/services/auth.service';
 import { PaymentService } from '../../../services/payment.service';
 import { ApiPatientVisitService } from '../../../services/api-patient-visit.service';

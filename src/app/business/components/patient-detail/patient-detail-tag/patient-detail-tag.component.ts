@@ -3,7 +3,7 @@ import { timer } from 'rxjs';
 import { PATIENT_INFO_KEYS, ALERT_TYPES, ALERT_PRIORITY } from '../../../../app/util/constants/app.constants';
 import { ApiPatientInfoService } from '../../../services/api-patient-info.service';
 import { AlertService } from '../../../services/alert.service';
-import { StoreService } from '../../../../app/services/store.service';
+import { StoreService } from '../../../services/store.service';
 import { Component, OnInit, Input } from '@angular/core';
 import { FormGroup, FormBuilder, FormArray } from '@angular/forms';
 import { BsModalService } from 'ngx-bootstrap/modal';

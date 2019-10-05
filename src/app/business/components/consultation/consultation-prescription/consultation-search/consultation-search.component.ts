@@ -6,7 +6,7 @@ import { Input } from '@angular/core';
 import { EventEmitter } from '@angular/core';
 
 // Services
-import { StoreService } from '../../../../../app/services/store.service';
+import { StoreService } from '../../../../services/store.service';
 import { ConsultationFormService } from '../../../../services/consultation-form.service';
 import { filter, distinctUntilChanged, map, debounceTime } from 'rxjs/operators';
 

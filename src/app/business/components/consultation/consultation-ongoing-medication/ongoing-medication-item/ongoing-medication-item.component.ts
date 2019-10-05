@@ -4,7 +4,7 @@ import { Subject } from 'rxjs';
 import { FormGroup, FormControl } from '@angular/forms';
 import { Component, OnInit, Input } from '@angular/core';
 import * as moment from 'moment';
-import { StoreService } from '../../../../../app/services/store.service';
+import { StoreService } from '../../../../services/store.service';
 @Component({
   selector: 'app-ongoing-medication-item',
   templateUrl: './ongoing-medication-item.component.html',

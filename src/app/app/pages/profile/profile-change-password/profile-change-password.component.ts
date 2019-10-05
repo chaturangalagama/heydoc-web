@@ -1,8 +1,8 @@
 import { Component, OnInit } from '@angular/core';
 import { FormControl, FormGroup, FormArray, FormBuilder } from '@angular/forms';
 import { Router } from '@angular/router';
-import { AuthService } from '../../../../app/services/auth.service';
-import { AlertService } from '../../../services/alert.service';
+import { AuthService } from '../../../services/auth.service';
+import { AlertService } from '../../../../business/services/alert.service';
 import { Alert } from 'selenium-webdriver';
 
 @Component({

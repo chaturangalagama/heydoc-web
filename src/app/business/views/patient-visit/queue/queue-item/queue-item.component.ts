@@ -1,11 +1,11 @@
-import { UtilsService } from '../../../../../../app/services/utils.service';
-import { DisplayHour } from '../../../../../../app/util/pipes/display-hour.pipe';
-import { INPUT_DELAY } from '../../../../../../app/util/constants/app.constants';
+import { UtilsService } from '../../../../../app/services/utils.service';
+import { DisplayHour } from '../../../../../app/util/pipes/display-hour.pipe';
+import { INPUT_DELAY } from '../../../../../app/util/constants/app.constants';
 import { debounceTime, distinctUntilChanged } from 'rxjs/operators';
-import { AlertService } from '../../../../../services/alert.service';
-import { ApiPatientVisitService } from '../../../../../services/api-patient-visit.service';
+import { AlertService } from '../../../../services/alert.service';
+import { ApiPatientVisitService } from '../../../../services/api-patient-visit.service';
 import { Component, OnInit, Input, Output,EventEmitter } from '@angular/core';
-import { StoreService } from '../../../../../../app/services/store.service';
+import { StoreService } from '../../../../services/store.service';
 @Component({
   selector: 'app-queue-item',
   templateUrl: './queue-item.component.html',

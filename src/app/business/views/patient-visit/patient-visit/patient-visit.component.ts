@@ -16,7 +16,7 @@ import { UtilsService } from '../../../../app/services/utils.service';
 import { ApiPatientVisitService } from '../../../services/api-patient-visit.service';
 import { AlertService } from '../../../services/alert.service';
 import { ConsultationFormService } from '../../../services/consultation-form.service';
-import { StoreService } from '../../../../app/services/store.service';
+import { StoreService } from '../../../services/store.service';
 import { TempStoreService } from '../../../../app/services/temp-store.service';
 import { ApiPatientInfoService } from '../../../services/api-patient-info.service';
 import { PaymentService } from '../../../services/payment.service';
@@ -32,10 +32,10 @@ import { DISPLAY_DATE_FORMAT, PATIENT_INFO_KEYS } from '../../../../app/util/con
 
 @Component({
   selector: 'app-patient-visit-management',
-  templateUrl: './patient-visit-management.component.html',
-  styleUrls: ['./patient-visit-management.component.scss']
+  templateUrl: './patient-visit.component.html',
+  styleUrls: ['./patient-visit.component.scss']
 })
-export class PatientVisitManagementComponent implements OnInit, OnDestroy {
+export class PatientVisitComponent implements OnInit, OnDestroy {
   // Panel Controls, Variables and Booleans
   @Output() isQueueHidden = true;
   @Output() reloadPatient = new EventEmitter<any>();

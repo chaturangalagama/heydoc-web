@@ -16,7 +16,7 @@ import { MedicalAlertResponse } from '../../../../app/util/objects/response/Medi
 import { PatientVisit, PatientVisitRegistryEntity } from '../../../../app/util/objects/request/PatientVisit';
 
 // Services
-import { StoreService } from '../../../../app/services/store.service';
+import { StoreService } from '../../../services/store.service';
 import { AlertService } from '../../../services/alert.service';
 import { UtilsService } from '../../../../app/services/utils.service';
 import { ApiCmsManagementService } from '../../../services/api-cms-management.service';

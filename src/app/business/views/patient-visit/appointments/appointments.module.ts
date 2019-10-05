@@ -1,5 +1,5 @@
 import { CalendarModule } from 'angular-calendar';
-import { SharedModule } from '../../../app/shared.module';
+import { SharedModule } from '../../../../app/shared.module';
 import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
 

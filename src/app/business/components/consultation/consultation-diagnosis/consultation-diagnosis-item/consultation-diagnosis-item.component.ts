@@ -1,6 +1,6 @@
 import { AlertService } from '../../../../services/alert.service';
 import { Observable, Subject } from 'rxjs';
-import { StoreService } from '../../../../../app/services/store.service';
+import { StoreService } from '../../../../services/store.service';
 import { SelectItemOptions } from '../../../../../app/util/objects/SelectItemOptions';
 import { Diagnosis } from '../../../../../app/util/objects/response/Diagnosis';
 import { ApiCmsManagementService } from '../../../../services/api-cms-management.service';

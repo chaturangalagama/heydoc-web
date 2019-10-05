@@ -15,12 +15,12 @@ import { PatientDetailComponent } from './patient-detail/patient-detail.componen
 import { PatientListComponent } from './patient-list/patient-list.component';
 import { PatientRoutingModule } from './patient-routing.module';
 import { PatientSearchComponent } from './patient-search/patient-search.component';
-import { PatientVisitManagementComponent } from './patient-visit-management/patient-visit-management.component';
-import { ConsultationComponent } from './patient-visit-management/consultation/consultation.component';
-import { QueueComponent } from './patient-visit-management/queue/queue.component';
-import { QueueItemComponent } from './patient-visit-management/queue/queue-item/queue-item.component';
+import { PatientVisitComponent } from '../patient-visit/patient-visit/patient-visit.component';
+import { ConsultationComponent } from '../patient-visit/consultation/consultation.component';
+import { QueueComponent } from '../patient-visit/queue/queue.component';
+import { QueueItemComponent } from '../patient-visit/queue/queue-item/queue-item.component';
 import { PatientProfileComponent } from './patient-profile/patient-profile.component';
-import { PatientConsultationComponent } from './patient-consultation/patient-consultation.component';
+import { PatientConsultationComponent } from '../patient-visit/consultation/patient-consultation/patient-consultation.component';
 import { PatientDispensingComponent } from './patient-dispensing/patient-dispensing.component';
 import { PatientMedicalServicesComponent } from './patient-medical-services/patient-medical-services.component';
 import { DynamicFormContainerComponent } from '../../../app/app-components/dynamic-form-container/dynamic-form-container.component';
@@ -45,7 +45,7 @@ import { DynamicFormContainerComponent } from '../../../app/app-components/dynam
     PatientDetailComponent,
     PatientSearchComponent,
     DynamicFormContainerComponent,
-    PatientVisitManagementComponent,
+    PatientVisitComponent,
     ConsultationComponent,
     QueueComponent,
     QueueItemComponent,

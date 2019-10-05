@@ -5,7 +5,6 @@ import { VitalService } from '../business/services/vital.service';
 import { ErrorLogService } from './services/error-log.service';
 
 import { AppConfigService } from './services/app-config.service';
-import { JwtInterceptor } from './services/jwt-interceptor';
 import { DatePipe } from '@angular/common';
 import { HttpClientModule, HTTP_INTERCEPTORS } from '@angular/common/http';
 import { NgModule, APP_INITIALIZER } from '@angular/core';
@@ -52,7 +51,7 @@ import { DialogService } from './services/dialog.service';
 import { LoggerService } from './services/logger.service';
 import { PatientService } from '../business/services/patient.service';
 import { PaymentService } from '../business/services/payment.service';
-import { StoreService } from './services/store.service';
+import { StoreService } from '../business/services/store.service';
 import { UtilsService } from './services/utils.service';
 import { VaccinationService } from '../business/services/vaccination.service';
 import { SharedModule } from './shared.module';

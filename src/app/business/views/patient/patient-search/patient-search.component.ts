@@ -3,7 +3,7 @@ import { PatientAddQueueConfirmationComponent } from '../../../components/patien
 import { ApiPatientVisitService } from '../../../services/api-patient-visit.service';
 import { PatientVisit, PatientVisitRegistryEntity } from '../../../../app/util/objects/request/PatientVisit';
 import { BsModalRef, BsModalService } from 'ngx-bootstrap/modal';
-import { StoreService } from '../../../../app/services/store.service';
+import { StoreService } from '../../../services/store.service';
 import { Component, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
 

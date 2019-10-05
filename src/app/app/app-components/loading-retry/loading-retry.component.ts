@@ -1,4 +1,4 @@
-import { StoreService } from '../../services/store.service';
+import { StoreService } from '../../../business/services/store.service';
 import { Component, OnInit } from '@angular/core';
 
 @Component({
